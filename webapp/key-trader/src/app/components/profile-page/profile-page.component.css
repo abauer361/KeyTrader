@@ -1,0 +1,48 @@
+.seeKeysWrapper{
+  background-color: white;
+  width:95vw;
+  height:95vh;
+  border-radius:20px;
+  display:flex;
+  flex-direction: column;
+  align-content: center;
+}
+.header{
+  border-top-left-radius: 20px;
+  border-top-right-radius:20px;
+  padding:30px;
+}
+.keys{
+  background-color: #7289DA;
+  padding:30px;
+  overflow-y: auto;
+  max-height:600px;
+}
+.keysColumn{
+  display: flex;
+  flex-direction: column;
+}
+#keySubHeader{
+  font-family: 'Varela Round', sans-serif;
+}
+.redeemBtn{
+  cursor:pointer;
+  background-color: #7289DA;
+  color:white;
+  box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+  float:right;
+
+}
+.keyTitle{
+  font-family: 'Varela Round', sans-serif;
+}
+.key{
+  padding: 5px;
+  background-color: white;
+  font-weight: normal;
+  box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+  width:100%;
+}
+.key h4 {
+  margin:0;
+}

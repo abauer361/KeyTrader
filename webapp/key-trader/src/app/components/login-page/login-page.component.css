@@ -1,0 +1,90 @@
+.loginWrapper {
+  width:95vw;
+  height:95vh;
+  border-radius:20px;
+  display: flex;
+  justify-content: space-around;
+}
+.login{
+  width:48vw;
+  left:0;
+  height:95vh;
+  background-color: white;
+  border-radius:20px;
+  position: relative;
+}
+.loginContent{
+  height: calc(100% - 70px);
+  padding: 35px;
+  display:flex;
+  flex-direction: column;
+  justify-content: space-around;
+
+}
+.keyHeader{
+  margin:0;
+  font-size: 4vw;
+  font-family: 'unisono_quickpathregular';
+}
+#discordParent{
+  flex-grow: 1;
+}
+.discordBtn {
+  background-color: #7289DA;
+  color:white;
+  list-style-type: none;
+  text-decoration: none;
+  border-radius: 5px;
+  width:100%;
+  height:20%;
+  text-align: center;
+  font-family: 'Varela Round', sans-serif;
+  font-size: 1vw;
+  cursor:pointer;
+}
+
+#noAccount{
+  flex-grow: 1;
+  font-family: 'Varela Round', sans-serif;
+
+}
+#noAccount a {
+  text-decoration: none;
+}
+.graphic {
+  width:48vw;
+  float:right;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+.discordGraphic {
+  width:60%;
+}
+.greenBoi {
+  position: fixed;
+  left:48%;
+  width:8%;
+  transform: rotate(160deg);
+  top:10px;
+}
+.blueBoi {
+  position: fixed;
+  left:90%;
+  width:10%;
+  transform: rotate(-30deg);
+  bottom:30px;
+}
+.line {
+  position: fixed;
+  left:80%;
+  top:5%;
+  width:30%;
+  transform: rotate(70deg);
+}
+.circles {
+  position: fixed;
+  left:35%;
+  bottom:10%;
+  width:10%;
+}

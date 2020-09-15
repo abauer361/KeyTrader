@@ -1,0 +1,33 @@
+.loggedOutWrapper {
+  background-image: radial-gradient(circle, #0CDAC2, #7289DA);
+  width:95vw;
+  height:95vh;
+  border-radius:20px;
+  display:flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+}
+#loggedOutHeader{
+  font-family: 'Varela Round', sans-serif;
+  color:white;
+  font-size: 64px;
+}
+
+h3 {
+  font-family: 'Varela Round', sans-serif;
+  color:white;
+}
+
+#keyHole {
+  height: auto;
+  width:20%;
+  filter: drop-shadow(30px 10px 4px rgba(0, 0, 0, 0.67));
+  margin:20px;
+}
+
+.loginBtn {
+  background-color: #7289DA;
+  color:white;
+  font-family: 'Varela Round', sans-serif;
+}

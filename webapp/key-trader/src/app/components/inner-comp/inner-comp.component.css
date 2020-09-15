@@ -1,0 +1,8 @@
+.inner{
+  background-image: radial-gradient(circle, #0CDAC2, #7289DA);
+  width:95vw;
+  height:95vh;
+  border-radius:20px;
+  display: flex;
+}
+

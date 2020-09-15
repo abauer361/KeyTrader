@@ -1,0 +1,51 @@
+<app-access-denied *ngIf="accessDenied"></app-access-denied>
+
+<div class="settingsPageWrapper" id="loading" *ngIf = "loading">
+  <app-swapping-squares-spinner
+    [animationDuration]="1000"
+    [size]="65"
+    [color]="'#0CDAC2'"
+  ></app-swapping-squares-spinner>
+</div>
+
+
+<div class="settingsPageWrapper" *ngIf="!loading">
+  <app-nav-menu></app-nav-menu>
+
+  <div class="header">
+    <h2 class="settingsTitle">Settings for {{this.server.serverName}}</h2>
+  </div>
+
+  <div class="roles" *ngIf="this.allowed">
+    <h2 *ngIf="this.keyTraderRoles.length === 0">Key Trader Roles have not yet been set. Set them below.</h2>
+
+    <div *ngIf="this.keyTraderRoles.length !== 0">
+      <h2>Roles:</h2>
+
+      <div class="roleGuides">
+        <h3 class="roleType">Discord Role</h3>
+        <h5 class="equates" >equates to...</h5>
+        <h3 class="roleType" >Key Trader Role</h3>
+      </div>
+      <mat-list>
+        <mat-list-item class="listItem" *ngFor="let role of this.keyTraderRoles">
+          <mat-card class="role">
+            <h4 class="roleTitle">{{role.roleName}}</h4>
+            <h4 class="roleTitle">{{role.roleType}}</h4>
+          </mat-card>
+
+        </mat-list-item>
+      </mat-list>
+      <hr/>
+        <div style="display:flex; flex-direction: column; margin-top:20px;">
+          <h2>Notifications:</h2>
+          <h4>Add Keys: </h4><h5 *ngIf="addKeysNotification" class="notifications">On</h5><h5 *ngIf="!addKeysNotification" class="notifications">Off</h5>
+          <h4>Claim Keys: </h4><h5 *ngIf="claimKeysNotification" class="notifications">On</h5><h5 *ngIf="!claimKeysNotification" class="notifications">Off</h5>
+          <h4>New Users:</h4><h5 *ngIf="newUserNotification" class="notifications">On</h5><h5 *ngIf="!newUserNotification" class="notifications">Off</h5>
+        </div>
+
+    </div>
+  </div>
+  <button *ngIf="this.keyTraderRoles.length === 0" class="roleBtn" mat-raised-button routerLink="/settings">Set Roles</button>
+  <button *ngIf="this.keyTraderRoles.length !== 0" class="roleBtn" mat-raised-button routerLink="/settings">Change Settings</button>
+</div>

@@ -1,0 +1,8 @@
+.bg{
+  background-color: #2D2D2D;
+  width:100vw;
+  height: 100vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}

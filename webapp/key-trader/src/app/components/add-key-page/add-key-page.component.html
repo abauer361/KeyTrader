@@ -1,0 +1,74 @@
+<app-access-denied *ngIf="accessDenied"></app-access-denied>
+
+<div class="addKeyWrapper">
+  <app-nav-menu></app-nav-menu>
+
+  <div class="header">
+    <h2 class="addKeyTitle">Add Steam Key</h2>
+  </div>
+  <div *ngIf="!allowed">
+    <h2>You are not allowed to add keys. Please contact the server owner if you believe this is incorrect.</h2>
+  </div>
+
+  <div *ngIf="allowed" class="addKeyContent">
+
+    <form id="donateForm"  #keyForm=ngForm (ngSubmit)="onSubmit(); keyForm.reset();">
+      <div class="inputs">
+        <mat-form-field style="margin-bottom: 20px;">
+          <mat-label>Key Type</mat-label>
+          <mat-select [(value)]="keyTypeSelected">
+            <mat-option value="Steam">Steam</mat-option>
+            <mat-option value="Other">Other</mat-option>
+          </mat-select>
+        </mat-form-field>
+        <div *ngIf="keyTypeSelected==='Steam'">
+          <mat-form-field class="formFields">
+            <mat-label>Steam Key</mat-label>
+            <input matInput  maxlength="29" [(ngModel)]="gameKey" name="gameKey" placeholder="ABCDE-FGHIJ-KLMNO-PQRST-UVWXY">
+          </mat-form-field>
+
+          <mat-form-field class="formFields">
+            <mat-label>Game ID</mat-label>
+            <input [(ngModel)]="gameID" name="gameID" matInput placeholder="218620">
+          </mat-form-field>
+        </div>
+
+        <div *ngIf="keyTypeSelected==='Other'">
+          <mat-form-field class="formFields">
+            <mat-label>Game Name</mat-label>
+            <input matInput  maxlength="29" [(ngModel)]="gameName" name="gameName" placeholder="Counter Strike: Global Offensive">
+          </mat-form-field>
+
+          <mat-form-field class="formFields">
+            <mat-label>Game Price</mat-label>
+            <input [(ngModel)]="gamePrice" name="gamePrice" matInput placeholder="59.99">
+          </mat-form-field>
+
+          <mat-form-field class="formFields">
+            <mat-label>Game Key</mat-label>
+            <input [(ngModel)]="gameKey" name="gameKey" matInput placeholder="ABCDE-FGHIJ-KLMNO-PQRST-UVWXY">
+          </mat-form-field>
+
+        </div>
+
+      </div>
+
+      <button *ngIf="keyTypeSelected==='Other'" mat-raised-button>Submit Key</button>
+      <button *ngIf="keyTypeSelected==='Steam'" mat-raised-button>Submit Steam Key</button>
+    </form>
+
+  </div>
+
+  <mat-card class="key" *ngIf="checkSteamKey && keyTypeSelected === 'Steam'">
+    <mat-card-title>{{steamKey.gameName}}</mat-card-title>
+    <mat-card-subtitle>${{(steamKey.gamePrice * .01).toFixed(2)}}</mat-card-subtitle>
+    <mat-card-subtitle>{{steamKey.keyString}}</mat-card-subtitle>
+    <mat-card-subtitle><a mat-raised-button target="_blank" href="https://store.steampowered.com/app/{{steamKey.gameID}}">Steam Page</a></mat-card-subtitle>
+    <span>Everything look correct?</span><button (click)="submitSteamKey()" class="submitSteamBtn" mat-raised-button>Yes, Submit!</button>
+    <button (click)="checkSteamKey=false" mat-raised-button class="cancelSteamBtn">No, cancel</button>
+  </mat-card>
+
+
+
+</div>
+

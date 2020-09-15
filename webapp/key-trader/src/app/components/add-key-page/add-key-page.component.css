@@ -1,0 +1,49 @@
+.addKeyWrapper{
+  background-color: white;
+  width:95vw;
+  height:95vh;
+  border-radius:20px;
+  display:flex;
+  flex-direction: column;
+  align-content: center;
+
+}
+.header{
+  border-top-left-radius: 20px;
+  border-top-right-radius:20px;
+  padding:30px;
+}
+.inputs{
+  background-color: white;
+  padding:10px;
+  display: flex;
+  flex-direction: column;
+  margin-bottom: 20px;
+}
+.addKeyTitle{
+  font-family: 'Varela Round', sans-serif;
+}
+.addKeyContent{
+  background-color: #7289DA;
+  padding:30px;
+  display: flex;
+  justify-content: center;
+}
+#donateForm {
+  width:60%;
+}
+#topBar{
+  background-color: dodgerblue;
+}
+.formFields {
+  width:100%;
+}
+.submitSteamBtn {
+  margin-left: 10px;
+  background-color: #6ffc74;
+}
+.cancelSteamBtn {
+  margin-left: 10px;
+  background-color: #ff6557;
+}
+

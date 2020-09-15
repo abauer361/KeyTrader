@@ -1,0 +1,21 @@
+#nav-menu{
+  position: absolute;
+  top: 40px;
+  right: 2%;
+  display: flex;
+  flex-direction: row;
+  justify-content: space-around;
+  background-color: #2D2D2D;
+  width:200px;
+  height:40px;
+  border-radius: 5px;
+  z-index: 999;
+}
+
+.btn_menu{
+  display: block;
+  border: none;
+  padding: 0;
+  background: none;
+  color: white;
+}

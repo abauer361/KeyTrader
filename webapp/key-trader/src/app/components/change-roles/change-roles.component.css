@@ -1,0 +1,78 @@
+.settingsPageWrapper {
+  background-color: white;
+  width:95vw;
+  height:95vh;
+  border-radius:20px;
+  display:flex;
+  flex-direction: column;
+  align-content: center;
+  overflow-y: auto;
+}
+.header{
+  border-top-left-radius: 20px;
+  border-top-right-radius:20px;
+  padding:30px;
+}
+.settingsTitle{
+  font-family: 'Varela Round', sans-serif;
+}
+.roles{
+  background-color: #7289DA;
+  padding:30px;
+  max-height: 600px;
+  overflow-y: auto;
+}
+.roleTitle{
+  font-family: 'Varela Round', sans-serif;
+}
+.listItem{
+  margin-bottom: 40px;
+}
+.role{
+  padding: 5px;
+  background-color: white;
+  font-weight: normal;
+  box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+  width:100%;
+  display:flex;
+  justify-content: space-between;
+  align-items: center;
+}
+.notification {
+  padding: 5px 10px;
+  background-color: white;
+  box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+  width:100%;
+  display:flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 20px;
+}
+
+.discordRoles{
+  display: flex;
+  justify-content: space-between;
+
+}
+#loading {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.roleBtn {
+  background-color: white;
+  width: 200px;
+  border-radius: 10px;
+  text-align: center;
+  color: #7289DA;
+  margin:30px;
+}
+.notificationsSection{
+  display: flex;
+  flex-direction: column;
+}
+
+.notificationSlider {
+  color: #7289DA !important;
+}

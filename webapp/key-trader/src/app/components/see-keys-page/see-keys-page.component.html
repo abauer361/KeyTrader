@@ -1,0 +1,36 @@
+<app-access-denied *ngIf="accessDenied"></app-access-denied>
+
+<div class="seeKeysWrapper" *ngIf="!accessDenied">
+  <app-nav-menu></app-nav-menu>
+
+  <div class="header">
+
+    <h2 class="keyTitle">Current Keys for {{this.server.serverName}}</h2>
+  </div>
+  <div class="keys">
+    <mat-list>
+      <mat-list-item *ngIf="this.keys.length === 0">
+        <mat-card class="key">
+          <h4 mat-line>No keys found for this server.</h4>
+        </mat-card>
+
+      </mat-list-item>
+
+        <mat-list-item style="height:190px" *ngFor="let key of this.keys">
+
+          <mat-card class="key">
+            <mat-card-title>{{key.gameName}}</mat-card-title>
+            <mat-card-subtitle>${{(key.gamePrice * .01).toFixed(2)}}</mat-card-subtitle>
+            <mat-card-subtitle *ngIf="key.gameID !== 0"><a mat-raised-button target="_blank" href="https://store.steampowered.com/app/{{key.gameID}}">Steam Page</a></mat-card-subtitle>
+            <button *ngIf="!this.isViewer" (click)="redeemKey(key.keyString)" class="redeemBtn" mat-raised-button>REDEEM</button>
+          </mat-card>
+
+        </mat-list-item>
+
+    </mat-list>
+
+  </div>
+
+
+
+</div>

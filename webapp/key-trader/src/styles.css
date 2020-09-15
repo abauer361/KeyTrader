@@ -1,0 +1,16 @@
+@import url('https://fonts.googleapis.com/css?family=Varela+Round&display=swap'); /* You can add global styles to this file, and also import other style files */
+@import "~@angular/material/prebuilt-themes/indigo-pink.css";
+@import "~bootstrap/dist/css/bootstrap.min.css";
+body{
+  margin:0;
+}
+
+@font-face {
+  font-family: 'unisono_quickpathregular';
+  src: url('./assets/Fonts/unisono-quickpath-free-webfont.woff2') format('woff2'),
+  url('./assets/Fonts/unisono-quickpath-free-webfont.woff') format('woff');
+  font-weight: normal;
+  font-style: normal;
+
+}
+

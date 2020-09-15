@@ -1,0 +1,34 @@
+<div class="seeKeysWrapper">
+  <app-nav-menu></app-nav-menu>
+
+  <div class="header">
+
+    <h2 class="keyTitle">Your redeemed keys:</h2>
+  </div>
+  <div class="keys">
+    <mat-list>
+      <mat-list-item *ngIf="this.redeemedKeys.length === 0">
+        <mat-card class="key">
+          <h4 mat-line>You have not redeemed any keys</h4>
+        </mat-card>
+
+      </mat-list-item>
+
+      <mat-list-item style="height:190px" *ngFor="let key of this.redeemedKeys">
+
+        <mat-card class="key">
+          <mat-card-title>{{key.gameName}}</mat-card-title>
+          <mat-card-subtitle>${{(key.gamePrice * .01).toFixed(2)}}</mat-card-subtitle>
+          <mat-card-subtitle *ngIf="key.gameID !== 0"><a mat-raised-button target="_blank" href="https://store.steampowered.com/app/ {{key.gameID}}">Steam Page</a></mat-card-subtitle>
+          <mat-card-subtitle><span style="color:black;">KEY:</span>  {{key.keyString}}</mat-card-subtitle>
+        </mat-card>
+
+      </mat-list-item>
+
+    </mat-list>
+
+  </div>
+
+
+
+</div>

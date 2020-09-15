@@ -1,0 +1,102 @@
+<app-access-denied *ngIf="accessDenied"></app-access-denied>
+
+<div class="settingsPageWrapper" id="loading" *ngIf = "loading">
+  <app-swapping-squares-spinner
+    [animationDuration]="1000"
+    [size]="65"
+    [color]="'#0CDAC2'"
+  ></app-swapping-squares-spinner>
+</div>
+
+<div class="settingsPageWrapper" *ngIf="!loading">
+  <app-nav-menu></app-nav-menu>
+
+  <div class="header">
+    <h2 class="settingsTitle">Settings for {{this.server.serverName}}</h2>
+  </div>
+  <div *ngIf="!this.allowed">
+    <h2>You do not have permission to change server settings.</h2>
+  </div>
+  <div class="roles" *ngIf="this.allowed">
+    <h2>Roles:</h2>
+    <mat-list>
+      <mat-list-item *ngIf="this.roles.length === 0">
+        <mat-card class="key">
+          <h4 mat-line>No roles found for this server.</h4>
+        </mat-card>
+
+      </mat-list-item>
+
+
+
+      <mat-list-item class="listItem" *ngFor="let role of roles; index as i">
+
+        <mat-card class="role">
+          <h4 mat-line class="roleTitle">{{role}}</h4>
+          <mat-form-field>
+            <mat-label>Role</mat-label>
+            <mat-select [formControl]="discordRoles.controls[i]">
+              <mat-option value="Admin">Admin</mat-option>
+              <mat-option value="Donor/Recipient">Donor/Recipient</mat-option>
+              <mat-option value="Donor">Donor</mat-option>
+              <mat-option value="Recipient">Recipient</mat-option>
+              <mat-option value="Viewer">Viewer</mat-option>
+              <mat-option value="Blocked">Blocked</mat-option>
+            </mat-select>
+          </mat-form-field>
+        </mat-card>
+
+      </mat-list-item>
+    </mat-list>
+
+<!--    <mat-checkbox [formControl]="discordChannels"></mat-checkbox>-->
+
+
+    <button class="roleBtn" mat-raised-button (click)="UpdateRoles()">Save Roles</button>
+    <hr/>
+    <div class="notificationsSection">
+      <h2>Notifications: </h2>
+      <mat-card class="notification">
+        <h4 mat-line class="roleTitle">Added Keys</h4>
+          <mat-slide-toggle
+            class="notificationSlider"
+            (change)="changeAddedKey()"
+            [checked]="keysAdded">
+          </mat-slide-toggle>
+      </mat-card>
+      <mat-card class="notification">
+        <h4 mat-line class="roleTitle">Redeemed Keys</h4>
+        <mat-slide-toggle
+          class="notificationSlider"
+          (change)="changeRedeemedKey()"
+          [checked]="keysClaimed">
+        </mat-slide-toggle>
+      </mat-card>
+      <mat-card class="notification">
+        <h4 mat-line class="roleTitle">New Users</h4>
+        <mat-slide-toggle
+          class="notificationSlider"
+          (change)="changeNewUser()"
+          [checked]="newUser">
+        </mat-slide-toggle>
+      </mat-card>
+    </div>
+    <div class="channelSection">
+
+      <mat-card class="notification">
+        <h4 mat-line class="roleTitle">Notification Channel</h4>
+        <mat-form-field>
+          <mat-select [(value)]="notificationChannel">
+            <mat-option *ngFor="let channel of channels" value="{{channel.id}}">{{channel.name}}</mat-option>
+          </mat-select>
+        </mat-form-field>
+      </mat-card>
+    </div>
+
+    <button class="roleBtn" mat-raised-button (click)="UpdateNotifications()">Save Notifications</button>
+
+
+
+  </div>
+  <div style="background-color: lightgreen; color: darkgreen; margin: 20px;" *ngIf="this.serverService.showSuccess"> Settings Updated </div>
+</div>
