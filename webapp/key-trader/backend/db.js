@@ -35,11 +35,11 @@ exports.getUsers = function (successCb, errCb) {
 
 //Create a User
 exports.createUser = function (id, userName, Discord_Token, successCb, errCb){
-    var sql = "INSERT INTO Users(U_ID, User_Name, Discord_Token) values(?, ?, ?) ON DUPLICATE KEY UPDATE Discord_Token = '" + Discord_Token + "';";
+    var sql = "INSERT INTO Users(U_ID, User_Name, Discord_Token) values(?, ?, ?) ON DUPLICATE KEY UPDATE Discord_Token = ?;";
     this.get()
     .query(
         {sql: sql},
-        [id, userName, Discord_Token]
+        [id, userName, Discord_Token, Discord_Token]
     )
     .then(successCb)
     .catch(errCb);
@@ -58,11 +58,11 @@ exports.addKey= function (guildid, keyID, keyName, keyPrice, keyString, successC
 
 
 exports.addServer = function(serverID, serverName, serverLink, successCb, errCb){
-    var sql = "INSERT INTO Discord_Servers(Server_ID, Server_Name, Server_Link) values (?, ?, ?) ON DUPLICATE KEY UPDATE Server_Name = '" + serverName + "';";
+    var sql = "INSERT INTO Discord_Servers(Server_ID, Server_Name, Server_Link) values (?, ?, ?) ON DUPLICATE KEY UPDATE Server_Name = ?;";
     this.get()
         .query(
             {sql:sql},
-            [serverID, serverName, serverLink]
+            [serverID, serverName, serverLink, serverName]
         )
         .then(successCb)
         .catch(errCb)
