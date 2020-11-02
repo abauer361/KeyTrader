@@ -9,10 +9,7 @@ const Discord = require('discord.js');
 const Enmap = require('enmap');
 const fs = require("fs");
 
-// Link the bot to the server with this line uncommented
-const client = new Discord.Client();
-// After linking the bot, comment out the above line and uncomment the line below to be able to edit roles
-// const client = new Discord.Client({ ws: { intents: ['GUILD_PRESENCES', 'GUILD_MEMBERS'] }});
+const client = new Discord.Client({ ws: { intents: ['GUILDS', 'GUILD_PRESENCES', 'GUILD_MEMBERS'] }});
 
 const CONFIG = require('../config.json');
 try {
