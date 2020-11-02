@@ -504,6 +504,8 @@ router.post('/storeSettings', catchAsync(async(req, res)=>{
       console.log('undefined');
       databaseRecords.insertSettings(keysAdded, keysClaimed, newUser, guildID, function(){
         res.status(200).json({message: "Settings saved to database."});
+      }, function(err) {
+        res.status(500).json({message: "Failed to insert settings", err})
       })
     }
 

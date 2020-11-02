@@ -5,7 +5,7 @@ exports.requiredParameters = ['guild_id', 'user_id'];
 
 exports.run = (client, req, res) => {
   // get guild
-  let guild = client.guilds.get(req.query.guild_id);
+  let guild = client.guilds.cache.get(req.query.guild_id);
   if (guild == undefined)
   {
     res.send({
@@ -16,7 +16,7 @@ exports.run = (client, req, res) => {
   }
 
   // find id of user to use for mentions.
-  let member = guild.members.get(req.query.user_id)
+  let member = guild.members.cache.get(req.query.user_id)
 
   if (member == null) {
     res.send({
@@ -30,7 +30,7 @@ exports.run = (client, req, res) => {
     ids: [],
     names: [],
   }
-  member.roles.forEach(role => {
+  member.roles.cache.forEach(role => {
     roles.ids.push(role.id);
     roles.names.push(role.name);
   });

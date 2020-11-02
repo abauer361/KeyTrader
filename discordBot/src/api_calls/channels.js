@@ -5,7 +5,7 @@ exports.requiredParameters = ["guild_id"];
 
 exports.run = (client, req, res) => {
   // get guild or tell respond with an error
-  let guild = client.guilds.get(req.query.guild_id);
+  let guild = client.guilds.cache.get(req.query.guild_id);
   if (guild == undefined)
   {
     res.send({
@@ -16,7 +16,7 @@ exports.run = (client, req, res) => {
   }
 
   channels = [];
-  guild.channels.forEach((c) => {
+  guild.channels.cache.forEach((c) => {
     if (c.type !== "text") {
       return;
     }

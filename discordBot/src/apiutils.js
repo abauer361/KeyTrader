@@ -5,7 +5,7 @@
 // then tell the caller of the api call whether this function succeeded
 exports.SendToChannel = (discordClient, res, guild_id, channel_id, message) => {
   // get guild or tell respond with an error
-  let guild = discordClient.guilds.get(guild_id);
+  let guild = discordClient.guilds.cache.get(guild_id);
   if (guild == undefined)
   {
     res.send({
@@ -15,7 +15,7 @@ exports.SendToChannel = (discordClient, res, guild_id, channel_id, message) => {
     return;
   }
   // get the guild's announcement channel
-  let channel = guild.channels.get(channel_id);
+  let channel = guild.channels.cache.get(channel_id);
   if (channel == undefined)
   {
     res.send({
