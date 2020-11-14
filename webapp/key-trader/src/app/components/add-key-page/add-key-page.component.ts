@@ -1,10 +1,10 @@
 import { Component, OnInit } from '@angular/core';
-import {UserService} from '../../User/userService';
-import {KeyService} from '../../Key/keyService';
-import {Server} from '../../Models/server.model';
-import {Subscription} from 'rxjs';
-import {Key} from '../../Models/key.model';
-import {Router} from "@angular/router";
+import { UserService } from '../../User/userService';
+import { KeyService } from '../../Key/keyService';
+import { Server } from '../../Models/server.model';
+import { Subscription } from 'rxjs';
+import { Key } from '../../Models/key.model';
+import { Router } from "@angular/router";
 
 @Component({
   selector: 'app-add-key-page',
@@ -40,10 +40,10 @@ export class AddKeyPageComponent implements OnInit {
     this.server = this.keyService.getKeyServer();
     console.log(this.server);
     this.userService.getUserRoles(localStorage.getItem('token'), this.server.serverID);
-    this.rolesSub = this.userService.getRolesUpdatedListener().subscribe( (roles: string[]) => {
-        this.userRoles = roles;
-        this.checkUserRole();
-      });
+    this.rolesSub = this.userService.getRolesUpdatedListener().subscribe((roles: string[]) => {
+      this.userRoles = roles;
+      this.checkUserRole();
+    });
 
     console.log(this.server);
 

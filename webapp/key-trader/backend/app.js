@@ -13,9 +13,8 @@ app.use((req, res, next) => {
   next();
 });
 
-app.get('/', (req, res) =>
-{
-  res.status(200).sendFile(path.join( __dirname, '../src/index.html'));
+app.get('/', (req, res) => {
+  res.status(200).sendFile(path.join(__dirname, '../src/index.html'));
 });
 
 app.use((err, req, res, next) => {
@@ -32,30 +31,30 @@ app.use((err, req, res, next) => {
   }
 });
 
-app.get('/callback', (req, res) =>
-{
-  res.status(200).sendFile(path.join( __dirname, '../src/app/UserInformation/userInfo.component.html'));
-});
 
 app.use('/api/discord', require('./discord'));
 
 app.get('/api/getAllUsers', (req, res, next) => {
-  db.getUsers(function(results){
-    res.status(200).json(results);
-  }, function (err) {
-    res.status(500).json(err);
-  })
-})
+  db.getUsers(
+    function(results) {
+      res.status(200).json(results);
+    },
+    function(err) {
+      res.status(500).json(err);
+    }
+  );
+});
 
-app.get('/api/viewAllKeys', (req, res, next)=>{
-  db.getKeys(function(results){
-    console.log('success');
-    res.status(200).json(results);
-  }, function(err){
-    res.status(500).json(err);
-  })
-})
-
-
+app.get('/api/viewAllKeys', (req, res, next) => {
+  db.getKeys(
+    function(results) {
+      console.log('success');
+      res.status(200).json(results);
+    },
+    function(err) {
+      res.status(500).json(err);
+    }
+  );
+});
 
 module.exports = app;

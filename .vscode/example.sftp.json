@@ -7,7 +7,7 @@
         "username": "student",
         "remotePath": "/home/student/key-trader",
         "password": "1234",
-        "context": "webApp/key-trader",
+        "context": "webapp/key-trader",
         "ignore": [
             ".vscode",
             ".git",
