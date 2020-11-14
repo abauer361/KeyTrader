@@ -1,0 +1,20 @@
+<h1 mat-dialog-title>An Error Occurred!</h1>
+<head>
+    <style>
+        button
+        {
+            margin: 15px;
+        }
+    </style>
+</head>
+<div mat-dialog-content>
+    <p class="mat-body-1">{{ data.message }}</p>
+</div>
+
+<div mat-dialog-actions>
+    <button mat-button mat-dialog-close>OK</button>
+</div>
+
+<div mat-dialog-actions>
+    <button mat-button mat-dialog-close (click)="homeButtonClicked()" class='btn_menu'>Home</button>
+</div>
