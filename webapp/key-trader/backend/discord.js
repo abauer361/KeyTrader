@@ -67,15 +67,17 @@ router.get('/callback', catchAsync(async (req, res) => {
     algorithm: 'HS256',
     expiresIn: jwt_expires
   });
-  const jwtInfo = {'token': json_token, 'expiresIn': 3600};
+  const jwtInfo = {'token': json_token, 'expiresIn': 3600 };
   // console.log(json_token);
-  databaseRecords.createUser(id, username, TOKEN, function() {
+  try {
+    await databaseRecords.createUser(id, username, TOKEN);
     console.log("success");
     res.cookie('jwt', JSON.stringify(jwtInfo));
     res.redirect('/');
-  }, function(err) {
+  }
+  catch (err) {
     return res.status(500).json(err);
-  });
+  }
 }));
 
 //gets all servers for homepage. Both owned servers and linked servers
@@ -112,10 +114,11 @@ router.get('/getServers', catchAsync(async (req, res) => {
         guildArray.push({serverName: guildJson[guild].name, serverID: guildJson[guild].id})
       }
     }
-    databaseRecords.getLinkedServers(function(results){
+    try {
+      const results = await databaseRecords.getLinkedServers()
       var linkedJson = JSON.parse(JSON.stringify(results));
       for (const guild in guildJson) {
-        for (const linkedGuild in linkedJson){
+        for (const linkedGuild in linkedJson) {
           if (guildJson[guild].id == linkedJson[linkedGuild].Server_ID) {
             linkedArray.push({serverName: linkedJson[linkedGuild].Server_Name, serverID: linkedJson[linkedGuild].Server_ID});
           }
@@ -132,14 +135,15 @@ router.get('/getServers', catchAsync(async (req, res) => {
       //   return el != null;
       // });
       return res.status(200).json({message: "Success", servers: notInLinkedArray, serversLinked: linkedArray});
-    }, function(err) {
-      if (err) {
+    } catch (err) {
+      if (err){
         console.log("There was an error with the db call");
         return res.status(500).json(err);
       }
-    });
+    }
   }
 }));
+
 //add bot to server
 router.get('/linkKeyTrader', catchAsync(async (req, res) => {
   res.redirect(`https://discordapp.com/api/oauth2/authorize?client_id=${CLIENT_ID}&permissions=68672&redirect_uri=${redirectBot}&response_type=code&scope=guilds.join%20bot&guild_id=` + req.query.guildID)
@@ -162,31 +166,31 @@ router.get('/linkRoles', catchAsync(async (req, res) => {
   }
 
   for (let roleIndex = 0; roleIndex < rolesArray.length; roleIndex++) {
-    databaseRecords.checkRolesExist(rolesArray[roleIndex], req.query.guildID, function(results) {
+    try {
+      const results = await databaseRecords.checkRolesExist(rolesArray[roleIndex], req.query.guildID)
       const countJson = JSON.parse(JSON.stringify(results));
       if (countJson[0]['COUNT(*)'] == 0) {
-        databaseRecords.saveRoles(rolesArray[roleIndex], 1, req.query.guildID, function() {
+        try {
+          await databaseRecords.saveRoles(rolesArray[roleIndex], 1, req.query.guildID)
           console.log('roles saved');
           if (roleIndex == rolesArray.length - 1) {
             res.redirect('/')
           }
-        }, function(err) {
+        } catch (err) {
           console.log(err);
           res.status(500).json(err);
-        })
+        }
       }
       else {
         if (roleIndex == rolesArray.length - 1) {
           res.redirect('/')
         }
-        else {
-          return;
-        }
+        else { return; }
       }
-    }, function(err) {
+    } catch (err) {
       console.log(err);
       res.status(500).json(err);
-    })
+    }
   }
 }));
 
@@ -200,15 +204,14 @@ router.get('/addServer', catchAsync(async (req, res) => {
   var guildJson = await guildInfo.json()
   const guildName = guildJson.name;
 
-  databaseRecords.addServer(req.query.guild_id, guildName, serverLink, function() {
+  try {
+    await databaseRecords.addServer(req.query.guild_id, guildName, serverLink)
     console.log('adding server success');
     res.redirect('/api/discord/linkRoles?guildID=' + req.query.guild_id)
-  }, function(err) {
-    if (err) {
-      return res.status(500).json(err);
-    }
-  })
-}))
+  } catch (err) {
+    return res.status(500).json(err);
+  }
+}));
 
 generateSteamLink = (gameName, id) => {
   const turnToUnderscore = [' ', ':']
@@ -221,37 +224,39 @@ generateSteamLink = (gameName, id) => {
 
 //adding a key
 router.post('/addKey', catchAsync(async (req, res) => {
-  var price = req.body.key.gamePrice;
-  var name = req.body.key.gameName;
-  var id = req.body.key.gameID;
-  var guildID = req.body.guildID;
-  localStorage.setItem('gameName', name);
-  localStorage.setItem('gameLink', generateSteamLink(name, id))
+  try {
+    var price = req.body.key.gamePrice;
+    var name = req.body.key.gameName;
+    var id = req.body.key.gameID;
+    var guildID = req.body.guildID;
+    localStorage.setItem('gameName', name);
+    localStorage.setItem('gameLink', generateSteamLink(name, id))
+
   //inserting key into database
-  databaseRecords.addKey(guildID, id, name, price, req.body.key.keyString, function(results) {
+    const results = await databaseRecords.addKey(guildID, id, name, price, req.body.key.keyString);
     console.log(results);
     res.status(200).json(results);
-  }, function(err) {
+  }
+  catch (err) {
     return res.status(500).json(err);
-  });
+  }
 }));
 
 //getting available keys
 router.get('/getKeys', catchAsync(async (req, res) => { //gets server id in req.body and queries to get the keys
   console.log(req.query.guildID);
-  databaseRecords.getKeys(req.query.guildID, function(results) {
+  try {
+    const results = await databaseRecords.getKeys(req.query.guildID);
     var keyArray = new Array();
     const keyJson = JSON.parse(JSON.stringify(results));
     for (const key in keyJson) {
       keyArray.push({gameName: keyJson[key].Key_name, gamePrice: keyJson[key].Key_price, keyString: keyJson[key].Key_string, gameID: keyJson[key].Key_ID});
     }
     res.status(200).json({message: "Success", keys: keyArray});
-  }, function(err) {
-    if (err) {
-      //console.log(err);
-      return res.status(500).json(err);
-    }
-  });
+  }
+  catch (err) {
+    return res.status(500).json(err);
+  }
 }));
 
 //sends what roles that user has to front end
@@ -273,13 +278,14 @@ router.get('/getUserRoles', catchAsync(async (req, res) => {
     {
       method: 'POST',
     });
+
   var userRolesTypes = await rolesInfo.json();
-  console.log(userRolesTypes)
   var rolesArray = userRolesTypes.roles.names;
 
   var accessArray = new Array();
-  rolesArray.forEach(role => {
-    databaseRecords.getRoleType(role, req.query.guildID, function(results) {
+  try {
+    for (const role of rolesArray) {
+      const results = await databaseRecords.getRoleType(role, req.query.guildID);
       const roleJson = JSON.parse(JSON.stringify(results));
       for (const role in roleJson) {
         accessArray.push(roleJson[role].User_Role_Def);
@@ -289,11 +295,11 @@ router.get('/getUserRoles', catchAsync(async (req, res) => {
           break;
         }
       }
-    }, function(err) {
-      console.log(err);
-      return res.status(500).json(err);
-    })
-  });
+    };
+  } catch (err) {
+    console.log(err);
+    return res.status(500).json(err);
+  }
 }));
 
 
@@ -348,32 +354,33 @@ router.post('/saveRoles', catchAsync(async (req, res) => {
         break;
     }
 
-    databaseRecords.updateRoles(discordRoles[roleIndex], userRoleID, req.body.guildID, function() {
+    try {
+      await databaseRecords.updateRoles(discordRoles[roleIndex], userRoleID, req.body.guildID)
       console.log('roles updated');
-      res.status(200).json({message: 'sucess'});
-    }, function(err) {
+      res.status(200).json({ message: 'sucess' });
+    } catch (err) {
       console.log(err);
       return res.status(500).json(err);
-    })
+    }
   }
 }));
 
 //getting keytrader roles
 router.get('/getKeyTraderRoles', catchAsync(async (req, res) => {
   var roleDataArray = new Array();
-  databaseRecords.getKeyTraderRoles(req.query.guildID, function(results) {
+  try {
+    const results = await databaseRecords.getKeyTraderRoles(req.query.guildID);
 
     const rolesDataJson = JSON.parse(JSON.stringify(results));
     for (const data in rolesDataJson) {
-      roleDataArray.push({roleName: rolesDataJson[data].Role_Name, roleType: rolesDataJson[data].User_Role_Def});
+      roleDataArray.push({ roleName: rolesDataJson[data].Role_Name, roleType: rolesDataJson[data].User_Role_Def });
     }
-    res.status(200).json({message: "Success", keyTraderRoles: roleDataArray});
+    res.status(200).json({ message: "Success", keyTraderRoles: roleDataArray });
     // example of rolesData: [roleName: 'test1', roleType: 'Admin'], [roleName: 'test2', roleType: 'Donor']
-  }, function(err) {
+  } catch (err) {
     console.log(err);
     res.status(500).json(err);
-  })
-
+  }
 }));
 
 //Redeem a key for a user
@@ -392,9 +399,14 @@ router.post('/redeemKey', catchAsync(async (req, res) => {
     userID = decoded.id;
   })
 
-  databaseRecords.redeemKey(keyString, userID, function() {
-    res.status(200).json({message: "Success"})
-  })
+  try {
+    await databaseRecords.redeemKey(keyString, userID)
+    res.status(200).json({ message: "Success" })
+  }
+  catch (err) {
+    console.log(err);
+    res.status(500).json(err);
+  }
 }))
 
 //getting redeemed keys of user
@@ -412,14 +424,19 @@ router.get('/userKeys', catchAsync(async (req, res) => {
     userID = decoded.id;
   })
 
-  databaseRecords.getUserKeys(userID, function(results) {
+  try {
+    const results = await databaseRecords.getUserKeys(userID);
     let keyArray = new Array();
     const keyJson = JSON.parse(JSON.stringify(results));
     for (const key in keyJson) {
-      keyArray.push({gameName: keyJson[key].Key_name, gamePrice: keyJson[key].Key_price, keyString: keyJson[key].Key_string, gameID: keyJson[key].Key_ID});
+      keyArray.push({ gameName: keyJson[key].Key_name, gamePrice: keyJson[key].Key_price, keyString: keyJson[key].Key_string, gameID: keyJson[key].Key_ID });
     }
-    res.status(200).json({message: "Success", keys: keyArray});
-  })
+    res.status(200).json({ message: "Success", keys: keyArray });
+  }
+  catch (err) {
+    console.log(err);
+    res.status(500).json(err);
+  }
 }));
 
 router.get('/checkSteamKey', catchAsync(async (req, res) => {
@@ -435,7 +452,7 @@ router.get('/checkSteamKey', catchAsync(async (req, res) => {
   var price = gameJson[gameID].data.price_overview.final;
   var name = gameJson[gameID].data.name;
 
-  await res.status(200).json({message: "Success", key: {gameName: name, gamePrice: price}})
+  await res.status(200).json({ message: "Success", key: { gameName: name, gamePrice: price } })
 }));
 
 router.get('/isVerified', catchAsync(async (req, res) => {
@@ -455,19 +472,25 @@ router.get('/isVerified', catchAsync(async (req, res) => {
 router.get('/kickBot', catchAsync(async (req, res) => {
   var oldArray = new Array();
   var newArray = new Array();
-  databaseRecords.getLinkedServers(function(results) {
+  try {
+    const results = await databaseRecords.getLinkedServers()
     var linkedJson = JSON.parse(JSON.stringify(results));
     for (const linkedGuild in linkedJson) {
-      oldArray.push({serverName: linkedJson[linkedGuild].Server_Name}) //insert serverName into old array
+      oldArray.push({ serverName: linkedJson[linkedGuild].Server_Name }) //insert serverName into old array
     }
-  })
+  }
+  catch (err) {
+    console.log(err);
+    res.status(500).json(err);
+  }
   //Need to make a call here to get newArray.
   // We are going to be comparing Server names because im not sure Server_IDs are working correctly in db.
   let difference = newArray.filter(x => !oldArray.includes(x));
   //difference array is the diff of the two arrays with server names
   for (let i = 0; i < difference.length; i++) {
-    detabaseRecords.deleteServer(difference[i], function(results) {
-      res.status(200).json({message: "Success, server deleted from Database"});
+    // TODO should be await
+    detabaseRecords.deleteServer(difference[i], function (results) {
+      res.status(200).json({ message: "Success, server deleted from Database" });
     })
   }
 }))
@@ -475,23 +498,29 @@ router.get('/kickBot', catchAsync(async (req, res) => {
 router.post('/storeChannel', catchAsync(async (req, res) => {
   let guildID = req.body.guildID;
   let channelID = req.body.channelID;
-  databaseRecords.getChannelId(guildID, function(results) {
+  try {
+    const results = await databaseRecords.getChannelId(guildID)
     var channelArray = new Array();
     let channelJson = JSON.parse(JSON.stringify(results));
+
     for (const channel in channelJson) {
       channelArray.push(channelJson[channel]);
     }
     if (typeof channelArray[0] === 'undefined') {
-      databaseRecords.insertChannel(channelID, guildID, function() {
-        res.status(200).json({message: "Channel inserted to database."})
+      databaseRecords.insertChannel(channelID, guildID, function () {
+        res.status(200).json({ message: "Channel inserted to database." })
       })
     }
     else {
-      databaseRecords.updateChannel(channelID, guildID, function() {
-        res.status(200).json({message: "Channel updated in database."})
+      databaseRecords.updateChannel(channelID, guildID, function () {
+        res.status(200).json({ message: "Channel updated in database." })
       })
     }
-  })
+  }
+  catch (err) {
+    console.log(err);
+    res.status(500).json(err);
+  }
 }))
 
 //
@@ -503,7 +532,8 @@ router.post('/storeSettings', catchAsync(async (req, res) => {
   let idJson;
 
   var idArray = new Array();
-  databaseRecords.getIdFromSettings(guildID, function(results) {
+  try {
+    const results = await databaseRecords.getIdFromSettings(guildID)
     idJson = JSON.parse(JSON.stringify(results));
     console.log(idJson)
     for (const id in idJson) {
@@ -512,36 +542,39 @@ router.post('/storeSettings', catchAsync(async (req, res) => {
 
     if (idArray[0]) {
       console.log('defined');
-      databaseRecords.updateSettings(keysAdded, keysClaimed, newUser, guildID, function() {
-        res.status(200).json({message: "Settings updated in database."});
+      // TODO should be await
+      databaseRecords.updateSettings(keysAdded, keysClaimed, newUser, guildID, function () {
+        res.status(200).json({ message: "Settings updated in database." });
       })
     }
     else {
       console.log('undefined');
-      databaseRecords.insertSettings(keysAdded, keysClaimed, newUser, guildID, function(){
-        res.status(200).json({message: "Settings saved to database."});
-      }, function(err) {
-        res.status(500).json({message: "Failed to insert settings", err})
+      // TODO shouldn't have callback
+      await databaseRecords.insertSettings(keysAdded, keysClaimed, newUser, guildID, function () {
+        res.status(200).json({ message: "Settings saved to database." });
+      }, function (err) {
+        res.status(500).json({ message: "Failed to insert settings", err })
       })
     }
-
+    console.log(idJson);
+    console.log(idArray);
+    console.log(typeof (idArray[0]))
+  } catch (err) {
+    console.log(err);
+    res.status(500).json(err);
   }
-  )
-  console.log(idJson);
-  console.log(idArray);
-  console.log(typeof(idArray[0]))
-
 }))
+
 
 router.post('/sendNotification', catchAsync(async (req, res) => {
   let server_ID = req.body.guildID;
   var settingArray = new Array();
   var channelArray = new Array();
   let channel_ID;
-  getSettings(async function(settingArray, server_ID, channel_ID) {
+  getSettings(async function (settingArray, server_ID, channel_ID) {
     //Callback method starts here
     //If the channel_ID is undefined, we request the bot to give us channels for a specific server ID
-    if (typeof(channel_ID) == 'undefined') {
+    if (typeof (channel_ID) == 'undefined') {
       const channels = await fetch(`http://localhost:1337/channels?guild_id=` + server_ID,
         {
           method: 'POST',
@@ -594,10 +627,10 @@ router.post('/sendNotification', catchAsync(async (req, res) => {
               method: 'POST',
             });
           console.log(sendNotification);
-          await res.status(200).json({message: "Notification sent new user"});
+          await res.status(200).json({ message: "Notification sent new user" });
         }
         else {
-          await res.status(200).json({message: "Notification disregarded new user"})
+          await res.status(200).json({ message: "Notification disregarded new user" })
         }
         break;
     }
@@ -610,13 +643,15 @@ router.post('/sendNotification', catchAsync(async (req, res) => {
   //Logic starts here
   function getSettings(callback) {
     //Check database for existing settings
-    databaseRecords.getSettings(server_ID, function(results) {
+    // TODO should be await
+    databaseRecords.getSettings(server_ID, function (results) {
       var settingsJson = JSON.parse(JSON.stringify(results));
       for (const setting in settingsJson) {
-        settingArray.push({newKey: settingsJson[setting].newKey, claimedKey: settingsJson[setting].claimedKey, newUser: settingsJson[setting].newUser})
+        settingArray.push({ newKey: settingsJson[setting].newKey, claimedKey: settingsJson[setting].claimedKey, newUser: settingsJson[setting].newUser })
       }
       //Push those settings into settingArray, Check database for existing channel selection
-      databaseRecords.getChannels(server_ID, function(resultstwo) {
+      // TODO should be await
+      databaseRecords.getChannels(server_ID, function (resultstwo) {
         var channelJson = JSON.parse(JSON.stringify(resultstwo));
 
         for (const channel in channelJson) {
@@ -624,8 +659,8 @@ router.post('/sendNotification', catchAsync(async (req, res) => {
           //Push existing channel selection into channelArray
         }
         //If settingArray[0] is undefined that means settings have not been previously set in the DB and we will default all settings to be 1.
-        if (typeof(settingArray[0]) == 'undefined') {
-          settingArray.push({newKey: '1', claimedKey: '1', newUser: '1'});
+        if (typeof (settingArray[0]) == 'undefined') {
+          settingArray.push({ newKey: '1', claimedKey: '1', newUser: '1' });
         }
         //Set the channel_ID to the ID in the channel, might be empty - we check later. channelArray should not have more than one channel in it because we can only select 1 channel.
         channel_ID = channelArray[0];
@@ -649,48 +684,51 @@ router.get('/getChannels', catchAsync(async (req, res) => {
   for (let channel in channelJson) {
     channelArray.push(channelJson[channel]);
   }
-  res.status(200).json({message: "Channels for server retrieved.", channels: channelArray});
+  res.status(200).json({ message: "Channels for server retrieved.", channels: channelArray });
 }))
 
 router.get('/getNotifications', catchAsync(async (req, res) => {
   let settingArray = new Array();
   let guildID = req.query.guildID;
-
-  databaseRecords.getSettings(guildID, function(results) {
+  try {
+    const results = await databaseRecords.getSettings(guildID)
     var settingsJson = JSON.parse(JSON.stringify(results));
     for (const setting in settingsJson) {
-      settingArray.push({newKey: settingsJson[setting].newKey, claimedKey: settingsJson[setting].claimedKey, newUser: settingsJson[setting].newUser})
+      settingArray.push({ newKey: settingsJson[setting].newKey, claimedKey: settingsJson[setting].claimedKey, newUser: settingsJson[setting].newUser })
     }
     if (typeof settingArray[0] == 'undefined') {
-      settingArray.push({newKey: 1, claimedKey: 1, newUser: 1});
+      settingArray.push({ newKey: 1, claimedKey: 1, newUser: 1 });
     }
-    res.status(200).json({message: "Settings saved to database.", notifications: settingArray});
-  }, error => {
-    console.log(error);
-  })
+    res.status(200).json({ message: "Settings saved to database.", notifications: settingArray });
+  } catch (err) {
+    console.log(err);
+    res.status(500).json(err);
+  }
 }))
 
 router.post('/getKeyCount', catchAsync(async (req, res) => {
   console.log(req.body);
   //check if user is admin, if it is, then count # of keys
-  databaseRecords.getGuildRoles(req.body.guildID, function(results) {
+  // TODO should be await
+  databaseRecords.getGuildRoles(req.body.guildID, function (results) {
     const roleJson = JSON.parse(JSON.stringify(results));
     // iterate over req.body.roles
     console.log(roleJson);
     for (const role in roleJson) {
       console.log(roleJson[role]);
       if (roleJson[role].User_Role_Def === 'Admin' && req.body.roles.includes(roleJson[role].Role_Name)) {
-        return databaseRecords.keyNumber(req.body.guildID, function(results) {
+        console.log("sdfgsdfglknsdfg")
+        return databaseRecords.keyNumber(req.body.guildID, function (results) {
           const countJson = JSON.parse(JSON.stringify(results));
-          return res.status(200).json({message: "Success", count: countJson[0]['COUNT(*)']});
-        }, function(err) {
-          return res.status(500).json({message: "get key count"});
+          return res.status(200).json({ message: "Success", count: countJson[0]['COUNT(*)'] });
+        }, function (err) {
+          return res.status(500).json({ message: "get key count" });
         })
       }
     }
-    return res.status(403).json({message: "Fail. User is not an Admin"});
-  }, function(err) {
-    return res.status(500).json({message: "getGuildRoles err", err: err});
+    return res.status(403).json({ message: "Fail. User is not an Admin" });
+  }, function (err) {
+    return res.status(500).json({ message: "getGuildRoles err", err: err });
   })
   //if fail return res.status(403)
 }))

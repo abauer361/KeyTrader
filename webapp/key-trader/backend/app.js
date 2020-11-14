@@ -3,6 +3,7 @@ const app = express();
 const bodyParser = require('body-parser');
 const path = require('path');
 const db = require('./db');
+const handleErrors = require('./handleErrors')
 
 app.use(bodyParser.json());
 
@@ -33,28 +34,5 @@ app.use((err, req, res, next) => {
 
 
 app.use('/api/discord', require('./discord'));
-
-app.get('/api/getAllUsers', (req, res, next) => {
-  db.getUsers(
-    function(results) {
-      res.status(200).json(results);
-    },
-    function(err) {
-      res.status(500).json(err);
-    }
-  );
-});
-
-app.get('/api/viewAllKeys', (req, res, next) => {
-  db.getKeys(
-    function(results) {
-      console.log('success');
-      res.status(200).json(results);
-    },
-    function(err) {
-      res.status(500).json(err);
-    }
-  );
-});
 
 module.exports = app;
