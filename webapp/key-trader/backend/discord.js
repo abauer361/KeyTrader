@@ -147,7 +147,7 @@ router.get('/getServers', catchAsync(async (req, res) => {
 //add bot to server
 router.get('/linkKeyTrader', catchAsync(async (req, res) => {
   res.redirect(`https://discordapp.com/api/oauth2/authorize?client_id=${CLIENT_ID}&permissions=68672&redirect_uri=${redirectBot}&response_type=code&scope=guilds.join%20bot&guild_id=` + req.query.guildID)
-}))
+}));
 
 //link roles
 router.get('/linkRoles', catchAsync(async (req, res) => {
@@ -407,7 +407,7 @@ router.post('/redeemKey', catchAsync(async (req, res) => {
     console.log(err);
     res.status(500).json(err);
   }
-}))
+}));
 
 //getting redeemed keys of user
 router.get('/userKeys', catchAsync(async (req, res) => {
@@ -488,12 +488,15 @@ router.get('/kickBot', catchAsync(async (req, res) => {
   let difference = newArray.filter(x => !oldArray.includes(x));
   //difference array is the diff of the two arrays with server names
   for (let i = 0; i < difference.length; i++) {
-    // TODO should be await
-    detabaseRecords.deleteServer(difference[i], function (results) {
+    try {
+      const results = await detabaseRecords.deleteServer(difference[i]);
       res.status(200).json({ message: "Success, server deleted from Database" });
-    })
+    }
+    catch(err) {
+      res.status(500).json({message: "Failed to delete server", err: err});
+    }
   }
-}))
+}));
 
 router.post('/storeChannel', catchAsync(async (req, res) => {
   let guildID = req.body.guildID;
@@ -507,23 +510,21 @@ router.post('/storeChannel', catchAsync(async (req, res) => {
       channelArray.push(channelJson[channel]);
     }
     if (typeof channelArray[0] === 'undefined') {
-      databaseRecords.insertChannel(channelID, guildID, function () {
-        res.status(200).json({ message: "Channel inserted to database." })
-      })
+      await databaseRecords.insertChannel(channelID, guildID);
+      res.status(200).json({ message: "Channel inserted to database." })
     }
     else {
-      databaseRecords.updateChannel(channelID, guildID, function () {
-        res.status(200).json({ message: "Channel updated in database." })
-      })
+      await databaseRecords.updateChannel(channelID, guildID);
+      res.status(200).json({ message: "Channel updated in database." });
     }
   }
   catch (err) {
     console.log(err);
     res.status(500).json(err);
   }
-}))
+}));
 
-//
+
 router.post('/storeSettings', catchAsync(async (req, res) => {
   let keysAdded = req.body.keysAdded;
   let keysClaimed = req.body.keysClaimed;
@@ -542,28 +543,24 @@ router.post('/storeSettings', catchAsync(async (req, res) => {
 
     if (idArray[0]) {
       console.log('defined');
-      // TODO should be await
-      databaseRecords.updateSettings(keysAdded, keysClaimed, newUser, guildID, function () {
-        res.status(200).json({ message: "Settings updated in database." });
-      })
+      await databaseRecords.updateSettings(keysAdded, keysClaimed, newUser, guildID);
+      res.status(200).json({ message: "Settings updated in database." });
     }
     else {
       console.log('undefined');
-      // TODO shouldn't have callback
-      await databaseRecords.insertSettings(keysAdded, keysClaimed, newUser, guildID, function () {
-        res.status(200).json({ message: "Settings saved to database." });
-      }, function (err) {
-        res.status(500).json({ message: "Failed to insert settings", err })
-      })
+      await databaseRecords.insertSettings(keysAdded, keysClaimed, newUser, guildID);
+      res.status(200).json({ message: "Settings saved to database." });
     }
+
     console.log(idJson);
     console.log(idArray);
-    console.log(typeof (idArray[0]))
+    console.log(typeof (idArray[0]));
+
   } catch (err) {
     console.log(err);
-    res.status(500).json(err);
+    res.status(500).json({ message: "Failed to store settings", err });
   }
-}))
+}));
 
 
 router.post('/sendNotification', catchAsync(async (req, res) => {
@@ -641,36 +638,37 @@ router.post('/sendNotification', catchAsync(async (req, res) => {
   });
 
   //Logic starts here
-  function getSettings(callback) {
+  async function getSettings(callback, errCb) {
     //Check database for existing settings
-    // TODO should be await
-    databaseRecords.getSettings(server_ID, function (results) {
+    try {
+      const results = await databaseRecords.getSettings(server_ID);
       var settingsJson = JSON.parse(JSON.stringify(results));
       for (const setting in settingsJson) {
         settingArray.push({ newKey: settingsJson[setting].newKey, claimedKey: settingsJson[setting].claimedKey, newUser: settingsJson[setting].newUser })
       }
       //Push those settings into settingArray, Check database for existing channel selection
-      // TODO should be await
-      databaseRecords.getChannels(server_ID, function (resultstwo) {
-        var channelJson = JSON.parse(JSON.stringify(resultstwo));
+      const resultstwo = await databaseRecords.getChannels(server_ID);
+      var channelJson = JSON.parse(JSON.stringify(resultstwo));
 
-        for (const channel in channelJson) {
-          channelArray.push(channelJson[channel]);
-          //Push existing channel selection into channelArray
-        }
-        //If settingArray[0] is undefined that means settings have not been previously set in the DB and we will default all settings to be 1.
-        if (typeof (settingArray[0]) == 'undefined') {
-          settingArray.push({ newKey: '1', claimedKey: '1', newUser: '1' });
-        }
-        //Set the channel_ID to the ID in the channel, might be empty - we check later. channelArray should not have more than one channel in it because we can only select 1 channel.
-        channel_ID = channelArray[0];
+      for (const channel in channelJson) {
+        channelArray.push(channelJson[channel]);
+        //Push existing channel selection into channelArray
+      }
+      //If settingArray[0] is undefined that means settings have not been previously set in the DB and we will default all settings to be 1.
+      if (typeof (settingArray[0]) == 'undefined') {
+        settingArray.push({ newKey: '1', claimedKey: '1', newUser: '1' });
+      }
+      //Set the channel_ID to the ID in the channel, might be empty - we check later. channelArray should not have more than one channel in it because we can only select 1 channel.
+      channel_ID = channelArray[0];
 
-        //We call our callback method which starts on line 524. We pass settingArray, server ID, and channel ID.
-        callback(settingArray, server_ID, channel_ID);
-      })
-    })
+      //We call our callback method which starts on line 524. We pass settingArray, server ID, and channel ID.
+      callback(settingArray, server_ID, channel_ID);
+    }
+    catch(err) {
+      errCb(err);
+    }
   }
-}))
+}));
 
 
 router.get('/getChannels', catchAsync(async (req, res) => {
@@ -685,7 +683,7 @@ router.get('/getChannels', catchAsync(async (req, res) => {
     channelArray.push(channelJson[channel]);
   }
   res.status(200).json({ message: "Channels for server retrieved.", channels: channelArray });
-}))
+}));
 
 router.get('/getNotifications', catchAsync(async (req, res) => {
   let settingArray = new Array();
@@ -704,13 +702,13 @@ router.get('/getNotifications', catchAsync(async (req, res) => {
     console.log(err);
     res.status(500).json(err);
   }
-}))
+}));
 
 router.post('/getKeyCount', catchAsync(async (req, res) => {
   console.log(req.body);
   //check if user is admin, if it is, then count # of keys
-  // TODO should be await
-  databaseRecords.getGuildRoles(req.body.guildID, function (results) {
+  try {
+    const results = await databaseRecords.getGuildRoles(req.body.guildID);
     const roleJson = JSON.parse(JSON.stringify(results));
     // iterate over req.body.roles
     console.log(roleJson);
@@ -718,19 +716,17 @@ router.post('/getKeyCount', catchAsync(async (req, res) => {
       console.log(roleJson[role]);
       if (roleJson[role].User_Role_Def === 'Admin' && req.body.roles.includes(roleJson[role].Role_Name)) {
         console.log("sdfgsdfglknsdfg")
-        return databaseRecords.keyNumber(req.body.guildID, function (results) {
-          const countJson = JSON.parse(JSON.stringify(results));
-          return res.status(200).json({ message: "Success", count: countJson[0]['COUNT(*)'] });
-        }, function (err) {
-          return res.status(500).json({ message: "get key count" });
-        })
+        const results = await databaseRecords.keyNumber(req.body.guildID);
+        const countJson = JSON.parse(JSON.stringify(results));
+        return res.status(200).json({ message: "Success", count: countJson[0]['COUNT(*)'] });
       }
     }
-    return res.status(403).json({ message: "Fail. User is not an Admin" });
-  }, function (err) {
+    return res.status(403).json({ message: "Failed to get key count", err: err });
+  }
+  catch(err) {
     return res.status(500).json({ message: "getGuildRoles err", err: err });
-  })
-  //if fail return res.status(403)
-}))
+  }
+
+}));
 
 module.exports = router;
