@@ -17,9 +17,9 @@ Allison 11/14/2020
 * modified HTML elements of login page
 * authentication research in progress
 * altered package.json to include 
- >   "dependencies": {
- >       "@okta/okta-auth-js": "^1.17.0",
- >       ...
+ >   "dependencies": { \
+ >       "@okta/okta-auth-js": "^1.17.0", \
+ >       ... \
  >    }
 * began login form
 ##### 15 points- UI similar to the existing process for adding and modifying key trader communities
