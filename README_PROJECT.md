@@ -10,10 +10,10 @@ Project 3\
 
 ### Progress
 
-##### Same features of donating and redeeming keys
+#### Same features of donating and redeeming keys
 
-##### 15 points- A login system based on a username and password (instead of the discord oauth2 flow)
-Allison 11/14/2020
+#### 15 points- A login system based on a username and password (instead of the discord oauth2 flow)
+##### Allison 11/14/2020
 * modified HTML elements of login page
 * authentication research in progress
 * altered package.json to include 
@@ -22,11 +22,11 @@ Allison 11/14/2020
  >       ... \
  >    }
 * began login form
-##### 15 points- UI similar to the existing process for adding and modifying key trader communities
+#### 15 points- UI similar to the existing process for adding and modifying key trader communities
 
-##### 15 points- Ability to invite users to join a specific key trader community given their username (not a discord username)
+#### 15 points- Ability to invite users to join a specific key trader community given their username (not a discord username)
 
-##### 15 points- Ability to assign roles to users in the key trader community
+#### 15 points- Ability to assign roles to users in the key trader community
 
 ### Research
 ##### Allison
