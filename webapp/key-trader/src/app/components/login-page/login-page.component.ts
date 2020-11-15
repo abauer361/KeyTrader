@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import {AuthService} from '../../Auth/auth.service';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-login-page',
@@ -8,7 +9,15 @@ import {AuthService} from '../../Auth/auth.service';
 })
 export class LoginPageComponent  {
 
-  constructor(public authService: AuthService) { }
+  constructor(private router: Router,
+    public authService: AuthService) { }
 
+  ngOnInit(): void {
+  }
+
+  onLoginButtonClicked(): void {
+    console.log('Going to key-trader login form');
+    this.router.navigate(['/login-form']);
+  }
 
 }
