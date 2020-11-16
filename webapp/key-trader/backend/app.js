@@ -3,7 +3,7 @@ const app = express();
 const bodyParser = require('body-parser');
 const path = require('path');
 const db = require('./db');
-const handleErrors = require('./handleErrors')
+const handleErrors = require('../middleware/handleErrors');
 
 app.use(bodyParser.json());
 
@@ -18,21 +18,11 @@ app.get('/', (req, res) => {
   res.status(200).sendFile(path.join(__dirname, '../src/index.html'));
 });
 
-app.use((err, req, res, next) => {
-  if (err.message === 'NoCodeProvided') {
-    return res.status(400).send({
-      status: 'ERROR',
-      error: err.message,
-    });
-  } else {
-    return res.status(500).send({
-      status: 'ERROR',
-      error: err.message,
-    });
-  }
-});
 
 
 app.use('/api/discord', require('./discord'));
 
+app.use(handleErrors); // register error handler middleware
 module.exports = app;
+
+
