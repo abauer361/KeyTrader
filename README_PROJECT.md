@@ -22,6 +22,8 @@ Project 3\
  >       ... \
  >    }
 * began login form
+##### Allison 11/16/2020
+* finished first draft of login form HTML side
 #### 15 points- UI similar to the existing process for adding and modifying key trader communities
 
 #### 15 points- Ability to invite users to join a specific key trader community given their username (not a discord username)
