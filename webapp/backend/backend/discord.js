@@ -228,7 +228,7 @@ router.get('/linkRoles', async (req, res, next) => {
 
   let roleJson;
   try {
-    const roles = await fetch('http://localhost:1337/all-roles?guild_id=' + req.query.guildID,
+    const roles = await fetch('http://discordbot:1337/all-roles?guild_id=' + req.query.guildID,
       {
         method: 'POST'
       }
@@ -289,7 +289,7 @@ router.get('/addServer', async(req, res, next) => {
 
   let guildName;
   try {
-    const guildInfo = await fetch('http://localhost:1337/guild-info?guild_id=' + req.query.guild_id, // check for success code and .name exists; throw error if neither exists
+    const guildInfo = await fetch('http://discordbot:1337/guild-info?guild_id=' + req.query.guild_id, // check for success code and .name exists; throw error if neither exists
       {
         method: 'POST',
       }
@@ -407,7 +407,7 @@ router.get('/getUserRoles', async (req, res, next) => {
   let userRolesTypes;
   try {
     // getting the roles
-    const rolesInfo = await fetch('http://localhost:1337/user-roles?guild_id=' + req.query.guildID + '&user_id=' + id,
+    const rolesInfo = await fetch('http://discordbot:1337/user-roles?guild_id=' + req.query.guildID + '&user_id=' + id,
       {
         method: 'POST',
       });
@@ -460,7 +460,7 @@ router.get('/getRoles', async (req, res, next) => {
 
   let rolesJson;
   try {
-    const roles = await fetch('http://localhost:1337/all-roles?guild_id=' + req.query.guildID,
+    const roles = await fetch('http://discordbot:1337/all-roles?guild_id=' + req.query.guildID,
       {
         method: 'POST'
       }
@@ -820,11 +820,9 @@ router.post('/sendNotification', async(req, res, next) => {
     //Set the channel_ID to the ID in the channel, might be empty - we check later. channelArray should not have more than one channel in it because we can only select 1 channel.
     let channel_ID = channelArray[0];
 
-    //We call our callback method which starts on line 524. We pass settingArray, server ID, and channel ID.
-    //Callback method starts here
     //If the channel_ID is undefined, we request the bot to give us channels for a specific server ID
     if (!channel_ID) {
-      const channels = await fetch(`http://localhost:1337/channels?guild_id=` + server_ID,
+      const channels = await fetch(`http://discordbot:1337/channels?guild_id=` + server_ID,
         {
           method: 'POST',
         }
@@ -839,7 +837,7 @@ router.post('/sendNotification', async(req, res, next) => {
     const username = localStorage.getItem('username');
     if ((notificationType === 'newKey') && (settingArray[0].newKey == '1')) {
       const message = `added key for [${localStorage.getItem('gameName')}](${localStorage.getItem('gameLink')})`
-      const url = `http://localhost:1337/mention?message=${message}&guild_id=${server_ID}&channel_id=${channel_ID.Channel_ID}&user=${username}`;
+      const url = `http://discordbot:1337/mention?message=${message}&guild_id=${server_ID}&channel_id=${channel_ID.Channel_ID}&user=${username}`;
       const sendNotification = await fetch(url,
         {
           method: 'POST',
@@ -848,7 +846,7 @@ router.post('/sendNotification', async(req, res, next) => {
     }
     else if ((notificationType === 'claimedKey') && (settingArray[0].claimedKey == '1')) {
       const message = `claimed key for [${localStorage.getItem('gameName')}](${localStorage.getItem('gameLink')})`
-      const url = `http://localhost:1337/mention?message=${message}&guild_id=${server_ID}&channel_id=${channel_ID.Channel_ID}&user=${username}`
+      const url = `http://discordbot:1337/mention?message=${message}&guild_id=${server_ID}&channel_id=${channel_ID.Channel_ID}&user=${username}`
       const sendNotification = await fetch(url,
         {
           method: 'POST',
@@ -858,7 +856,7 @@ router.post('/sendNotification', async(req, res, next) => {
     else if ((notificationType === 'newUser') && (settingArray[0].newUser == '1')) {
       const message = "A new user has been created."
       channel_ID = channel_ID.Channel_ID;
-      const sendNotification = await fetch(`http://localhost:1337/announce?message=${message}&guild_id=${server_ID}&channel_id=${channel_ID}`,
+      const sendNotification = await fetch(`http://discordbot:1337/announce?message=${message}&guild_id=${server_ID}&channel_id=${channel_ID}`,
         {
           method: 'POST',
         }
@@ -884,7 +882,7 @@ router.get('/getChannels', async(req, res, next) => {
   }
 
   try {
-    const channels = await fetch(`http://localhost:1337/channels?guild_id=` + req.query.guildID,
+    const channels = await fetch(`http://discordbot:1337/channels?guild_id=` + req.query.guildID,
       {
         method: 'POST',
       }

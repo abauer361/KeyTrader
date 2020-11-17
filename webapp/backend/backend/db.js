@@ -9,6 +9,7 @@ var state = {
 
 exports.connect = function (mode, done) {
   state.pool = mariadb.createPool({
+    host: 'database',
     user: process.env.DB_USER,
     password: process.env.DB_PW,
     database: 'keytrader'

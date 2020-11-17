@@ -12,9 +12,9 @@ db.connect(db.MODE_PRODUCTION, function(err){
     }
     else{
         console.log("Mariadb Connected Successfully");
-        db.getUsers((results) => {
-            console.log("Retrieved Users successfully");
-        }, (err) => {
+        db.getUsers().then(results => {
+            console.log(`Successfully Retrieved users: ${results.length}`);
+        }).catch(err => {
             console.log(err);
         });
     }

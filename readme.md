@@ -5,33 +5,24 @@
     * Node v12
     * Mariadb v10.3
     * Nginx
+    * Docker
+    * Docker Compose
     * Discord Developer Account
     * Visual Studio Code (Optional)
         * SFTP by liximomo
 
 * Create Discord App at https://discord.com/developers/applications
     * Add OAuth2 redirects, where `<hostname>` is `<protocol>://<url>` (http/https followed by ip or domain name)
-        * `<hostname>/api/discord/addServer`
-        * `<hostname>/api/discord/callback`
-        * `<hostname>/login`
+        * `localhost/api/discord/addServer`
+        * `localhost/api/discord/callback`
+        * `localhost/login`
 
 * Edit environment files to the server setup accordingly
-    * Rename and configure  `./webapp/key-trader/example.env.txt` -> `./webapp/key-trader/.env`
-    * Rename and configure `./webapp/key-trader/src/environments/example.environment.local.ts` -> `./webapp/key-trader/src/environments/environment.local.ts`
-
-* Configure Nginx
-    * Copy `./nginxConf/keytrader` to nginx config (`/etc/nginx/sites-available`)
-    * Add to `sites-enabled` by linking `sudo ln -s /etc/nginx/sites-availabe/keytrader /etc/nginx/sites-enabled`
-
-* Configure Mariadb
-    * Run the sql commands in `./dbSqlFiles/initialCreation.sql`
+    * Rename and configure  `./backend/files/key-trader/example.env.txt` -> `./webapp/key-trader/.env`
+    * Note db user is 'test' and pass is '1234' unless changed
 
 * Configure the Bot
-    * Create `./discordbot/bot-token.json` with a single string containing Discord Bot token
-
-* Install the node packages for both webapp and bot
-    * `cd ./discordbot` and `npm install`
-    * `cd ./webapp/key-trader` and `npm install`
+    * Create `./discordBot/bot-token.json` with a single string containing Discord Bot token
 
 * (Optional) Configure Visual Studio Code
     * Rename and configure `./.vscode/example.launch.json` -> `./.vscode/launch.json`
@@ -42,9 +33,7 @@
         * `sudo ln -s <projectLocation>/keytrader/webapp/key-trader/dist/key-trader/ /var/www/html`
 
 ## Running the Project
-* Start the Backend
-    * `cd ./webapp/key-trader` and `npm start:server`
-* Start the frontend development server
-    * `cd ./webapp/key-trader` and `npm start`
-* Start the Discord Bot
-    * `cd ./discord/src` and `node ktbot.js`
+* Build the Project
+    * `docker-compose build`
+* Start the Project
+    * `docker-compose up`
