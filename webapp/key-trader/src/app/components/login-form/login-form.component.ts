@@ -15,8 +15,8 @@ export class LoginFormComponent implements OnInit {
   ngOnInit(): void {
   }
 
-  onLoginClicked(): void {
-    console.log('Going to key-trader home page');
+  onLoginButtonClicked(): void {
+    console.log('Going to key trader home page');
     this.router.navigate(['/']);
   }
 
