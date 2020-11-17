@@ -3,6 +3,7 @@ import { Routes, RouterModule } from '@angular/router';
 
 import {LoginPageComponent} from './components/login-page/login-page.component';
 import {LoginFormComponent} from './components/login-form/login-form.component';
+import {SignupFormComponent} from './components/signup-form/signup-form.component';
 import {ServersPageComponent} from './components/servers-page/servers-page.component';
 import {AddKeyPageComponent} from './components/add-key-page/add-key-page.component';
 import {SeeKeysPageComponent} from './components/see-keys-page/see-keys-page.component';
@@ -17,6 +18,7 @@ const routes: Routes = [
   {path: '', component: ServersPageComponent, canActivate: [AuthGuard]},
   {path: 'login', component: LoginPageComponent},
   {path: 'login-form', component: LoginFormComponent},
+  {path: 'signup-form', component: SignupFormComponent},
   {path: 'add-key', component: AddKeyPageComponent, canActivate: [NormalAuthGuard]},
   {path: 'see-keys', component: SeeKeysPageComponent, canActivate: [NormalAuthGuard]},
   {path: 'view-roles', component: ViewRolesComponent, canActivate: [NormalAuthGuard]},
