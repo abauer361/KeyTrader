@@ -1,13 +1,29 @@
 [
     {
-        "name": "My Server",
+        "name": "Frontend",
         "host": "192.168.56.102",
         "protocol": "sftp",
         "port": 22,
         "username": "student",
-        "remotePath": "/home/student/key-trader",
+        "remotePath": "/home/student/frontend",
         "password": "1234",
-        "context": "webapp/key-trader",
+        "context": "webApp/key-trader",
+        "ignore": [
+            ".vscode",
+            ".git",
+            ".DS_Store",
+            "node_modules"
+        ],
+        "uploadOnSave": true
+    },    {
+        "name": "Backend",
+        "host": "192.168.56.102",
+        "protocol": "sftp",
+        "port": 22,
+        "username": "student",
+        "remotePath": "/home/student/backend",
+        "password": "1234",
+        "context": "webApp/backend",
         "ignore": [
             ".vscode",
             ".git",
@@ -17,7 +33,7 @@
         "uploadOnSave": true
     },
     {
-        "name": "My Server Discord",
+        "name": "Discord Bot",
         "host": "192.168.56.102",
         "protocol": "sftp",
         "port": 22,

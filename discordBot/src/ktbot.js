@@ -12,7 +12,7 @@ const dotenv = require('dotenv').config()
 
 const client = new Discord.Client({ ws: { intents: ['GUILDS', 'GUILD_PRESENCES', 'GUILD_MEMBERS'] }});
 
-const CONFIG = require('../config.json');
+const CONFIG = require('./config.json');
 try {
   CONFIG.BOT_TOKEN = process.env.BOT_TOKEN
 } catch (e) {
