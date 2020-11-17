@@ -16,7 +16,7 @@ export class LoginPageComponent  {
   }
 
   onLoginButtonClicked(): void {
-    console.log('Going to key-trader login form');
+    console.log('Going to key trader login form');
     this.router.navigate(['/login-form']);
   }
 
