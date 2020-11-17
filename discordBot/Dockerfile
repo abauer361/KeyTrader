@@ -3,6 +3,7 @@ FROM node:12
 
 # Change directory so that our commands run inside this new directory
 WORKDIR /usr/src/app
+
 # Copy dependency definitions
 COPY package*.json ./
 # Install dependecies

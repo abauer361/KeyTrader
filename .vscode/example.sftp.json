@@ -1,52 +1,18 @@
-[
-    {
-        "name": "Frontend",
-        "host": "192.168.56.102",
-        "protocol": "sftp",
-        "port": 22,
-        "username": "student",
-        "remotePath": "/home/student/frontend",
-        "password": "1234",
-        "context": "webApp/key-trader",
-        "ignore": [
-            ".vscode",
-            ".git",
-            ".DS_Store",
-            "node_modules"
-        ],
-        "uploadOnSave": true
-    },    {
-        "name": "Backend",
-        "host": "192.168.56.102",
-        "protocol": "sftp",
-        "port": 22,
-        "username": "student",
-        "remotePath": "/home/student/backend",
-        "password": "1234",
-        "context": "webApp/backend",
-        "ignore": [
-            ".vscode",
-            ".git",
-            ".DS_Store",
-            "node_modules"
-        ],
-        "uploadOnSave": true
-    },
-    {
-        "name": "Discord Bot",
-        "host": "192.168.56.102",
-        "protocol": "sftp",
-        "port": 22,
-        "username": "student",
-        "remotePath": "/home/student/key-trader-discord",
-        "password": "1234",
-        "context": "discordBot",
-        "ignore": [
-            ".vscode",
-            ".git",
-            ".DS_Store",
-            "node_modules"
-        ],
-        "uploadOnSave": true
-    }
-]
+{
+    "name": "KeyTrader",
+    "host": "192.168.56.102",
+    "protocol": "sftp",
+    "port": 22,
+    "username": "student",
+    "password": "1234",
+    "remotePath": "/home/student/keytrader",
+    "ignore": [
+        ".vscode",
+        ".git",
+        ".DS_Store",
+        "node_modules",
+        "dockerShare",
+        "scratch"
+    ],
+    "uploadOnSave": true
+}
