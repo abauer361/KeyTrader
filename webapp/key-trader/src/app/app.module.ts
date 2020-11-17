@@ -19,6 +19,7 @@ import { MainComponent } from './components/main/main.component';
 import { InnerCompComponent } from './components/inner-comp/inner-comp.component';
 import { LoginPageComponent } from './components/login-page/login-page.component';
 import { LoginFormComponent } from './components/login-form/login-form.component';
+import { SignupFormComponent } from './components/signup-form/signup-form.component';
 import { ServersPageComponent } from './components/servers-page/servers-page.component';
 import { SeeKeysPageComponent } from './components/see-keys-page/see-keys-page.component';
 import { AddKeyPageComponent } from './components/add-key-page/add-key-page.component';
@@ -44,6 +45,7 @@ import {MatSlideToggleModule} from "@angular/material/slide-toggle";
     InnerCompComponent,
     LoginPageComponent,
     LoginFormComponent,
+    SignupFormComponent,
     ServersPageComponent,
     SeeKeysPageComponent,
     AddKeyPageComponent,
