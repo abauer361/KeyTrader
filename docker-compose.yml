@@ -1,0 +1,74 @@
+version: '3' # specify docker-compose version
+
+services:
+  frontend:
+    container_name: kt-frontend
+    build: ./webapp/key-trader
+    ports:
+      - "4200:4200"
+      - "9876:9876"
+    environment:
+      - "ENV=${ENV}"
+    volumes:
+      - /client/node_modules # ignore host node_modules
+      - /webapp/key-trader/dist # ignore host prod build files
+      - ./webapp/key-trader:/client # used for live reloading
+      - ./dockerShare/dist:/client/dist/key-trader # used for making prod build files available to nginx
+
+  backend:
+    container_name: kt-backend
+    restart: always
+    build: ./webapp/backend
+    ports:
+      - "3000:3000"
+      - "9229:9229"
+    depends_on:
+      - database
+    volumes:
+      - /usr/src/app/node_modules # ignore host node_modules
+      - ./webapp/backend:/usr/src/app # used for live reloading
+    environment:
+      - "CLIENT_ID=${CLIENT_ID}"
+      - "CLIENT_SECRET=${CLIENT_SECRET}"
+      - "REDIRECT_URI_LOGIN_CB=${REDIRECT_URI_LOGIN_CB}"
+      - "REDIRECT_URI_BOT_CB=${REDIRECT_URI_BOT_CB}"
+      - "PORT=${PORT}"
+      - "DB_USER=${DB_USER}"
+      - "DB_PW=${DB_PW}"
+
+  database:
+    container_name: kt-database
+    image: mariadb
+    restart: always
+    environment:
+      MYSQL_ROOT_PASSWORD: "${MY_SQL_ROOT_PW}"
+      MYSQL_DATABASE: "keytrader"
+      MYSQL_USER: "${DB_USER}"
+      MYSQL_PASSWORD: "${DB_PW}"
+    volumes:
+      - ./database/sql:/docker-entrypoint-initdb.d # map initialization scripts
+      - ./dockerShare/mysql_data:/var/lib/mysql # map db data
+
+  discordbot:
+    container_name: kt-discordbot
+    build: ./discordBot
+    restart: always
+    ports:
+      - "1337:1337"
+    volumes:
+      - /usr/src/app/node_modules # ignore host node_modules
+      - ./discordBot:/usr/src/app # used for live reloading
+    environment:
+      - "BOT_TOKEN=${BOT_TOKEN}"
+
+  webserver:
+    container_name: kt-webserver
+    restart: always
+    build: ./nginx
+    ports:
+      - "8080:80"
+    volumes:
+      - ./dockerShare/dist:/usr/share/nginx/html:ro
+    depends_on: # frontend, backend required to be up for hostnames
+      - frontend
+      - backend

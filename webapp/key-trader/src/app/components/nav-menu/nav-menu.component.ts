@@ -12,8 +12,7 @@ export class NavMenuComponent implements OnInit {
   constructor(private router: Router,
               private authService: AuthService) { }
 
-  ngOnInit(): void {
-  }
+  ngOnInit(): void { }
 
   onHomeButtonClicked(): void {
     console.log('Going to home page');
@@ -22,7 +21,7 @@ export class NavMenuComponent implements OnInit {
 
   onProfileButtonClicked(): void {
     console.log('Going to profile page');
-    this.router.navigate(['/profile-page']);     // Need to add the call to the profile page
+    this.router.navigate(['/profile-page']);
   }
 
   onLogoutButtonClicked(): void {
