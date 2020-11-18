@@ -15,7 +15,7 @@ exports.run = async (client, message, args) => {
   });
 
   body = JSON.stringify(body);
-  const response = await fetch(`https://localhost/api/discord/getKeyCount`, {
+  const response = await fetch(`https://localhost:8080/api/discord/getKeyCount`, {
     headers: {'Content-Type': 'application/json'},
     method: 'POST',
     body: body
