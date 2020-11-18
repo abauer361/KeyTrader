@@ -4,7 +4,7 @@
   "description": "Discord bot for the KeyTrader service",
   "main": "index.js",
   "scripts": {
-    "start": "cd src && npx nodemon ktbot.js",
+    "start": "cd src && nodemon ktbot.js",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "author": "",
@@ -17,5 +17,8 @@
     "eris": "^0.11.2",
     "express": "^4.17.1",
     "node-fetch": "^2.6.0"
+  },
+  "devDependencies": {
+    "nodemon": "^2.0.6"
   }
 }
