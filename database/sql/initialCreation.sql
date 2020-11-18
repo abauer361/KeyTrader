@@ -18,7 +18,7 @@ CREATE TABLE `Channels` (
 
 DROP TABLE IF EXISTS `Discord_Servers`;
 CREATE TABLE `Discord_Servers` (
-  `Server_ID` varchar(50) NOT NULL,
+  `Server_ID` varchar(20) NOT NULL,
   `Server_Name` varchar(50) DEFAULT NULL,
   `Server_Link` varchar(50) DEFAULT NULL,
   PRIMARY KEY (`Server_ID`)
@@ -44,7 +44,7 @@ CREATE TABLE `NotificationSettings` (
   `newKey` tinyint(1) DEFAULT NULL,
   `claimedKey` tinyint(1) DEFAULT NULL,
   `newUser` tinyint(1) DEFAULT NULL,
-  `Server_ID` int(11) DEFAULT NULL,
+  `Server_ID` varchar(20) DEFAULT NULL,
   PRIMARY KEY (`Setting_ID`)
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
@@ -53,7 +53,7 @@ DROP TABLE IF EXISTS `Roles`;
 CREATE TABLE `Roles` (
   `Role_Name` varchar(20) NOT NULL,
   `User_Role_ID` int(11) NOT NULL,
-  `Server_ID` varchar(50) NOT NULL
+  `Server_ID` varchar(20) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 
@@ -61,7 +61,7 @@ DROP TABLE IF EXISTS `UBS`;
 CREATE TABLE `UBS` (
   `UBS_PK` int(11) NOT NULL AUTO_INCREMENT,
   `U_ID` int(11) DEFAULT NULL,
-  `Server_ID` int(11) DEFAULT NULL,
+  `Server_ID` varchar(20) DEFAULT NULL,
   `User_Role_Type` int(11) DEFAULT NULL,
   PRIMARY KEY (`UBS_PK`)
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
