@@ -38,6 +38,8 @@ app.get('/callback', (req, res) =>
 });
 
 app.use('/api/discord', require('./discord'));
+app.use('/api/user', require('./routes/user'));
+
 
 app.get('/api/getAllUsers', (req, res, next) => {
   db.getUsers(function(results){
@@ -45,7 +47,7 @@ app.get('/api/getAllUsers', (req, res, next) => {
   }, function (err) {
     res.status(500).json(err);
   })
-})
+});
 
 app.get('/api/viewAllKeys', (req, res, next)=>{
   db.getKeys(function(results){
@@ -54,8 +56,6 @@ app.get('/api/viewAllKeys', (req, res, next)=>{
   }, function(err){
     res.status(500).json(err);
   })
-})
-
-
+});
 
 module.exports = app;
