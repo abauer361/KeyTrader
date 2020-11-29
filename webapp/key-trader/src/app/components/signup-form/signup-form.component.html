@@ -1,20 +1,27 @@
+
 <div class="signupWrapper">
 
     <div class="signup">
 
         <h2 class="keyHeader" style="flex-grow:0.3">Sign Up</h2>
-        <form>
-            <h5 for="usernameLbl">Username</h5>
-            <input type="text" id="usernameInput" name="usernameInput"><br><br>
-            <h5 for="emailLbl">Email</h5>
-            <input type="text" id="emailInput" name="emailInput"><br><br>
-            <h5 for="passwordLbl">Enter Password</h5>
-            <input type="password" id="passwordInput" name="passwordInput"><br><br>
-            <h5 for="confirmLbl">Confirm Password</h5>
-            <input type="password" id="confirmInput" name="confirmInput"><br><br>
-            <input type="submit" value="Submit">
-          </form>
-        
+        <mat-card>
+            <form (submit)="onSignup(signupForm)" #signupForm="ngForm">
+                <mat-form-field>
+                    <input matInput type="email" ngModel #emailInput="ngModel" name="email" id="emailInput" placeholder="E-mail" name="emailInput" required email><br><br>
+                    <mat-error *ngIf="emailInput.invalid">Please enter a valid email.</mat-error>
+                </mat-form-field>
+                <mat-form-field>
+                    <input matInput type="password" ngModel #passwordInput="ngModel" name="password" id="passwordInput" placeholder="Password" name="passwordInput" required><br><br>
+                    <mat-error *ngIf="passwordInput.invalid">Enter a valid password.</mat-error>
+                </mat-form-field>
+                <mat-form-field>
+                    <!-- TODO: need to add confirm input error if passwords don't match -->
+                    <input matInput type="password" ngModel #confirmInput="ngModel" name="confirm" id="confirmInput" placeholder="Confirm Password" name="confirmInput" required><br><br>
+                    <mat-error *ngIf="confirmInput.invalid">Enter a valid password.</mat-error>
+                </mat-form-field>
+                <button mat-raised-button color="accent" type="submit" onclick="window.location.href =  '/api/user/signup';">Sign Up</button>
+            </form>
+        </mat-card>
     </div>
 
 </div>

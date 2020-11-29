@@ -21,3 +21,7 @@
     justify-content: space-around;
   
   }
+  mat-form-field,
+  textarea {
+    width: 100%
+  }
