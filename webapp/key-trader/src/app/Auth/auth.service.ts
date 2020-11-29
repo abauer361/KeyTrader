@@ -17,6 +17,7 @@ import { Router } from '@angular/router';
 import { Subject } from 'rxjs';
 import {environment} from '../../environments/environment';
 import {CookieService} from 'ngx-cookie-service';
+import { AuthData } from '../Models/auth-data.model';
 
 @Injectable({ providedIn: 'root' })
 export class AuthService {
@@ -32,6 +33,16 @@ export class AuthService {
 
   constructor(private http: HttpClient, private router: Router, private cookieService: CookieService) {
 
+  }
+
+  createUser(email: string, password: string) {
+    const authData: AuthData = {
+      email: email,
+      password: password
+    };
+    const url = environment.getApiUrl("user/signup");
+    console.log(url);
+    this.http.post(url,authData);
   }
 
   getToken() {
