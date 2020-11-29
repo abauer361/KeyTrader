@@ -3,14 +3,19 @@
     <div class="login">
 
         <h2 class="keyHeader" style="flex-grow:0.3">Log In</h2>
-        <form>
-            <h5 for="usernameLbl">Username</h5>
-            <input type="text" id="usernameInput" name="usernameInput"><br><br>
-            <h5 for="passwordLbl">Password</h5>
-            <input type="password" id="passwordInput" name="passwordInput"><br><br>
-            <input type="submit" value="Submit">
-          </form>
-        
+        <mat-card>
+            <form (submit)="onLogin(loginForm)" #loginForm="ngForm">
+                <mat-form-field>
+                    <input matInput type="email" ngModel #emailInput="ngModel" name="email" id="emailInput" placeholder="E-mail" name="emailInput" required email><br><br>
+                    <mat-error *ngIf="emailInput.invalid">Please enter a valid email.</mat-error>
+                </mat-form-field>
+                <mat-form-field>
+                    <input matInput type="password" ngModel #passwordInput="ngModel" name="password" id="passwordInput" placeholder="Password" name="passwordInput" required><br><br>
+                    <mat-error *ngIf="passwordInput.invalid">Enter a valid password.</mat-error>
+                </mat-form-field>
+                <button mat-raised-button color="accent" type="submit">Login</button>
+            </form>
+        </mat-card>
     </div>
 
 </div>

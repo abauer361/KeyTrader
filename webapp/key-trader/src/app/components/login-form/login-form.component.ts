@@ -20,5 +20,9 @@ export class LoginFormComponent implements OnInit {
     this.router.navigate(['/']);
   }
 
+  onLogin(form: NgForm) {
+    console.log(form.value);
+  }
+
 
 }
