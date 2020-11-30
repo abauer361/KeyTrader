@@ -1,16 +1,20 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
-
+import {
+  HttpClientTestingModule,
+  HttpTestingController,
+} from '@angular/common/http/testing';
+import { RouterTestingModule } from '@angular/router/testing';
 import { InnerCompComponent } from './inner-comp.component';
 
-describe('InnerCompComponent', () => {
+xdescribe('InnerCompComponent', () => {
   let component: InnerCompComponent;
   let fixture: ComponentFixture<InnerCompComponent>;
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [ InnerCompComponent ]
-    })
-    .compileComponents();
+      declarations: [InnerCompComponent],
+      imports: [HttpClientTestingModule, RouterTestingModule],
+    }).compileComponents();
   }));
 
   beforeEach(() => {
