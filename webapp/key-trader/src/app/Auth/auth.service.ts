@@ -12,7 +12,7 @@ Basically anything having to do with the jwt is in here which includes:
 
 
 import {Injectable, OnInit} from '@angular/core';
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpParams } from '@angular/common/http';
 import { Router } from '@angular/router';
 import { Subject } from 'rxjs';
 import {environment} from '../../environments/environment';
@@ -36,13 +36,16 @@ export class AuthService {
   }
 
   createUser(email: string, password: string) {
-    const authData: AuthData = {
+    
+    const body: AuthData = {
       email: email,
       password: password
     };
     const url = environment.getApiUrl("user/signup");
-    console.log(url);
-    this.http.post(url,authData);
+    this.http.post(url,body)
+    .subscribe(response => {
+      console.log(response);
+    });
   }
 
   getToken() {
