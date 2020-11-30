@@ -29,7 +29,6 @@ router.post("/signup", (req, res, next) => {
     catch (err) {
       return next(new BadRequest("Failed to create user", err));
     }
-
 });
 
 module.exports = router;
