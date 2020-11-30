@@ -37,8 +37,7 @@ export class SignupFormComponent implements OnInit {
       console.log("Passwords do not match.")
     }
     else {
-      console.log(form.value);
-      this.userService.createUser(form.value.email, form.value.password);
+      this.userService.createUser(form.value.emailInput, form.value.passwordInput);
     }
   }
 
