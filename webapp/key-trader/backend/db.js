@@ -32,7 +32,28 @@ exports.getUsers = function (successCb, errCb) {
     var sql = "SELECT * FROM Users;";
     this.get().query(sql).then(successCb).catch(errCb);
 }
-
+//-------------------------------------------
+//Key Trader
+//-------------------------------------------
+//Create a User
+exports.createKeyTraderUser = function (email, token, successCb, errCb) {
+    var sql = "INSERT INTO KeyTraderUsers(Email, Token) values (?, ?) ON DUPLICATE KEY UPDATE Token = ?;"
+    this.get()
+    .query(
+        {sql: sql},
+        [email, token, token]
+    )
+    .then(successCb)
+    .catch(errCb);
+}
+//Get a User
+exports.getUsers = function (successCb, errCb) {
+    var sql = "SELECT * FROM KeyTraderUsers;";
+    this.get().query(sql).then(successCb).catch(errCb);
+}
+//-------------------------------------------
+//Discord
+//-------------------------------------------
 //Create a User
 exports.createUser = function (id, userName, Discord_Token, successCb, errCb){
     var sql = "INSERT INTO Users(U_ID, User_Name, Discord_Token) values(?, ?, ?) ON DUPLICATE KEY UPDATE Discord_Token = ?;";
