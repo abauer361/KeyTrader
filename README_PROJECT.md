@@ -25,6 +25,13 @@ Project 3\
 ##### Allison 11/16/2020
 * finished first draft of login form frontend
 * finished first draft of sign up form frontend
+##### Allison 11/28/2020
+* altered signup-form and login-form to handle user input
+##### Allison 11/29/2020
+* created routes/user.js for backend to handle signup post request, including data encryption and database insertion
+* added code to auth.service.ts to handle signup email and password data
+* added code to initialCreation.sql to create KeyTraderUser table
+* added insert and select statements to db.js to handle KeyTraderUser table database interaction
 #### 15 points- UI similar to the existing process for adding and modifying key trader communities
 
 #### 15 points- Ability to invite users to join a specific key trader community given their username (not a discord username)
@@ -35,5 +42,7 @@ Project 3\
 ##### Allison
 * https://developer.okta.com/blog/2019/05/16/angular-authentication-jwt
 * https://developer.okta.com/blog/2017/04/17/angular-authentication-with-oidc
+* https://udemy.com/course/angular-2-and-nodejs-the-practical-guide/
+* https://dzone.com/articles/tutorial-connect-your-angular-app-to-mysql
 
 ##### Andrew
