@@ -2,38 +2,34 @@ const express = require('express');
 const bcrypt = require('bcrypt');
 const router = express.Router();
 
-const User = require("../models/user");
-
-router.get('/', (req, res) => {
-    console.log('testing123');
-    res.status(200).json({"test" : "123"});
-  });
-
+const databaseRecords = require('../db');
 
 router.post("/signup", (req, res, next) => {
-    console.log('test');
-    //create user
-    bcrypt.hash(req.body.password, 10)
-    .then(hash => {
-        const user = new User({
-            email: req.body.email,
-            password: hash
-        });
-        console.log(user);
-        user.save()
-        .then(result => {
-            res.status(201).json({
-                message: "User created.",
-                result: result
-            });
-        })
-        .catch(err => {
-            res.status(500).json({
-                error: err
-            });
-        });
-    });
     
+    //create user
+    const saltRounds = 10;
+    const salt = bcrypt.genSaltSync(saltRounds);
+    
+    const hash = bcrypt.hashSync(req.body.password, salt);
+    const authData = {
+        email: req.body.email,
+        token: hash
+    };
+    const email = req.body.email;
+    const token = hash;
+    //insert to database
+    try {
+        databaseRecords.createKeyTraderUser(email, token, function(){
+            res.redirect('/');
+          },function(err){
+              return res.status(500).json(err);
+          });
+        return res.status(201).json({msg:"success"});
+    }
+    catch (err) {
+      return next(new BadRequest("Failed to create user", err));
+    }
+
 });
 
 module.exports = router;
