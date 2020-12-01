@@ -29,6 +29,29 @@ exports.get = function () {
     return state.pool;
 };
 
+//-------------------------------------------
+//Key Trader
+//-------------------------------------------
+//Create a User
+exports.createKeyTraderUser = function (email, token, successCb, errCb) {
+  var sql = "INSERT INTO KeyTraderUsers(Email, Token) values (?, ?) ON DUPLICATE KEY UPDATE Token = ?;"
+  this.get()
+  .query(
+      {sql: sql},
+      [email, token, token]
+  )
+  .then(successCb)
+  .catch(errCb);
+}
+//Get a User
+exports.getKeyTraderUsers = function (successCb, errCb) {
+  var sql = "SELECT * FROM KeyTraderUsers;";
+  this.get().query(sql).then(successCb).catch(errCb);
+}
+
+//-------------------------------------------
+//Discord
+//-------------------------------------------
 exports.getUsers = function () {
   var sql = "SELECT * FROM Users;";
   return this.get().query(
