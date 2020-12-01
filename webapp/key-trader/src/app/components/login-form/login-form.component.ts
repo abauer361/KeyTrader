@@ -22,7 +22,7 @@ export class LoginFormComponent implements OnInit {
   }
 
   onLogin(form: NgForm) {
-    console.log(form.value);
+    this.authService.loginKeyTraderUser(form.value.emailInput, form.value.passwordInput);
   }
 
 
