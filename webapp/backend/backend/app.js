@@ -21,6 +21,8 @@ app.get('/', (req, res) => {
 
 
 app.use('/api/discord', require('./discord'));
+app.use('/api/user', require('./routes/user'));
+
 
 app.use(handleErrors); // register error handler middleware
 module.exports = app;
