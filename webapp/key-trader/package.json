@@ -30,7 +30,6 @@
     "angular-epic-spinners": "^2.0.0",
     "bootstrap": "^4.5.0",
     "btoa": "^1.2.1",
-    "bcrypt": "^5.0.0",
     "dotenv": "^8.2.0",
     "jsonwebtoken": "^8.5.1",
     "ngx-cookie-service": "^3.0.4",
