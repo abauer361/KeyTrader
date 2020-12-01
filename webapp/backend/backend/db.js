@@ -33,20 +33,21 @@ exports.get = function () {
 //Key Trader
 //-------------------------------------------
 //Create a User
-exports.createKeyTraderUser = function (email, token, successCb, errCb) {
+exports.createKeyTraderUser = function (email, token) {
   var sql = "INSERT INTO KeyTraderUsers(Email, Token) values (?, ?) ON DUPLICATE KEY UPDATE Token = ?;"
-  this.get()
+  return this.get()
   .query(
       {sql: sql},
       [email, token, token]
-  )
-  .then(successCb)
-  .catch(errCb);
+  );
 }
 //Get a User
-exports.getKeyTraderUsers = function (successCb, errCb) {
-  var sql = "SELECT * FROM KeyTraderUsers;";
-  this.get().query(sql).then(successCb).catch(errCb);
+exports.getKeyTraderUsers = function (email) {
+  var sql = "SELECT * FROM KeyTraderUsers WHERE Email=?;";
+  return this.get().query(
+    {sql:sql},
+    [email]
+    );
 }
 
 //-------------------------------------------
