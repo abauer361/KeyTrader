@@ -8,12 +8,13 @@
 const Discord = require('discord.js');
 const Enmap = require('enmap');
 const fs = require("fs");
+const dotenv = require('dotenv').config()
 
 const client = new Discord.Client({ ws: { intents: ['GUILDS', 'GUILD_PRESENCES', 'GUILD_MEMBERS'] }});
 
-const CONFIG = require('../config.json');
+const CONFIG = require('./config.json');
 try {
-  CONFIG.BOT_TOKEN = require("../bot-token.json")
+  CONFIG.BOT_TOKEN = process.env.BOT_TOKEN
 } catch (e) {
   console.log("Error: Missing discord bot token.")
   console.log("Please save your token in a file called \"bot-token.json\", in the same directory as your config.json")
@@ -36,7 +37,7 @@ client.commands = new Enmap();
 fs.readdir("./commands/", (err, files) => {
   if (err) return console.error(err);
   files.forEach(file => {
-    if(!file.endsWith(".js")) return;
+    if (!file.endsWith(".js")) return;
     let props = require(`./commands/${file}`);
     let commandName = file.split(".")[0];
     console.log(`Attempting to load command ${commandName}`);
@@ -70,8 +71,7 @@ fs.readdir("./api_calls/", (err, files) => {
   console.log("Web server API is loaded.");
 });
 
-function runOrListMissingParams(api_call)
-{
+function runOrListMissingParams(api_call) {
   return (req, res) => {
     let missingParams = getMissingParameters(req.query, api_call.requiredParameters)
     if (missingParams.length !== 0) {
