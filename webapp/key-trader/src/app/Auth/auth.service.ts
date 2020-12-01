@@ -35,13 +35,26 @@ export class AuthService {
 
   }
 
-  createUser(email: string, password: string) {
+  createKeyTraderUser(email: string, password: string) {
     
     const body: AuthData = {
       email: email,
       password: password
     };
     const url = environment.getApiUrl("user/signup");
+    this.http.post(url,body)
+    .subscribe(response => {
+      console.log(response);
+    });
+  }
+
+  loginKeyTraderUser(email: string, password: string) {
+    
+    const body: AuthData = {
+      email: email,
+      password: password
+    };
+    const url = environment.getApiUrl("user/login");
     this.http.post(url,body)
     .subscribe(response => {
       console.log(response);
