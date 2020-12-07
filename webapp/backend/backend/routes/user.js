@@ -4,6 +4,7 @@ const router = express.Router();
 
 const databaseRecords = require('../db');
 const { BadRequestError } = require('../errorUtil');
+const jwt = require("jsonwebtoken");
 
 router.post("/login", async (req, res, next) => {
     //get user
@@ -17,14 +18,39 @@ router.post("/login", async (req, res, next) => {
         const keyJson = JSON.parse(JSON.stringify(results));
         
         var match = false;
+        var account;
         //we used the primary key, so array should be size 1
         for (const user in keyJson) {
           var check = bcrypt.compareSync(req.body.password,keyJson[user].Token);
           if (match == false) {
             match = check;
+            account = keyJson[user];
           }
         }
-        return res.status(200).json({token:match});
+        if (!match) {
+          next(new BadRequestError("Failed to get user authorization", err));
+          return res.status(401).json({
+            msg:"Login Failed",
+            result:match
+          });
+        }
+              
+        const jwt_key = 'softwareengineeringismymajorandwegraduateinmay';
+        const jwt_expires = 3600;
+
+        const json_token = jwt.sign({username: account.email, id: account.email, token: account.token}, jwt_key, {
+          algorithm: 'HS256',
+          expiresIn: jwt_expires
+        });
+
+        const jwtInfo = {'token': json_token, 'expiresIn': 3600 };
+
+        res.cookie('jwt', JSON.stringify(jwtInfo));
+
+        return res.status(200).json({
+          msg:"Login Success",
+          result:match
+        });
       }
       catch (err) {
         return next(new BadRequestError("Failed to get user authorization", err));
@@ -47,12 +73,10 @@ router.post("/signup", async (req, res, next) => {
     //insert to database
     try {
         await databaseRecords.createKeyTraderUser(email, token);
+
         return res.status(201).json({
             msg:"Signup Success",
-            result: { 
-                email: email,
-                token: token
-                }
+            result: true
             });
     }
     catch (err) {
