@@ -16,11 +16,6 @@ Project 3\
 ##### Allison 11/14/2020
 * modified HTML elements of login page
 * authentication research in progress
-* altered package.json to include 
- >   "dependencies": { \
- >       "@okta/okta-auth-js": "^1.17.0", \
- >       ... \
- >    }
 * began login form
 ##### Allison 11/16/2020
 * finished first draft of login form frontend
@@ -32,6 +27,15 @@ Project 3\
 * added code to auth.service.ts to handle signup email and password data
 * added code to initialCreation.sql to create KeyTraderUser table
 * added insert and select statements to db.js to handle KeyTraderUser table database interaction
+##### Allison 11/30/2020
+* completed bcrypt hashing for login and signup
+* created database interaction for inserting and retrieving KeyTraderUser table items (users)
+* created LoginKeyTraderUser function for authentication service
+##### Allison 12/6/2020
+* added in jwt to user.js for key trader authentication
+* created signup-success page
+* created base for communities page which login redirects to
+
 #### 15 points- UI similar to the existing process for adding and modifying key trader communities
 
 #### 15 points- Ability to invite users to join a specific key trader community given their username (not a discord username)
@@ -44,5 +48,6 @@ Project 3\
 * https://developer.okta.com/blog/2017/04/17/angular-authentication-with-oidc
 * https://udemy.com/course/angular-2-and-nodejs-the-practical-guide/
 * https://dzone.com/articles/tutorial-connect-your-angular-app-to-mysql
+* https://www.npmjs.com/package/bcrypt
 
 ##### Andrew
