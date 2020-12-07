@@ -45,6 +45,10 @@ export class AuthService {
     this.http.post(url,body)
     .subscribe(response => {
       console.log(response);
+      var result = response['result']
+      if (result) {
+        this.router.navigate(['/signup-success']);
+      }
     });
   }
 
@@ -58,6 +62,10 @@ export class AuthService {
     this.http.post(url,body)
     .subscribe(response => {
       console.log(response);
+      var result = response['result']
+      if (result) {
+        this.router.navigate(['/communities-page']);
+      }
     });
   }
 
