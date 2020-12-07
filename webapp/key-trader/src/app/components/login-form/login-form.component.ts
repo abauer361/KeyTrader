@@ -1,5 +1,4 @@
 import { Component, OnInit } from '@angular/core';
-import { Router } from '@angular/router';
 import { AuthService } from '../../Auth/auth.service';
 import {NgForm} from '@angular/forms';
 
@@ -10,15 +9,10 @@ import {NgForm} from '@angular/forms';
 })
 export class LoginFormComponent implements OnInit {
 
-  constructor(private router: Router,
+  constructor(
               private authService: AuthService) { }
 
   ngOnInit(): void {
-  }
-
-  onLoginButtonClicked(): void {
-    console.log('Going to key trader home page');
-    this.router.navigate(['/']);
   }
 
   onLogin(form: NgForm) {
