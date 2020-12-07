@@ -1,0 +1,37 @@
+.signupWrapper {
+    width:95vw;
+    height:95vh;
+    border-radius:20px;
+    display: flex;
+    justify-content: space-around;
+  }
+  .signup{
+    width:48vw;
+    left:0;
+    height:95vh;
+    background-color: white;
+    border-radius:20px;
+    position: relative;
+  }
+  .signupContent{
+    height: calc(100% - 70px);
+    padding: 35px;
+    display:flex;
+    flex-direction: column;
+    justify-content: space-around;
+  }
+  .loginBtn {
+    background-color: #970C0C;
+    color:white;
+    list-style-type: none;
+    text-decoration: none;
+    border-radius: 5px;
+    text-align: center;
+    font-family: 'Varela Round', sans-serif;
+    font-size: 1vw;
+    cursor:pointer;
+  }
+  mat-form-field,
+  textarea {
+    width: 100%
+  }
