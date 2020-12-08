@@ -30,6 +30,7 @@ import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatOptionModule } from '@angular/material/core';
 import { MatSelectModule } from '@angular/material/select';
 import { NavMenuComponent } from './components/nav-menu/nav-menu.component';
+import { CommunitiesNavMenuComponent } from './components/communities-nav-menu/communities-nav-menu.component'
 import { ViewRolesComponent } from './components/view-roles/view-roles.component';
 import { LoggedOutComponent } from './components/logged-out/logged-out.component';
 import { AuthService } from "./Auth/auth.service";
@@ -58,6 +59,7 @@ import { MatDialogModule } from '@angular/material/dialog';
     AddKeyPageComponent,
     ChangeRolesComponent,
     NavMenuComponent,
+    CommunitiesNavMenuComponent,
     ViewRolesComponent,
     LoggedOutComponent,
     ProfilePageComponent,
