@@ -25,9 +25,7 @@
   "description": "## Installation * Dependencies     * Node v12     * Mariadb v10.3     * Nginx     * Discord Developer Account     * Visual Studio Code (Optional)         * SFTP by liximomo",
   "version": "1.0.0",
   "main": "test.js",
-  "dependencies": {
-    "ng2-opd-popup": "^1.1.21"
-  },
+  "dependencies": {},
   "scripts": {
     "test": "ng test",
     "lint": "eslint .",
