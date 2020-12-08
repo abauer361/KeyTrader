@@ -37,7 +37,7 @@ export class SignupFormComponent implements OnInit {
       console.log("Passwords do not match.")
     }
     else {
-      this.authService.createKeyTraderUser(form.value.emailInput, form.value.passwordInput);
+      this.authService.createKeyTraderUser(form.value.emailInput, form.value.userInput, form.value.passwordInput);
     }
   }
 
