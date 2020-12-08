@@ -38,6 +38,7 @@ export class ViewRolesComponent implements OnInit, OnDestroy {
   accessDenied: boolean;
 
   loading = false;
+  popup = false;
 
   serverUpdates: string[] = [];
 
@@ -87,6 +88,10 @@ export class ViewRolesComponent implements OnInit, OnDestroy {
     }
   }
 
+  search() {
+    console.log("Search button");
+  }
+
   checkUserRole() {
     for (const role in this.userRoles) {
       if (this.userRoles[role] === 'Admin') {
@@ -110,5 +115,8 @@ export class ViewRolesComponent implements OnInit, OnDestroy {
     this.claimKeysNotification = this.notifications[0].claimedKey;
     // @ts-ignore
     this.newUserNotification = this.notifications[0].newUser;
+  }
+  addUser() {
+    this.router.navigateByUrl('/add-user');
   }
 }

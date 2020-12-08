@@ -319,6 +319,49 @@ router.get('/addServer', async(req, res, next) => {
   }
 });
 
+//redirect after adding bot ADDING SERVER TO DATABASE
+router.get('/addCommunity', async(req, res, next) => {
+  var communityLink = ' '
+  const reqErr = checkRequestQueryParams(req, [
+    new RequiredParam("guild_id")
+  ], next);
+
+  if (reqErr) {
+    return;
+  }
+
+  let guildName;
+  try {
+    const guildInfo = await fetch('http://discordbot:1337/guild-info?guild_id=' + req.query.guild_id, // check for success code and .name exists; throw error if neither exists
+      {
+        method: 'POST',
+      }
+    );
+
+    const guildJson = await guildInfo.json()
+    const guildErr = checkResponse(guildInfo, guildJson, "Failed to get guild info from bot", [
+      new RequiredParam("name", String)
+    ], next);
+
+    if (guildErr) {
+      return;
+    }
+
+    guildName = guildJson.name;
+  }
+  catch (err) {
+    return next(new BadRequestError("General HTTP error bot/guild-info", err));
+  }
+
+  try {
+    await databaseRecords.addCommunity(req.query.guild_id, guildName, communityLink);
+
+    res.redirect('/api/discord/linkRoles?guildID=' + req.query.guild_id);
+  } catch (err) {
+    return next(new InternalServerError("Cannot add community "), err);
+  }
+});
+
 generateSteamLink = (gameName, id) => {
   const turnToUnderscore = [' ', ':']
   let newGameName = ''

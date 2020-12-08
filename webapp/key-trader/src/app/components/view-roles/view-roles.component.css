@@ -58,6 +58,15 @@
   margin:30px;
 }
 
+.addUserBtn {
+  background-color: white;
+  width: 150px;
+  border-radius: 10px;
+  text-align: center;
+  color: #7289DA;
+  margin:30px;
+}
+
 .roleGuides {
   display: flex;
   justify-content: space-between;

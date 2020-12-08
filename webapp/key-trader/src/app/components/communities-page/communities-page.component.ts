@@ -1,7 +1,6 @@
 import { Component, OnInit, OnDestroy } from '@angular/core';
 import {AuthService} from '../../Auth/auth.service';
 import { Router } from '@angular/router';
-import {Subscription} from 'rxjs';
 
 @Component({
   selector: 'app-communities-page',

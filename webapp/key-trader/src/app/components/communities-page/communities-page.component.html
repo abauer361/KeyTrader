@@ -2,8 +2,67 @@
   <div class="page">
     <div *ngIf="userAuthenticated; else elseBlock">
       <app-communities-nav-menu></app-communities-nav-menu>
+      <div id="pageWrapper">
 
-      <h2 class="keyHeader" style="flex-grow:0.3">Communities Page</h2>
+        <div class="serverSection">
+          <div class="headerWrapper">
+            <h2 class="serverHeader">Your Communities that use KeyTrader</h2>
+          </div>
+          <div class="servers">
+            <div *ngIf="isLoading" class="loading">
+              <app-swapping-squares-spinner
+                [animationDuration]="1000"
+                [size]="40"
+                [color]="'#0CDAC2'"
+              ></app-swapping-squares-spinner>
+            </div>
+
+            <div *ngIf="!isLoading">
+              <div *ngIf="!loading" class="serversWrapper">
+                <mat-card class="serverCard" *ngIf="this.linkedServers.length === 0">
+                  <mat-card-header class="serverCardHeader">
+
+                  </mat-card-header>
+                  <mat-card-content>
+                    <h4 class="serverName">You aren't currently in any KeyTrader Communities :(</h4>
+                  </mat-card-content>
+                </mat-card>
+
+
+                <mat-card class="serverCard">
+                  <mat-card-header class="serverCardHeader">
+
+                  </mat-card-header>
+                  <mat-card-content>
+                    <h4 class="serverName">Create a Community Here</h4>
+                  </mat-card-content>
+                  <mat-card-actions style="display:flex; ">
+                    <button mat-raised-button (click)="addServer(linkedServer)" id="addServer" class="serverBtn">CREATE COMMUNITY</button>
+                  </mat-card-actions>
+                </mat-card>
+
+
+                <mat-card class="serverCard" *ngFor="let linkedServer of this.linkedServers">
+                  <mat-card-header class="serverCardHeader">
+
+                  </mat-card-header>
+                  <mat-card-content>
+                    <button class="settingsBtn" (click)="serverSettings(linkedServer)"><fa-icon [icon]="settingsIcon"></fa-icon></button>
+                    <h4 class="serverName">{{linkedServer.serverName}}</h4>
+                  </mat-card-content>
+                  <mat-card-actions style="display:flex; ">
+                    <button mat-raised-button (click)="addKey(linkedServer)" id="addKey" class="serverBtn">ADD KEY</button>
+                    <button mat-raised-button (click)="seeKeys(linkedServer)" id="viewKey" class="serverBtn">VIEW KEYS</button>
+                  </mat-card-actions>
+                </mat-card>
+
+              </div>
+            </div>
+
+          </div>
+        </div>
+
+      </div>
     </div>
     <ng-template #elseBlock>
 
