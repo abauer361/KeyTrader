@@ -27,6 +27,7 @@ export class AuthService {
 
   private tokenTimer: any;
   private authStatusListener = new Subject<boolean>();
+  private keyTraderAuthStatusListener = false;
 
   private validity: { validity: boolean };
   private validityUpdated = new Subject<{validity: boolean }>();
@@ -35,10 +36,11 @@ export class AuthService {
 
   }
 
-  createKeyTraderUser(email: string, password: string) {
+  createKeyTraderUser(email: string, username: string, password: string) {
     
     const body: AuthData = {
       email: email,
+      username: username,
       password: password
     };
     const url = environment.getApiUrl("user/signup");
@@ -52,21 +54,38 @@ export class AuthService {
     });
   }
 
-  loginKeyTraderUser(email: string, password: string) {
+  loginKeyTraderUser(email: string, username: string, password: string) {
     
     const body: AuthData = {
       email: email,
+      username: username,
       password: password
     };
     const url = environment.getApiUrl("user/login");
-    this.http.post(url,body)
+    this.http.post<{token:string}>(url,body)
     .subscribe(response => {
       console.log(response);
       var result = response['result']
       if (result) {
+        const token = response['token'];
+        this.token = token;
+        this.authStatusListener.next(true);
+        this.isAuthenticated = true;
         this.router.navigate(['/communities-page']);
       }
     });
+  }
+
+  logoutKeyTraderUser() {
+    this.token = null;
+    this.isAuthenticated = false;
+    this.authStatusListener.next(false);
+    this.clearAuthData();
+    this.router.navigate(['/login']);
+  }
+
+  getIsAuthenticated() {
+    return this.isAuthenticated;
   }
 
   getToken() {
@@ -76,6 +95,7 @@ export class AuthService {
     return this.isAuthenticated;
   }
   getAuthStatusListener() {
+    console.log(this.authStatusListener.asObservable());
     return this.authStatusListener.asObservable();
   }
   login(token) {
