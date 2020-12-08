@@ -33,20 +33,20 @@ exports.get = function () {
 //Key Trader
 //-------------------------------------------
 //Create a User
-exports.createKeyTraderUser = function (email, token) {
-  var sql = "INSERT INTO KeyTraderUsers(Email, Token) values (?, ?) ON DUPLICATE KEY UPDATE Token = ?;"
+exports.createKeyTraderUser = function (email, username, token) {
+  var sql = "INSERT INTO KeyTraderUsers(Email, Username, Token) values (?, ?, ?);"
   return this.get()
   .query(
       {sql: sql},
-      [email, token, token]
+      [email, username, token]
   );
 }
 //Get a User
-exports.getKeyTraderUsers = function (email) {
-  var sql = "SELECT * FROM KeyTraderUsers WHERE Email=?;";
+exports.getKeyTraderUsers = function (username) {
+  var sql = "SELECT * FROM KeyTraderUsers WHERE Username=?;";
   return this.get().query(
     {sql:sql},
-    [email]
+    [username]
     );
 }
 
