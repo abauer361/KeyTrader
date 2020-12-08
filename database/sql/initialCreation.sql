@@ -84,9 +84,10 @@ DROP TABLE IF EXISTS `KeyTraderUsers`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!40101 SET character_set_client = utf8 */;
 CREATE TABLE `KeyTraderUsers` (
+  `Username` varchar(20) NOT NULL,
   `Email` varchar(50) DEFAULT NULL,
   `Token` varchar(60) DEFAULT NULL,
-  PRIMARY KEY (`Email`)
+  PRIMARY KEY (`Username`)
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
