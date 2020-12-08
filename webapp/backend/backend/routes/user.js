@@ -6,15 +6,16 @@ const databaseRecords = require('../db');
 const { BadRequestError } = require('../errorUtil');
 const jwt = require("jsonwebtoken");
 
+
 router.post("/login", async (req, res, next) => {
     //get user
 
     //define attributes
-    const email = req.body.email;
+    const username = req.body.username;
 
     //pull from database
     try {
-        const results = await databaseRecords.getKeyTraderUsers(email);
+        const results = await databaseRecords.getKeyTraderUsers(username);
         const keyJson = JSON.parse(JSON.stringify(results));
         
         var match = false;
@@ -49,11 +50,12 @@ router.post("/login", async (req, res, next) => {
 
         return res.status(200).json({
           msg:"Login Success",
-          result:match
+          result:match,
+          token:jwtInfo
         });
       }
       catch (err) {
-        return next(new BadRequestError("Failed to get user authorization", err));
+        return next(new BadRequestError("Failed to get user authorization.", err));
       }
 });
 
@@ -61,18 +63,37 @@ router.post("/signup", async (req, res, next) => {
     
     //create user
 
+    //check password
+    const password = req.body.password;
+    /*const length = 6;
+    var missing = "";
+    var approved = true;
+    if (password.length < length) {
+      missing = missing + "\n 6+ characters";
+      approved = false
+    }
+    
+    if (approved == false) {
+      next(new BadRequestError("Failed to create user.  Password requires: ${missing}", err));
+      return res.status(401).json({
+            msg:"Signup failed.",
+            result:false
+          });
+    }*/
+
     //hash password
     const saltRounds = 10;
     const salt = bcrypt.genSaltSync(saltRounds);
-    const hash = bcrypt.hashSync(req.body.password, salt);
+    const hash = bcrypt.hashSync(password, salt);
 
     //define attributes
     const email = req.body.email;
+    const username = req.body.username;
     const token = hash;
 
     //insert to database
     try {
-        await databaseRecords.createKeyTraderUser(email, token);
+        await databaseRecords.createKeyTraderUser(email, username, token);
 
         return res.status(201).json({
             msg:"Signup Success",
@@ -80,7 +101,7 @@ router.post("/signup", async (req, res, next) => {
             });
     }
     catch (err) {
-      return next(new BadRequestError("Failed to create user", err));
+      return next(new BadRequestError("Failed to create user.  This email may already be in use.", err));
     }
 });
 
