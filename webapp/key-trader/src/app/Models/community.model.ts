@@ -1,4 +1,4 @@
-export interface Server {
-  serverName: string;
-  serverID: string;
+export interface Community {
+  communityName: string;
+  communityID: string;
 }

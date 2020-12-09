@@ -24,6 +24,14 @@ CREATE TABLE `Discord_Servers` (
   PRIMARY KEY (`Server_ID`)
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
+DROP TABLE IF EXISTS `Communities`;
+CREATE TABLE `Communities` (
+  `Community_ID` varchar(20) NOT NULL,
+  `Community_Name` varchar(50) DEFAULT NULL,
+  `Community_Link` varchar(50) DEFAULT NULL,
+  PRIMARY KEY (`Community_ID`)
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
 
 DROP TABLE IF EXISTS `Game_Keys`;
 CREATE TABLE `Game_Keys` (
