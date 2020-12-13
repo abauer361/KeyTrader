@@ -37,6 +37,7 @@ Project 3\
 * created base for communities page which login redirects to
 
 #### 15 points- UI similar to the existing process for adding and modifying key trader communities
+* refactored original front end to one container
 
 #### 15 points- Ability to invite users to join a specific key trader community given their username (not a discord username)
 

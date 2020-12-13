@@ -10,11 +10,13 @@ import {environment} from '../../environments/environment';
 
 import {Key} from '../Models/key.model';
 import {Server} from '../Models/server.model';
+import {Community} from '../Models/community.model'
 
 @Injectable({providedIn: 'root'})
 export class KeyService {
 
   private currentServer: Server;
+  private currentCommunity: Community;
 
   private keys: Key[] = [];
   private keysUpdated = new Subject<Key []>();
@@ -107,6 +109,9 @@ export class KeyService {
 
   setKeyServer(serverName) {
     this.currentServer = serverName;
+  }
+  setKeyCommunity(communityName){
+    this.currentCommunity = communityName;
   }
   getKeyServer() {
     return this.currentServer;

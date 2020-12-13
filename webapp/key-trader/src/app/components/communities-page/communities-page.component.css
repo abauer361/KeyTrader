@@ -14,6 +14,11 @@
   position: relative;
 }
 
+.center {
+  position: absolute;
+    transform: translateY(0vh);
+}
+
 .loginBtn {
   background-color: #970C0C;
   color:white;
@@ -26,7 +31,7 @@
   cursor:pointer;
 }
 
-.serverListing{
+.communityListing{
   background-color: white;
   width:95vw;
   height:95vh;
@@ -44,13 +49,13 @@
   align-items: center;
 }
 
-.serverSection{
+.communitySection{
   background-color: #7289DA;
   border-radius:20px;
   filter: drop-shadow(10px 10px 4px rgba(0, 0, 0, 0.40));
 
 }
-.serverCard{
+.communityCard{
   box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
   height:20vh;
   width:200px;
@@ -59,11 +64,11 @@
   font-family: 'Varela Round', sans-serif;
   text-align: center;
 }
-.serverCardHeader{
+.communityCardHeader{
   background-color: #7289DA;
 
 }
-.serverHeader{
+.communityHeader{
   font-family: 'Varela Round', sans-serif;
   color:white;
   font-size: 2vw;
@@ -80,7 +85,7 @@
   padding-left: 40px;
 
 }
-.serversWrapper {
+.communitiesWrapper {
   display:flex;
   flex-wrap: wrap;
   justify-content: flex-start;
@@ -88,7 +93,7 @@
 
 
 
-.serverName{
+.communityName{
   font-size: 20px;
 }
 
@@ -101,19 +106,20 @@
   cursor:pointer;
 }
 
-.serverBtns{
+.communityBtns{
   width:90%;
   border: 1px solid white;
   border-radius: 5px;
   margin:auto;
 }
 
-.serverBtn {
+.communityBtn {
   cursor: pointer;
   color:white;
   text-align: center;
   font-weight: bold;
   font-size:12px;
+  margin: auto;
   background-color: #0CDAC2;
 }
 #addKey{

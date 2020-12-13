@@ -2,7 +2,7 @@ import {Injectable} from '@angular/core';
 import {HttpClient} from '@angular/common/http';
 import {environment} from '../../environments/environment';
 import {Observable, Subject, Subscription} from 'rxjs';
-import {Server} from '../Models/server.model';
+import {Community} from '../Models/community.model';
 import {KeyTraderRole} from '../Models/keyTraderRole.model';
 import {Router} from '@angular/router';
 import {Channel} from '../Models/channel.model';
@@ -12,7 +12,7 @@ import { timer } from 'rxjs/observable/timer';
 @Injectable({providedIn: 'root'})
 export class CommunityService {
 
-  private currentCommunity: Server;
+  private currentCommunity: Community;
 
   private roles: string[] = [];
   private rolesUpdated = new Subject<string []>();
@@ -59,11 +59,11 @@ export class CommunityService {
   setCommunity(community) {
     this.currentCommunity = community;
   }
-  getServer() {
+  getCommunity() {
     return this.currentCommunity;
   }
   updateRoles(communityRoles, communityUpdates) {
-    const guildID = this.currentCommunity.serverID;
+    const guildID = this.currentCommunity.communityID;
     this.http.post(environment.getApiUrl('discord/saveRoles'), {communityRoles, communityUpdates, guildID}).subscribe(
       response => {
         console.log(response);
@@ -85,7 +85,7 @@ export class CommunityService {
 
   public updateNotifications(keysAdded, keysClaimed, newUser) {
 
-    const guildID = this.currentCommunity.serverID;
+    const guildID = this.currentCommunity.communityID;
     this.http.post(environment.getApiUrl('discord/storeSettings'), {keysAdded, keysClaimed, newUser, guildID}).subscribe(
       response => {
         console.log(response);
@@ -96,36 +96,10 @@ export class CommunityService {
     );
   }
 
-  public getChannels(guildID) {
-    this.http.get<{ message: string, channels: Channel[] }>(environment.getApiUrl('discord/getChannels'), {params: {guildID}})
-      .subscribe((channelData) => {
-        const channelInfo = channelData.channels[1];
-        for (const channel in channelInfo) {
-          this.channels.push(channelInfo[channel]);
-        }
-        this.channelsUpdated.next([...this.channels]);
-      });
-  }
-  public getChannelsUpdated() {
-    return this.channelsUpdated.asObservable();
-  }
-
-  public updateChannels(channelID) {
-    const guildID = this.currentCommunity.serverID;
-    this.http.post(environment.getApiUrl('discord/storeChannel'), {channelID, guildID}).subscribe(
-      response => {
-        console.log(response);
-        // this.router.navigateByUrl('/view-roles');
-      });
-  }
-
   public deleteChannels() {
     this.channels.length = 0;
   }
 
-  public linkServer() {
-    window.location.href = '/api/discord/linkKeyTrader?guildID=' + this.currentCommunity.serverID;
-  }
 
   public setTimer() {
     console.log('timer called');

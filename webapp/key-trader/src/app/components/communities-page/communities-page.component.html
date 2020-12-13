@@ -4,11 +4,11 @@
       <app-communities-nav-menu></app-communities-nav-menu>
       <div class="center" id="pageWrapper">
 
-        <div class="serverSection">
+        <div class="communitySection">
           <div class="headerWrapper">
-            <h2 class="serverHeader">Your Communities that use KeyTrader</h2>
+            <h2 class="communityHeader">Your Communities that use KeyTrader</h2>
           </div>
-          <div class="servers">
+          <div class="communities">
             <div *ngIf="loading" class="loading">
               <app-swapping-squares-spinner
                 [animationDuration]="1000"
@@ -17,34 +17,35 @@
               ></app-swapping-squares-spinner>
             </div>
 
-            <div *ngIf="!loading" class="serversWrapper">
-                <mat-card class="serverCard" *ngIf="this.linkedServers.length === 0">
-                  <mat-card-header class="serverCardHeader">
+            <div *ngIf="!loading" class="communitiesWrapper">
+                <mat-card class="communityCard" *ngIf="this.linkedServers.length === 0">
+                  <mat-card-header class="communityCardHeader">
 
                   </mat-card-header>
                   <mat-card-content>
-                    <h4 class="serverName">You aren't currently in any KeyTrader Communities :(</h4>
+                    <h4 class="communityName">You aren't currently in any KeyTrader Communities :(</h4>
                   </mat-card-content>
                 </mat-card>
 
 
-                <mat-card class="serverCard">
-                  <mat-card-header class="serverCardHeader">
+                <mat-card class="communityCard" style="text-align: center;">
+                  <mat-card-header class="communityCardHeader">
 
                   </mat-card-header>
                   <mat-card-content>
-                    <h4 class="serverName">Create a Community Here</h4>
+                    <h4 class="communityName">Create a Community Here</h4>
+                    <button class = "communityBtns">Create Community</button>
                   </mat-card-content>
                 </mat-card>
 
 
-                <mat-card class="serverCard" *ngFor="let linkedServer of this.linkedServers">
-                  <mat-card-header class="serverCardHeader">
+                <mat-card class="communityCard" *ngFor="let linkedServer of this.linkedServers">
+                  <mat-card-header class="communityCardHeader">
 
                   </mat-card-header>
                   <mat-card-content>
-                    <button class="settingsBtn" (click)="serverSettings(linkedServer)"><fa-icon [icon]="settingsIcon"></fa-icon></button>
-                    <h4 class="serverName">{{linkedServer.serverName}}</h4>
+                    <button class="settingsBtn" (click)="communitySettings(linkedServer)"><fa-icon [icon]="settingsIcon"></fa-icon></button>
+                    <h4 class="communityName">{{linkedServer.communityName}}</h4>
                   </mat-card-content>
                 </mat-card>
 
