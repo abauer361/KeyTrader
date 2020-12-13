@@ -16,12 +16,7 @@ export class CommunitiesNavMenuComponent implements OnInit {
 
   onHomeButtonClicked(): void {
     console.log('Going to home page');
-    this.router.navigate(['/']);
-  }
-
-  onProfileButtonClicked(): void {
-    console.log('Going to profile page');
-    this.router.navigate(['/profile-page']);
+    this.router.navigate(['/communities-page']);
   }
 
   onLogoutButtonClicked(): void {
