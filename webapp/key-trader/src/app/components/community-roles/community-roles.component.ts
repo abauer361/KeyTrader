@@ -19,6 +19,7 @@ export class CommunityRolesComponent implements OnInit, OnDestroy {
   community: Community;
 
   private userRoles: string[] = [];
+  public username: string;
 
   allowed: boolean;
   accessDenied: boolean;
@@ -37,10 +38,17 @@ export class CommunityRolesComponent implements OnInit, OnDestroy {
     this.loading = true;
     this.community = this.communityService.getCommunity();
 
-    
   }
 
   ngOnDestroy(): void {
+  }
+
+  addUser(username : string) {
+    this.username = username;
+    if (this.username.length > 0) {
+      console.log('Creating key trader community');
+      this.communityService.createCommunity(this.communityName, this.communityName);
+    }
   }
 
   search() {
