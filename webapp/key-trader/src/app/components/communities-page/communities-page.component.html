@@ -45,12 +45,12 @@
 
                   </mat-card-header>
                   <mat-card-content>
-                    <button class="settingsBtn" (click)="window.location.href = '/comRoles';"><fa-icon [icon]="settingsIcon"></fa-icon></button>
-                    <h4 class="communityName">{{community.communityName}}</h4>
+                    <!-- <button class="settingsBtn" (click)="window.location.href = '/comRoles';"><fa-icon [icon]="settingsIcon"></fa-icon></button> -->
+                    <h4 class="communityName">{{community.communityID}}</h4>
                   </mat-card-content>
                   <mat-card-actions style="display:flex; ">
-                    <button mat-raised-button (click)="addKey(linkedServer)" id="addKey" class="serverBtn">ADD KEY</button>
-                    <button mat-raised-button (click)="seeKeys(linkedServer)" id="viewKey" class="serverBtn">VIEW KEYS</button>
+                    <button mat-raised-button (click)="addRoles(community)" id="addKey" class="serverBtn">ADD ROLES</button>
+                    <button mat-raised-button (click)="seeRoles(community)" id="viewKey" class="serverBtn">VIEW ROLES</button>
                   </mat-card-actions>
                 </mat-card>
 

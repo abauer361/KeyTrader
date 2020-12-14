@@ -47,6 +47,7 @@ export class CommunitiesComponent implements OnInit, OnDestroy {
                 .getIsAuthenticated();
       
       this.username = this.authService.getUsername();
+      
       this.retrieveCommunity();
   }
           
@@ -57,13 +58,11 @@ export class CommunitiesComponent implements OnInit, OnDestroy {
 
   loadCommunity(username) {
     console.log('Locating key trader community');
-    this.communityService.loadCommunity(username);
-    this.communities = this.communityService.getCommunities().subscribe((community: Community[]) => {
+    this.communityService.loadCommunity(username);console.log(this.communities);
+    this.communities = this.communityService.getCommunities().subscribe((community) => {
       this.communities = community;
       this.loading = false;
-      console.log(this.communities);
     });
-    //console.log(this.communities);
   }
 
 
@@ -74,17 +73,18 @@ export class CommunitiesComponent implements OnInit, OnDestroy {
     }
   }
 
-  setKeyCommunity(community) {
-    this.keyService.setKeyCommunity(community);
+  setRoleCommunity(community) {
+    //this.keyService.setKeyCommunity(community);
   }
 
-  addKey(community) {
-    this.setKeyCommunity(community);
-    this.router.navigateByUrl('/add-key');
+  addRoles(community) {
+    //this.setKeyCommunity(community);
+    //this.router.navigateByUrl('/add-key');
   }
-  seeKeys(community) {
-    this.setKeyCommunity(community);
-    this.router.navigateByUrl('/see-keys');
+  seeRoles(community) {
+    //this.setKeyCommunity(community);
+    //TODO: navigate to role
+    //this.router.navigateByUrl('/see-keys');
   }
 
   createCommunity() {

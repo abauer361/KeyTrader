@@ -45,7 +45,7 @@ export class ServerService {
     return this.rolesUpdated.asObservable();
   }
 
-  public getKeyTraderRoles(guildID) {
+  public getKeyTraderRoles(guildID) { 
     this.http.get<{ message: string, keyTraderRoles: KeyTraderRole[] }>(environment.getApiUrl('discord/getKeyTraderRoles'), {params: {guildID}})
       .subscribe((roleData) => {
         this.keyTraderRoles = roleData.keyTraderRoles;

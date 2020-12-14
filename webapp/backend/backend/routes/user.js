@@ -3,7 +3,7 @@ const bcrypt = require('bcrypt');
 const router = express.Router();
 
 const databaseRecords = require('../db');
-const { BadRequestError } = require('../errorUtil');
+const { BadRequestError, InternalServerError } = require('../errorUtil');
 const jwt = require("jsonwebtoken");
 
 

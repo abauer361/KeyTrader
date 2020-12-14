@@ -68,10 +68,13 @@ export class CommunityService {
 
     this.http.post<{ message: string, communities: Community [] }>(url,body)
     .subscribe((result) => {
+      console.log(result);
       this.communities = result.communities;
       this.communitiesUpdated.next([...this.communities]);
       console.log("Successfully loaded community.");
-    });
+    }), error => {
+      console.log(error);
+    };
   }
 
   createRole(communityID: string, username: string, role: string) {
@@ -99,8 +102,6 @@ export class CommunityService {
   }
 
   getCommunities() {
-    console.log(this.communities);
-    console.log(this.communitiesUpdated.asObservable());
     return this.communitiesUpdated.asObservable();
   }
 
