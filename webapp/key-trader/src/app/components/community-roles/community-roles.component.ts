@@ -46,8 +46,7 @@ export class CommunityRolesComponent implements OnInit, OnDestroy {
   addUser(username : string) {
     this.username = username;
     if (this.username.length > 0) {
-      console.log('Creating key trader community');
-      this.communityService.createCommunity(this.communityName, this.communityName);
+      //TO DO ADD USERS TO ROLES
     }
   }
 
