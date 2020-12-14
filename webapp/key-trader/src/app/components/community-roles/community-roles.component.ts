@@ -18,17 +18,16 @@ export class CommunityRolesComponent implements OnInit, OnDestroy {
 
   community: Community;
 
-  private userRoles: string[] = [];
+  public userRoles: string[] = ["Admin","Doner/Recipient","Doner","Recipient","Viewer","Blocked"];
   public username: string;
   public users: CommunityRole [] = [];
+  private communityRoleSub: Subscription;
 
   allowed: boolean;
   accessDenied: boolean;
 
   loading = false;
   popup = false;
-
-  serverUpdates: string[] = [];
 
   constructor(public communityService: CommunityService, public userComService: UserComService, private router: Router) { }
 
@@ -39,22 +38,34 @@ export class CommunityRolesComponent implements OnInit, OnDestroy {
     this.loading = true;
     this.community = this.communityService.getCommunity();
     this.loadUsers();
-    this.loading = false;
   }
 
   ngOnDestroy(): void {
+    if (this.communityRoleSub) {
+      this.communityRoleSub.unsubscribe();
+    }
   }
 
   loadUsers() {
     this.communityService.loadRoles(this.community.communityID);
-    this.communityService.getCommunities().subscribe((communityRoles: CommunityRole []) => {
+    this.communityService.getCommunityRoles().subscribe((communityRoles: CommunityRole []) => {
+      console.log("Testing");
       this.users = communityRoles;
+      console.log(communityRoles);
+     
+      this.loading = false;
     });
+  }
+
+  updateRole(username: string, role: string) {
+    const communityID = this.community.communityID;
+    console.log(role);
+    console.log("Updating role.");
+    this.communityService.createRole(communityID, username, role);
   }
 
   addUser(newUser: string) {
     if (newUser.length > 0) {
-      //TO DO ADD USERS TO ROLES
       const communityID = this.community.communityID;
       const role = "Viewer";
       //TODO: check existance of user in KeyTraderUsers
@@ -62,7 +73,6 @@ export class CommunityRolesComponent implements OnInit, OnDestroy {
       this.communityService.createRole(communityID, newUser, role);
     }
   }
-
   search() {
     console.log("Search button");
   }

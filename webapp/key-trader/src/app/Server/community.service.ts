@@ -63,6 +63,8 @@ export class CommunityService {
         console.log("Successfully created community.");
         const role = "Admin";
         this.createRole(communityID,username,role);
+        
+        this.router.navigate(['/communities-page']);
       }
     });
   }
@@ -91,7 +93,6 @@ export class CommunityService {
       username : username, 
       role : role
     };
-    console.log(body);
     const url = environment.getApiUrl("user/update-role");
     this.http.post(url,body)
     .subscribe(response => {
@@ -100,7 +101,6 @@ export class CommunityService {
       if (result) {
         //navigate to page so user can see new community
         console.log("Successfully created role.");
-        this.router.navigate(['/communities-page']);
       }
     });
   }
@@ -111,7 +111,7 @@ export class CommunityService {
       communityID: communityID
     }
     const url = environment.getApiUrl("user/load-roles");
-
+    console.log(body);
     this.http.post<{ message: string, communityRoles: CommunityRole [] }>(url,body)
     .subscribe((result) => {
       console.log(result);

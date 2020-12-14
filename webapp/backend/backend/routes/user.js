@@ -124,10 +124,9 @@ router.post("/load-roles", async (req, res, next) => {
       let roleDataArray = [];
 
       for (const data in keyJson) {
-        const communityID = keyJson[data].Community_ID;
-        const communityName = keyJson[data].Community_ID;
+        const username = keyJson[data].Username;
         const role = keyJson[data].Role_Name;
-        roleDataArray.push({ communityID: communityID, communityName: communityName, role:role });
+        roleDataArray.push({ communityID: communityID, username: username, role:role });
     }
     res.status(200).json({ message: "Success: Loaded roles", communityRoles: roleDataArray });
 
