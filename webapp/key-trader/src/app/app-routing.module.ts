@@ -11,6 +11,7 @@ import {SeeKeysPageComponent} from './components/see-keys-page/see-keys-page.com
 import {ChangeRolesComponent} from './components/change-roles/change-roles.component';
 import {AuthGuard} from './Auth/auth.guard';
 import {CommunitiesComponent} from './components/communities-page/communities-page.component';
+import {CommunityRolesComponent} from './components/community-roles/community-roles.component';
 import {ViewRolesComponent} from './components/view-roles/view-roles.component';
 import {LoggedOutComponent} from './components/logged-out/logged-out.component';
 import {NormalAuthGuard} from './Auth/auth-2.guard';
@@ -28,6 +29,7 @@ const routes: Routes = [
   {path: 'settings', component: ChangeRolesComponent, canActivate: [NormalAuthGuard]},
   {path: 'profile-page', component: ProfilePageComponent},
   {path: 'communities-page', component: CommunitiesComponent, canActivate: [AuthGuard]},
+  {path: 'community-roles', component: CommunityRolesComponent, canActivate: [AuthGuard]},
   {path: 'community-form', component: CommunityFormComponent, canActivate: [AuthGuard]},
   {path: 'logged-out', component: LoggedOutComponent}
 ];

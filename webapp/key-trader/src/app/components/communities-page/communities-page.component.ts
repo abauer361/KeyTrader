@@ -59,7 +59,7 @@ export class CommunitiesComponent implements OnInit, OnDestroy {
   loadCommunity(username) {
     console.log('Locating key trader community');
     this.communityService.loadCommunity(username);console.log(this.communities);
-    this.communities = this.communityService.getCommunities().subscribe((community) => {
+    this.communities = this.communityService.getCommunities().subscribe((community: Community []) => {
       this.communities = community;
       this.loading = false;
     });
@@ -75,14 +75,17 @@ export class CommunitiesComponent implements OnInit, OnDestroy {
 
   setRoleCommunity(community) {
     //this.keyService.setKeyCommunity(community);
+    this.communityService.setCommunity(community);
   }
 
   addRoles(community) {
-    //this.setKeyCommunity(community);
-    //this.router.navigateByUrl('/add-key');
+    console.log("Navigating to community-roles page.")
+    this.setRoleCommunity(community);
+    this.router.navigate(['/community-roles']);
+
   }
   seeRoles(community) {
-    //this.setKeyCommunity(community);
+    this.setRoleCommunity(community);
     //TODO: navigate to role
     //this.router.navigateByUrl('/see-keys');
   }
