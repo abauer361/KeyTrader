@@ -11,7 +11,8 @@
   height:95vh;
   background-color: white;
   border-radius:20px;
-  position: relative;
+  justify-content: center;
+  align-items: center;
 }
 .signupContent{
   height: calc(100% - 70px);
@@ -19,6 +20,12 @@
   display:flex;
   flex-direction: column;
   justify-content: space-around;
+
+}
+.communitySection{
+  background-color: #7289DA;
+  border-radius:20px;
+  filter: drop-shadow(10px 10px 4px rgba(0, 0, 0, 0.40));
 
 }
 .loginBtn {
