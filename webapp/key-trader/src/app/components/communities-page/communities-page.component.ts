@@ -84,10 +84,17 @@ export class CommunitiesComponent implements OnInit, OnDestroy {
 
   }
 
-  addKeys(community) {
+  addKey(community) {
     console.log("Navigating to community-roles page.")
     this.setRoleCommunity(community);
-    this.router.navigate(['/community-roles']);
+    this.router.navigate(['/add-key']);
+
+  }
+
+  viewKey(community) {
+    console.log("Navigating to community-roles page.")
+    this.setRoleCommunity(community);
+    this.router.navigate(['/add-key']);
 
   }
 
