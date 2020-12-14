@@ -4,21 +4,21 @@ import {
   HttpTestingController,
 } from '@angular/common/http/testing';
 import { RouterTestingModule } from '@angular/router/testing';
-import { CommunitiesPageComponent } from './communities-page.component';
+import { CommunitiesComponent } from './communities-page.component';
 
-xdescribe('CommunitiesPageComponent', () => {
-  let component: CommunitiesPageComponent;
-  let fixture: ComponentFixture<CommunitiesPageComponent>;
+xdescribe('CommunitiesComponent', () => {
+  let component: CommunitiesComponent;
+  let fixture: ComponentFixture<CommunitiesComponent>;
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [CommunitiesPageComponent],
+      declarations: [CommunitiesComponent],
       imports: [HttpClientTestingModule, RouterTestingModule],
     }).compileComponents();
   }));
 
   beforeEach(() => {
-    fixture = TestBed.createComponent(CommunitiesPageComponent);
+    fixture = TestBed.createComponent(CommunitiesComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });
