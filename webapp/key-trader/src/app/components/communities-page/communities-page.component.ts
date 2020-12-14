@@ -28,6 +28,7 @@ export class CommunitiesComponent implements OnInit, OnDestroy {
 
   loading = false;
   userAuthenticated = false;
+  username = "None";
 
   private tokenValidity: { validity: boolean };
 
@@ -44,16 +45,19 @@ export class CommunitiesComponent implements OnInit, OnDestroy {
       this.loading = true;
       this.userAuthenticated = this.authService
                 .getIsAuthenticated();
-                this.retrieveCommunity();
+      
+      this.username = this.authService.getUsername();
+      this.retrieveCommunity();
   }
           
   retrieveCommunity() {
     this.loading = false;
+    this.loadCommunity(this.username)
   }
 
-  loadCommunity(communityName) {
+  loadCommunity(username) {
     console.log('Locating key trader community');
-    this.communityService.loadCommunity(communityName,communityName);
+    this.communityService.loadCommunity(username);
   }
 
 

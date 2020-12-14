@@ -18,6 +18,8 @@ import { Subject } from 'rxjs';
 import {environment} from '../../environments/environment';
 import {CookieService} from 'ngx-cookie-service';
 import { Community } from 'src/app/Models/community.model';
+import { CommunityRole } from 'src/app/Models/community-role.model';
+
 
 @Injectable({ providedIn: 'root' })
 export class CommunityService {
@@ -39,9 +41,9 @@ export class CommunityService {
 
   }
 
-  createCommunity(communityID: string, communityName: string){
+  createCommunity(communityID: string, communityName: string, username: string){
     const body: Community = {
-      communityID : communityName, 
+      communityID : communityID, 
       communityName : communityName
     };
     const url = environment.getApiUrl("user/create-community");
@@ -51,17 +53,18 @@ export class CommunityService {
       var result = response['result']
       if (result) {
         //navigate to page so user can see new community
-        console.log("Successfully created page.");
-        this.router.navigate(['/communities-community']);
+        console.log("Successfully created community.");
+        const role = "Admin";
+        this.createRole(communityID,username,role);
       }
     });
   }
 
-  loadCommunity(communityID: string, communityName: string){
-    const body: Community = {
-      communityID : communityName,
-      communityName : communityName
-    };
+  loadCommunity(username: string){
+    const body = {
+      username: username
+    }
+    console.log(body);
     const url = environment.getApiUrl("user/load-community");
 
     this.http.post(url,body)
@@ -70,7 +73,29 @@ export class CommunityService {
       var result = response['result']
       if (result) {
         //navigate to page so user can see new community
-        console.log("Successfully loaded community.");
+        console.log("Successfully retrieved communities.");
+        console.log(result);
+        return result;
+      }
+    });
+  }
+
+  createRole(communityID: string, username: string, role: string) {
+    const body: CommunityRole = {
+      communityID : communityID,
+      username : username, 
+      role : role
+    };
+    
+    const url = environment.getApiUrl("user/update-role");
+    this.http.post(url,body)
+    .subscribe(response => {
+      console.log(response);
+      var result = response['result']
+      if (result) {
+        //navigate to page so user can see new community
+        console.log("Successfully created role.");
+        this.router.navigate(['/communities-page']);
       }
     });
   }

@@ -24,15 +24,6 @@ CREATE TABLE `Discord_Servers` (
   PRIMARY KEY (`Server_ID`)
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
-DROP TABLE IF EXISTS `Communities`;
-CREATE TABLE `Communities` (
-  `Community_ID` varchar(20) NOT NULL,
-  `Community_Name` varchar(50) DEFAULT NULL,
-  `Community_Link` varchar(50) DEFAULT NULL,
-  PRIMARY KEY (`Community_ID`)
-) ENGINE=InnoDB DEFAULT CHARSET=latin1;
-
-
 DROP TABLE IF EXISTS `Game_Keys`;
 CREATE TABLE `Game_Keys` (
   `Game_PK` int(11) NOT NULL AUTO_INCREMENT,
@@ -99,12 +90,27 @@ CREATE TABLE `KeyTraderUsers` (
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
-
-
 DROP TABLE IF EXISTS `Users`;
 CREATE TABLE `Users` (
   `U_ID` varchar(20) NOT NULL,
   `User_Name` varchar(50) DEFAULT NULL,
   `Discord_Token` varchar(50) DEFAULT NULL,
   PRIMARY KEY (`U_ID`)
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+
+DROP TABLE IF EXISTS `Communities`;
+CREATE TABLE `Communities` (
+  `Community_ID` varchar(20) NOT NULL,
+  `Community_Name` varchar(50) DEFAULT NULL,
+  `Community_Link` varchar(50) DEFAULT NULL,
+  PRIMARY KEY (`Community_ID`)
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+DROP TABLE IF EXISTS `CommunityRoles`;
+CREATE TABLE `CommunityRoles` (
+  `Community_ID` varchar(20) NOT NULL,
+  `Username` varchar(50) DEFAULT NULL,
+  `Role_Name` varchar(20) NOT NULL,
+  PRIMARY KEY (`Community_ID`,`Username`)
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;

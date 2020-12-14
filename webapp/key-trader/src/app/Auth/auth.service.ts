@@ -24,6 +24,7 @@ export class AuthService {
 
   private isAuthenticated = false;
   private token: string;
+  private username: string;
 
   private tokenTimer: any;
   private authStatusListener = new Subject<boolean>();
@@ -71,6 +72,7 @@ export class AuthService {
         this.token = token;
         this.authStatusListener.next(true);
         this.isAuthenticated = true;
+        this.username = username;
         this.router.navigate(['/communities-page']);
       }
     });
@@ -88,6 +90,9 @@ export class AuthService {
     return this.isAuthenticated;
   }
 
+  getUsername() {
+    return this.username;
+  }
   getToken() {
     return this.token;
   }

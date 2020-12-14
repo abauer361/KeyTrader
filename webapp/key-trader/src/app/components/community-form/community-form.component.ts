@@ -19,17 +19,19 @@ export class CommunityFormComponent implements OnInit {
   communityName: string;
   loading = false;
   userAuthenticated = false;
+  username = "None";
 
   ngOnInit(): void {
     this.loading = true;
     this.userAuthenticated = this.authService.getIsAuthenticated();
+    this.username = this.authService.getUsername();
   }
 
   createCommunity(form: NgForm) {
     this.communityName = form.value.communityInput;
     if (this.communityName.length > 0) {
       console.log('Creating key trader community');
-      this.communityService.createCommunity(this.communityName, this.communityName);
+      this.communityService.createCommunity(this.communityName, this.communityName, this.username);
     }
   }
 
