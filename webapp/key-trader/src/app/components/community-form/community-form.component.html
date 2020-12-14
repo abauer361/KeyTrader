@@ -2,16 +2,26 @@
 <div class="communityWrapper">
 
     <div class="community">
+        <div *ngIf="userAuthenticated; else elseBlock">
+            <app-communities-nav-menu></app-communities-nav-menu>
 
-        <h2 class="keyHeader" style="flex-grow:0.3">Choose A Community Name</h2>
+            <h2 class="keyHeader" style="flex-grow:0.3">Choose A Community Name</h2>
 
-            <form (submit)="createCommunity(communityForm)" #communityForm="ngForm">
+                <form (submit)="createCommunity(communityForm)" #communityForm="ngForm">
 
-                <input ngModel #communityInput="ngModel" id="communityInput" placeholder="Community Name" name="communityInput"><br><br>
+                    <input ngModel #communityInput="ngModel" id="communityInput" placeholder="Community Name" name="communityInput"><br><br>
 
-                <button color="accent" type="submit" >Create</button>
+                    <button color="accent" type="submit" >Create</button>
 
-            </form>
+                </form>
+        </div>
+        <ng-template #elseBlock>
+
+            <h2 class="keyHeader" style="flex-grow:0.3">User must log in to view page.</h2>
+            <button class="loginBtn" onclick="window.location.href =  '/login-form';">Login with Key Trader</button>
+          
+        </ng-template>
     </div>
+    
 
 </div>
