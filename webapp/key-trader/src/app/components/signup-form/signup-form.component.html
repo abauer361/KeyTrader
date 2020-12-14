@@ -21,6 +21,9 @@
                     <!-- TODO: need to add confirm input error if passwords don't match -->
                     <input matInput type="password" ngModel #confirmInput="ngModel" name="confirm" id="confirmInput" placeholder="Confirm Password" name="confirmInput" required><br><br>
                     <mat-error *ngIf="confirmInput.invalid">Enter a valid password.</mat-error>
+                    <div *ngIf="this.password != this.confirm">
+                        <p class = "textStyle">Your passwords do not match up.</p>
+                    </div>
                 </mat-form-field>
                 <button mat-raised-button color="accent" type="submit" >Sign Up</button>
             </form>

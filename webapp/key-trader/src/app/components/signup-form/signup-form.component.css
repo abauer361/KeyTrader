@@ -13,6 +13,11 @@
     border-radius:20px;
     position: relative;
   }
+
+  p.textStyle{
+    color: red;
+    font-size: small;
+  }
   .signupContent{
     height: calc(100% - 70px);
     padding: 35px;
