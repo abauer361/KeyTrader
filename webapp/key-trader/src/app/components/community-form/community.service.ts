@@ -32,6 +32,9 @@ export class CommunityService {
   private validity: { validity: boolean };
   private validityUpdated = new Subject<{validity: boolean }>();
 
+
+  private currentCommunity: Community;
+
   constructor(private http: HttpClient, private router: Router, private cookieService: CookieService) {
 
   }
@@ -40,6 +43,8 @@ export class CommunityService {
     const body: Community = {communityID : communityName, communityName : communityName};
     const url = environment.getApiUrl("user/create-community");
   }
-
+  setCommunity(community: Community){
+    this.currentCommunity = community
+  }
 
 }
