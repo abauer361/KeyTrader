@@ -112,7 +112,7 @@ export class CommunityService {
     }
     const url = environment.getApiUrl("user/load-roles");
 
-    this.http.post<{ message: string, communities: CommunityRole [] }>(url,body)
+    this.http.post<{ message: string, communityRoles: CommunityRole [] }>(url,body)
     .subscribe((result) => {
       console.log(result);
       this.communityRoles = result.communityRoles;
