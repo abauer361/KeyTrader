@@ -176,6 +176,24 @@ router.post("/get-roles", async (req, res, next) => {
   }
 });
 
+router.post("/remove-user", async (req, res, next) => {
+  const communityID = req.body.communityID;
+  const username = req.body.username;
+
+  //insert to database
+    try {
+      await databaseRecords.removeCommunityUser(communityID, username);
+      
+      return res.status(201).json({
+          msg:"User removed",
+          result: true
+          });
+  }
+  catch (err) {
+    return next(new BadRequestError("Failed to remove user from community.", err));
+  }
+});
+
 router.post("/update-role", async (req, res, next) => {
   const communityID = req.body.communityID;
   const username = req.body.username;

@@ -87,6 +87,14 @@ export class CommunityRolesComponent implements OnInit, OnDestroy {
       this.communityService.createRole(communityID, newUser, role);
     }
   }
+
+  removeUser(username: string, role: string) {
+      const communityID = this.community.communityID;
+      console.log("Deleting user.");
+      this.communityService.removeUser(communityID, username, role);
+      this.loadUsers();
+  }
+
   search() {
     console.log("Search button");
   }

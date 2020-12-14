@@ -105,6 +105,24 @@ export class CommunityService {
     });
   }
 
+  removeUser(communityID: string, username: string, role: string) {
+    const body: CommunityRole = {
+      communityID : communityID,
+      username : username, 
+      role : role
+    };
+    const url = environment.getApiUrl("user/remove-user");
+    this.http.post(url,body)
+    .subscribe(response => {
+      console.log(response);
+      var result = response['result']
+      if (result) {
+        //navigate to page so user can see new community
+        console.log("Successfully deleted user.");
+      }
+    });
+  }
+
 
   loadRoles(communityID: string){
     const body = {

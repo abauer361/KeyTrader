@@ -74,6 +74,14 @@ exports.getCommunityRole = function (communityID) {
     );
 }
 
+exports.removeCommunityUser = function (communityID, username) {
+  var sql = "DELETE FROM CommunityRoles WHERE Community_ID=? AND Username=?;";
+  return this.get().query(
+    {sql: sql},
+    [communityID, username]
+  );
+}
+
 exports.addCommunityRole = function (communityID, username, role) {
   var sql = "INSERT INTO CommunityRoles(Community_ID, Username, Role_Name) values (?, ?, ?) ON DUPLICATE KEY UPDATE Role_Name = ?;";
   return this.get().query(
