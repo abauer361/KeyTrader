@@ -48,8 +48,11 @@
                     <!-- <button class="settingsBtn" (click)="window.location.href = '/comRoles';"><fa-icon [icon]="settingsIcon"></fa-icon></button> -->
                     <h4 class="communityName">{{community.communityID}}</h4>
                   </mat-card-content>
-                  <mat-card-actions style="display:flex;" class="center">
-                    <button mat-raised-button (click)="addRoles(community)" id="addKey" class="communityBtn">ADD ROLES</button>
+                  <mat-card-actions class="center">
+                    <button mat-raised-button style="width: 150px;" (click)="addRoles(community)" id="addRole" class="Aligner-item">ADD ROLES</button>
+                    <div style="padding: 5px;"></div>
+                    <button mat-raised-button id="addKey" class="Aligner-item">ADD KEY</button>
+                    <button mat-raised-button id="seeKey" class="Aligner-item">SEE KEY</button>
                   </mat-card-actions>
                 </mat-card>
 
