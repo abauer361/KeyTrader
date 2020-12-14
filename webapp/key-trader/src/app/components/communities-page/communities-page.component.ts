@@ -69,6 +69,9 @@ export class CommunitiesComponent implements OnInit, OnDestroy {
 
   ngOnDestroy(): void {
     // this.cookieService.deleteAll( '/ ',  '/' );
+    if (this.communitySub) {
+      this.communitySub.unsubscribe();
+    }
   }
 
   setKeyCommunity(community) {

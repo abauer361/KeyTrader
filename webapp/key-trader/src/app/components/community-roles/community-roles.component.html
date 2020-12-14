@@ -1,0 +1,47 @@
+<div class="settingsPageWrapper" id="loading" *ngIf = "loading">
+  <app-swapping-squares-spinner
+    [animationDuration]="1000"
+    [size]="65"
+    [color]="'#0CDAC2'"
+  ></app-swapping-squares-spinner>
+</div>
+
+<!---
+<div class="settingsPageWrapper" *ngIf="!loading">
+  <app-nav-menu></app-nav-menu>
+
+  <div class="header">
+    <h2 class="settingsTitle">Roles for {{this.community.communityName}}</h2>
+  </div>
+-->
+
+  <h4>Add User to Community</h4>
+
+  <mat-form-field>
+    <input matInput ngModel #userInput="ngModel" id="userInput" placeholder="Add User" name="userInput"><br><br>
+</mat-form-field>
+  <button class="searchBtn" mat-raised-button (click)="addUser(userInput.value)" >ADD USER</button>
+
+<h4>Role Selector</h4>
+<mat-list-item class="listItem" *ngFor="let user of this.users">
+
+  <mat-card class="role">
+    <h4 mat-line class="roleTitle">{{role}}</h4>
+    <p>user.name</p>
+    <mat-form-field>
+      <mat-label>user.role</mat-label>
+      <mat-select [formControl]="discordRoles.controls[i]">
+        <mat-option value="Admin">Admin</mat-option>
+        <mat-option value="Donor/Recipient">Donor/Recipient</mat-option>
+        <mat-option value="Donor">Donor</mat-option>
+        <mat-option value="Recipient">Recipient</mat-option>
+        <mat-option value="Viewer">Viewer</mat-option>
+        <mat-option value="Blocked">Blocked</mat-option>
+      </mat-select>
+    </mat-form-field>
+  </mat-card>
+
+</mat-list-item>
+
+
+<!--</div> -->

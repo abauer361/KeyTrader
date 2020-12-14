@@ -67,7 +67,7 @@ export class ServersPageComponent implements OnInit, OnDestroy {
 
   retrieveServers() {
     this.userService.getUserDiscords(this.jwtKey);          // Initiates call to backend to ensure that the servers are loaded on the home page
-    this.userService.getServerUpdatedListener().subscribe((servers) => {
+    this.userService.getServerUpdatedListener().subscribe((servers) => { 
       this.servers = servers;
       this.userService.getLinkedServersUpdatedListener().subscribe((linkedServers: Server[]) => {
         this.linkedServers = linkedServers;

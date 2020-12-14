@@ -21,6 +21,12 @@
     justify-content: space-around;
   
   }
+
+  .loginButton{
+    background-color: #34d4c4;
+    color: white;
+  }
+
   mat-form-field,
   textarea {
     width: 100%
