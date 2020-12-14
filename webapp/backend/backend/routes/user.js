@@ -114,7 +114,7 @@ router.post("/create-community", async (req, res, next) => {
   
   //insert to database
     try {
-      await databaseRecords.createKeyTraderUser(communityID, communityName, communityLink);
+      await databaseRecords.createCommunity(communityID, communityName, communityLink);
 
       return res.status(201).json({
           msg:"Community Added",
