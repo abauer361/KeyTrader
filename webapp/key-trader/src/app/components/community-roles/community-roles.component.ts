@@ -56,6 +56,7 @@ export class CommunityRolesComponent implements OnInit, OnDestroy {
   }
 
   loadUsers() {
+    this.users = [];
     this.communityService.loadRoles(this.community.communityID);
     this.communityService.getCommunityRoles().subscribe((communityRoles: CommunityRole []) => {
       this.users = communityRoles;
@@ -71,7 +72,7 @@ export class CommunityRolesComponent implements OnInit, OnDestroy {
     const communityID = this.community.communityID;
     console.log("Updating role: " + role);
     this.communityService.createRole(communityID, username, role);
-    
+    this.loadUsers();
   }
 
   addUser(newUser: string) {
