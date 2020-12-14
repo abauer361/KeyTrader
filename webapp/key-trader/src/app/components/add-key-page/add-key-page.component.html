@@ -2,7 +2,27 @@
 
 <div class="addKeyWrapper">
   <div *ngIf="username != ''" class="communitiesWrapper">
-
+    <app-communities-nav-menu></app-communities-nav-menu>
+    <div style="text-align: center;" id="pageWrapper">
+      <h2 class="keyHeader" style="flex-grow:0.3">Add Key to Community</h2>
+  
+    <mat-form-field>
+      <input matInput ngModel #userInput="ngModel" id="userInput" placeholder="Key" name="userInput"><br><br>
+    </mat-form-field>
+    <button class="createButton" mat-raised-button (click)="addCommunityKey(userInput.value)" >ADD KEY</button>
+  
+    <h1>View keys</h1>
+    <mat-card class="communityCard" *ngFor="let key of keys">
+      <mat-card-header class="header">
+      </mat-card-header>
+      <mat-card-content>
+        <h4 class="communityName">{{key.key}}</h4>
+      </mat-card-content>
+      <mat-card-actions class="center">
+        <div style="padding: 5px;"></div>
+        <button mat-raised-button id="seeKey" (click)="deleteCommunityKey(key)"  class="Aligner-item">REMOVE KEY</button>
+      </mat-card-actions>
+    </mat-card>
   </div>
   <ng-template #elseBlock>
   <app-nav-menu></app-nav-menu>

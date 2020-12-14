@@ -65,7 +65,7 @@ export class AddKeyPageComponent implements OnInit {
       else {
         //run community service
         this.community = this.communityService.getCommunity();
-        console.log(this.community);
+        
         this.loadCommunityKeys();
       }
 
