@@ -104,7 +104,32 @@ router.post("/load-community", async (req, res, next) => {
         const communityName = keyJson[data].Community_ID;
         roleDataArray.push({ communityID: communityID, roleType: communityName });
     }
-    res.status(200).json({ message: "Success", communities: roleDataArray });
+    res.status(200).json({ message: "Success: Loaded communities", communities: roleDataArray });
+
+  
+  }
+  catch (err) {
+    console.log(err);
+    return next(new InternalServerError("Cannot get communities.", err));
+  }
+});
+
+router.post("/load-roles", async (req, res, next) => {
+
+  const communityID = req.body.communityID;
+  //load community
+    try {
+      const results = await databaseRecords.getCommunityRole(communityID);
+      const keyJson = JSON.parse(JSON.stringify(results));
+      let roleDataArray = [];
+
+      for (const data in keyJson) {
+        const communityID = keyJson[data].Community_ID;
+        const communityName = keyJson[data].Community_ID;
+        const role = keyJson[data].Role_Name;
+        roleDataArray.push({ communityID: communityID, communityName: communityName, role:role });
+    }
+    res.status(200).json({ message: "Success: Loaded roles", communityRoles: roleDataArray });
 
   
   }

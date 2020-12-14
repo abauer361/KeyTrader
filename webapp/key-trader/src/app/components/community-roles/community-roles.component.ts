@@ -5,9 +5,9 @@ import { ViewChild} from '@angular/core';
 import {CdkTextareaAutosize} from '@angular/cdk/text-field';
 import {FormArray, FormControl} from '@angular/forms';
 import {UserComService} from '../../User/userComService';
-import {KeyTraderRole} from "../../Models/keyTraderRole.model";
 import {Router} from "@angular/router";
 import { Community } from 'src/app/Models/community.model';
+import { CommunityRole } from 'src/app/Models/community-role.model';
 
 @Component({
   selector: 'app-community-roles',
@@ -20,6 +20,7 @@ export class CommunityRolesComponent implements OnInit, OnDestroy {
 
   private userRoles: string[] = [];
   public username: string;
+  public users: CommunityRole [] = [];
 
   allowed: boolean;
   accessDenied: boolean;
@@ -37,16 +38,25 @@ export class CommunityRolesComponent implements OnInit, OnDestroy {
   ngOnInit() {
     this.loading = true;
     this.community = this.communityService.getCommunity();
+    this.loadUsers();
     this.loading = false;
   }
 
   ngOnDestroy(): void {
   }
 
-  addUser(username : string) {
-    this.username = username;
-    if (this.username.length > 0) {
+  loadUsers() {
+    this.communityService.loadRoles(this.community.communityID);
+  }
+
+  addUser(newUser: string) {
+    if (newUser.length > 0) {
       //TO DO ADD USERS TO ROLES
+      const communityID = this.community.communityID;
+      const role = "Viewer";
+      //TODO: check existance of user in KeyTraderUsers
+      console.log("Creating role.");
+      this.communityService.createRole(communityID, newUser, role);
     }
   }
 

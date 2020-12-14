@@ -34,6 +34,9 @@ export class CommunityService {
 
   private communities: Community [] = [];
   private communitiesUpdated = new Subject<Community []>();
+
+  private communityRoles: CommunityRole [] = [];
+  private communityRolesUpdated = new Subject<CommunityRole []>();
  
   public showSuccess: boolean;     // Success timer info
   private successSub: Subscription;
@@ -100,6 +103,25 @@ export class CommunityService {
         this.router.navigate(['/communities-page']);
       }
     });
+  }
+
+
+  loadRoles(communityID: string){
+    const body = {
+      communityID: communityID
+    }
+    const url = environment.getApiUrl("user/load-roles");
+
+    this.http.post<{ message: string, communities: CommunityRole [] }>(url,body)
+    .subscribe((result) => {
+      console.log(result);
+      this.communityRoles = result.communityRoles;
+      this.communityRolesUpdated.next([...this.communityRoles]);
+      this.setTimer();
+      console.log("Successfully loaded community.");
+    }), error => {
+      console.log(error);
+    };
   }
 
   setCommunity(community){
