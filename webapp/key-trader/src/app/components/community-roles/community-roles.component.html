@@ -1,5 +1,6 @@
 
-  <div class="community">
+<div class="settingsPageWrapper">
+  <div class="page">
 <div *ngIf="userAuthenticated; else elseBlock">
   <app-communities-nav-menu></app-communities-nav-menu>
   <div class="settingsPageWrapper" id="loading" *ngIf = "loading">
@@ -48,6 +49,7 @@
   <button class="loginBtn" onclick="window.location.href =  '/login-form';">Login with Key Trader</button>
 
 </ng-template>
+</div>
 </div>
 
 <!--</div> -->
