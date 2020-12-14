@@ -16,7 +16,7 @@
   <mat-form-field>
     <input matInput ngModel #userInput="ngModel" id="userInput" placeholder="Add User" name="userInput"><br><br>
   </mat-form-field>
-  <button class="searchBtn" mat-raised-button (click)="addUser(userInput.value)" >ADD USER</button>
+  <button class="createButton" mat-raised-button (click)="addUser(userInput.value)" >ADD USER</button>
 
 <h4>Role Selector</h4>
 <mat-list-item class="listItem" *ngFor="let user of this.users; index as i">
@@ -35,8 +35,8 @@
         <mat-option value="Blocked">Blocked</mat-option>
       </mat-select>
     </mat-form-field>
-    <button class="searchBtn" mat-raised-button (click)="updateRole(user.username,newRoles[i])" >UPDATE ROLE</button>
-    <button class="searchBtn" mat-raised-button (click)="removeUser(user.username,newRoles[i])" >REMOVE USER</button>
+    <button mat-raised-button (click)="updateRole(user.username,newRoles[i])" class="createButton">UPDATE ROLE</button>
+    <button mat-raised-button (click)="removeUser(user.username,newRoles[i])" class="createButton">REMOVE USER</button>
 
   </mat-card>
 
