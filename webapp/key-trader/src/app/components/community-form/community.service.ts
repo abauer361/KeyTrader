@@ -40,9 +40,40 @@ export class CommunityService {
   }
 
   createCommunity(communityID: string, communityName: string){
-    const body: Community = {communityID : communityName, communityName : communityName};
+    const body: Community = {
+      communityID : communityName, 
+      communityName : communityName
+    };
     const url = environment.getApiUrl("user/create-community");
+    this.http.post(url,body)
+    .subscribe(response => {
+      console.log(response);
+      var result = response['result']
+      if (result) {
+        //navigate to page so user can see new community
+        console.log("Successfully created page.");
+        this.router.navigate(['/communities-page']);
+      }
+    });
   }
+
+  loadCommunity(communityID: string, communityName: string){
+    const body: Community = {
+      communityID : communityName,
+      communityName : communityName
+    };
+    const url = environment.getApiUrl("user/create-community");
+
+    this.http.post<{token:string}>(url,body)
+    .subscribe(response => {
+      console.log(response);
+      var result = response['result']
+      if (result) {
+        //navigate to page so user can see new community
+      }
+    });
+  }
+
   setCommunity(community: Community){
     this.currentCommunity = community
   }

@@ -2,6 +2,8 @@ import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { CommunityService } from './community.service';
 import {NgForm} from '@angular/forms';
+import {AuthService} from '../../Auth/auth.service';
+
 
 @Component({
   selector: 'app-community-form',
@@ -11,24 +13,22 @@ import {NgForm} from '@angular/forms';
 })
 export class CommunityFormComponent implements OnInit {
 
-  constructor( private router: Router,
+  constructor( private router: Router, public authService: AuthService,
     private communityService: CommunityService) { }
 
   communityName: string;
+  loading = false;
+  userAuthenticated = false;
 
   ngOnInit(): void {
+    this.loading = true;
+    this.userAuthenticated = this.authService.getIsAuthenticated();
   }
-
-  onSubmitButtonClicked(form: NgForm): void {
-    this.communityName = form.value.communityNameInput;
-    console.log('Going to key-trader home page');
-    this.communityService.createCommunity(this.communityName, this.communityName);
-  }
-
 
   createCommunity(form: NgForm) {
-    
+    this.communityName = form.value.communityInput;
+    console.log('Creating key trader community');
+    this.communityService.createCommunity(this.communityName, this.communityName);
   }
-
 
 }

@@ -50,12 +50,20 @@ exports.getKeyTraderUsers = function (username) {
     );
 }
 
-exports.addCommunity = function (communityID, communityName) {
-  var sql = "INSERT INTO Communities(Community_ID, Community_Name) values (?, ?) ON DUPLICATE KEY UPDATE Community_Name = ?;";
+exports.addCommunity = function (communityID, communityName, communityLink) {
+  var sql = "INSERT INTO Communities(Community_ID, Community_Name, Community_Link) values (?, ?, ?);";
   return this.get().query(
     {sql: sql},
-    [communityID, communityName]
+    [communityID, communityName, communityLink]
   );
+}
+
+exports.loadCommunity = function () {
+  var sql = "SELECT * FROM Communities;";
+  return this.get().query(
+    {sql:sql},
+    []
+    );
 }
 
 //-------------------------------------------

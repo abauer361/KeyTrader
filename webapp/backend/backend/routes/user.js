@@ -90,13 +90,30 @@ router.post("/signup", async (req, res, next) => {
     }
 });
 
-router.post("/create-community", async (req, res, next) => {
-  const communityID = req.body.communityID;
-  const communityName = req.body.communityName;
+router.post("/load-community", async (req, res, next) => {
 
   //insert to database
     try {
-      await databaseRecords.addCommunity(communityID, communityName);
+      await databaseRecords.loadCommunity();
+
+      return res.status(201).json({
+          msg:"Community Loaded",
+          result: true
+          });
+  }
+  catch (err) {
+    return next(new BadRequestError("Failed to create community. Try a different name.", err));
+  }
+});
+
+router.post("/create-community", async (req, res, next) => {
+  const communityID = req.body.communityID;
+  const communityName = req.body.communityName;
+  const communityLink = ' ';
+ 
+  //insert to database
+    try {
+      await databaseRecords.addCommunity(communityID, communityName, communityLink);
 
       return res.status(201).json({
           msg:"Community Added",
