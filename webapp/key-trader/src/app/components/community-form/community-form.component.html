@@ -1,17 +1,17 @@
 
-<div class="signupWrapper">
+<div class="communityWrapper">
 
     <div class="community">
 
         <h2 class="keyHeader" style="flex-grow:0.3">Choose A Community Name</h2>
-        <mat-card>
+
             <form (submit)="createCommunity(communityForm)" #communityForm="ngForm">
-                <mat-form-field>
-                    <input matInput ngModel #communityInput="ngModel" name="community" id="communityNameInput" placeholder="Community Name" name="communityInput"><br><br>
-                </mat-form-field> 
-                <button mat-raised-button color="accent" type="submit" >Create</button>
+
+                <input ngModel #communityInput="ngModel" name="community" id="communityNameInput" placeholder="CommunityName" name="communityInput"><br><br>
+
+                <button color="accent" type="submit" >Create</button>
+
             </form>
-        </mat-card>
     </div>
 
 </div>

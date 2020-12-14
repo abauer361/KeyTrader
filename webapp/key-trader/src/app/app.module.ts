@@ -25,6 +25,7 @@ import { ServersPageComponent } from './components/servers-page/servers-page.com
 import { SeeKeysPageComponent } from './components/see-keys-page/see-keys-page.component';
 import { AddKeyPageComponent } from './components/add-key-page/add-key-page.component';
 import {CommunitiesComponent} from './components/communities-page/communities-page.component';
+import {CommunityFormComponent} from './components/community-form/community-form.component';
 import { ChangeRolesComponent} from './components/change-roles/change-roles.component';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatOptionModule } from '@angular/material/core';
@@ -60,6 +61,7 @@ import { MatDialogModule } from '@angular/material/dialog';
     ChangeRolesComponent,
     NavMenuComponent,
     CommunitiesNavMenuComponent,
+    CommunityFormComponent,
     ViewRolesComponent,
     LoggedOutComponent,
     ProfilePageComponent,

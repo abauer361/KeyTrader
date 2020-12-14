@@ -25,4 +25,10 @@ export class CommunityFormComponent implements OnInit {
     this.communityService.createCommunity(this.communityName, this.communityName);
   }
 
+
+  createCommunity(form: NgForm) {
+    
+  }
+
+
 }
