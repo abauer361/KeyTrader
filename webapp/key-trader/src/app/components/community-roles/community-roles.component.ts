@@ -10,7 +10,6 @@ import { Community } from 'src/app/Models/community.model';
 import { CommunityRole } from 'src/app/Models/community-role.model';
 import {AuthService} from '../../Auth/auth.service';
 
-
 @Component({
   selector: 'app-community-roles',
   templateUrl: './community-roles.component.html',
@@ -24,11 +23,14 @@ export class CommunityRolesComponent implements OnInit, OnDestroy {
   public userRoles: string[] = ["Admin","Doner/Recipient","Doner","Recipient","Viewer","Blocked"];
   public username: string;
   public users: CommunityRole [] = [];
+
   private communityRoleSub: Subscription;
   userAuthenticated = false;
 
   allowed: boolean;
   accessDenied: boolean;
+  communityRoles = new FormArray([]);
+
 
   loading = false;
   popup = false;
@@ -62,6 +64,7 @@ export class CommunityRolesComponent implements OnInit, OnDestroy {
       this.users = communityRoles;
       for (let user in this.users) {
         const newRole = this.users[user].role;
+        this.communityRoles.push(new FormControl(''));
         this.newRoles.push(newRole);
       }
       this.loading = false;
