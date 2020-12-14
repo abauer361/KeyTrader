@@ -85,6 +85,7 @@ export class CommunityRolesComponent implements OnInit, OnDestroy {
       //TODO: check existance of user in KeyTraderUsers
       console.log("Creating role.");
       this.communityService.createRole(communityID, newUser, role);
+      this.loadUsers();
     }
   }
 

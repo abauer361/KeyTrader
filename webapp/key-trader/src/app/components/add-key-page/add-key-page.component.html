@@ -1,6 +1,10 @@
 <app-access-denied *ngIf="accessDenied"></app-access-denied>
 
 <div class="addKeyWrapper">
+  <div *ngIf="username != ''" class="communitiesWrapper">
+
+  </div>
+  <ng-template #elseBlock>
   <app-nav-menu></app-nav-menu>
 
   <div class="header">
@@ -68,7 +72,7 @@
     <button (click)="checkSteamKey=false" mat-raised-button class="cancelSteamBtn">No, cancel</button>
   </mat-card>
 
-
+</ng-template>
 
 </div>
 

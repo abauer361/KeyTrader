@@ -37,8 +37,6 @@ export class CommunitiesComponent implements OnInit, OnDestroy {
               private router: Router, public keyService: KeyService,
               public communityService: CommunityService,
               private cookieService: CookieService) {}
-
-
   
 
   ngOnInit(): void {
@@ -80,6 +78,13 @@ export class CommunitiesComponent implements OnInit, OnDestroy {
   }
 
   addRoles(community) {
+    console.log("Navigating to community-roles page.")
+    this.setRoleCommunity(community);
+    this.router.navigate(['/community-roles']);
+
+  }
+
+  addKeys(community) {
     console.log("Navigating to community-roles page.")
     this.setRoleCommunity(community);
     this.router.navigate(['/community-roles']);

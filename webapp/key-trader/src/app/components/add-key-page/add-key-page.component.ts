@@ -5,6 +5,10 @@ import { Server } from '../../Models/server.model';
 import { Subscription } from 'rxjs';
 import { Key } from '../../Models/key.model';
 import { Router } from "@angular/router";
+import {AuthService} from '../../Auth/auth.service';
+import {CommunityService} from '../../Server/community.service'
+import { Community } from 'src/app/Models/community.model';
+
 
 @Component({
   selector: 'app-add-key-page',
@@ -13,7 +17,8 @@ import { Router } from "@angular/router";
 })
 export class AddKeyPageComponent implements OnInit {
 
-  constructor(public userService: UserService, public keyService: KeyService, private router: Router) { }
+  constructor(public authService: AuthService, public communityService : CommunityService,
+    public userService: UserService, public keyService: KeyService, private router: Router) { }
 
   server: Server;
   gameKey: string;
@@ -27,6 +32,12 @@ export class AddKeyPageComponent implements OnInit {
 
   addedKey: boolean;
 
+  username = "";
+  community: Community;
+
+  keys: Key[] = [];
+
+
   otherKey = {gameID: 0, gamePrice: 0, gameName: '', keyString: ''};
 
   keyTypeSelected = 'Steam';
@@ -37,17 +48,48 @@ export class AddKeyPageComponent implements OnInit {
   accessDenied: boolean;
 
   ngOnInit() {
-    this.server = this.keyService.getKeyServer();
-    console.log(this.server);
-    this.userService.getUserRoles(localStorage.getItem('token'), this.server.serverID);
-    this.rolesSub = this.userService.getRolesUpdatedListener().subscribe((roles: string[]) => {
-      this.userRoles = roles;
-      this.checkUserRole();
-    });
 
-    console.log(this.server);
+    this.username = this.authService
+                .getUsername();
+      if (this.username == "") {  
+        this.server = this.keyService.getKeyServer();
+        console.log(this.server);
+        this.userService.getUserRoles(localStorage.getItem('token'), this.server.serverID);
+        this.rolesSub = this.userService.getRolesUpdatedListener().subscribe((roles: string[]) => {
+          this.userRoles = roles;
+          this.checkUserRole();
+        });
+
+        console.log(this.server);
+      }
+      else {
+        //run community service
+        this.community = this.communityService.getCommunity();
+        console.log(this.community);
+        this.loadCommunityKeys();
+      }
 
   }
+
+//button
+  addCommunityKey(key: string) {
+
+    this.keyService.addCommunityKey(this.community.communityID,key);
+    this.loadCommunityKeys();
+  }
+// button
+  deleteCommunityKey(key: string) {
+    this.keyService.removeCommunityKey(key);
+    this.loadCommunityKeys();
+  }
+
+  loadCommunityKeys() {
+    this.keyService.loadCommunityKeys(this.username);
+    this.keyService.getKeyUpdatedListener().subscribe((keys: Key []) => {
+      this.keys = keys;
+    });
+  }
+
 
   checkUserRole() {
 

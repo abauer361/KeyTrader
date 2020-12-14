@@ -157,6 +157,60 @@ router.post("/create-community", async (req, res, next) => {
   }
 });
 
+router.post("/create-key", async (req, res, next) => {
+  const communityID = req.body.communityID;
+  const key = req.body.key;
+ 
+  //insert to database
+    try {
+      await databaseRecords.createCommunityKey(communityID, key);
+
+      return res.status(201).json({
+          msg:"Community key Added",
+          result: true
+          });
+  }
+  catch (err) {
+    return next(new BadRequestError("Failed to create community. Try a different name.", err));
+  }
+});
+
+router.post("/remove-key", async (req, res, next) => {
+  const key = req.body.key;
+
+  //remove from db
+    try {
+      await databaseRecords.removeCommunityKey(key);
+      
+      return res.status(201).json({
+          msg:"Key removed",
+          result: true
+          });
+  }
+  catch (err) {
+    return next(new BadRequestError("Failed to remove key from community.", err));
+  }
+});
+
+router.post("/get-keys", async (req, res, next) => {
+  const communityID = req.body.communityID;
+  
+  //insert to database
+    try {
+      const results = await databaseRecords.getCommunityKeys(communityID);
+      const keyJson = JSON.parse(JSON.stringify(results));
+      
+        
+      return res.status(201).json({
+          msg:"Keys found",
+          result: keyJson
+          });
+  }
+  catch (err) {
+    return next(new BadRequestError("Failed to create key. Try a different key.", err));
+  }
+});
+
 router.post("/get-roles", async (req, res, next) => {
   const communityID = req.body.communityID;
   

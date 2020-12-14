@@ -11,6 +11,7 @@ import {environment} from '../../environments/environment';
 import {Key} from '../Models/key.model';
 import {Server} from '../Models/server.model';
 import {Community} from '../Models/community.model'
+import { CommunityKey } from 'src/app/Models/community-key.model';
 
 @Injectable({providedIn: 'root'})
 export class KeyService {
@@ -32,7 +33,47 @@ export class KeyService {
   keyAdded : boolean;
   private keyAddedUpdated = new Subject<boolean>();
 
-  public getKeys(guildID) {
+  public loadCommunityKeys(communityID) {
+    this.http.get<{message: string, keys}>(environment.getApiUrl('user/get-keys'), {params: {communityID}})
+    .subscribe((keyData) => {
+      this.keys = keyData.keys;
+      this.keysUpdated.next([...this.keys]);
+    });
+  }
+
+  public removeCommunityKey(key) {
+    this.http.get<{message: string, keys}>(environment.getApiUrl('user/remove-keys'), {params: {key}})
+    .subscribe((response) => {
+      console.log(response);
+      var result = response['result']
+      if (result) {
+        //navigate to page so user can see new community
+        console.log("Successfully deleted key.");
+      }
+    });
+  }
+
+  public addCommunityKey(communityID, key) {
+    const body: CommunityKey = {
+      communityID : communityID, 
+      key: key
+    };
+    this.http.post(environment.getApiUrl('user/create-Key') , body).subscribe(
+        responseData => {
+          this.keyAdded = true;
+          this.keyAddedUpdated.next(this.keyAdded);
+
+          //this.sendNotification(ID, 'newKey');
+        }, err => {
+          console.log(err);
+          this.keyAdded = false;
+      });
+
+  }
+
+ 
+
+  public getKeys(guildID) { 
     console.log(guildID);
     this.http.get<{message: string, keys}>(environment.getApiUrl('discord/getKeys'), {params: {guildID}})
       .subscribe((keyData) => {

@@ -74,6 +74,31 @@ exports.getCommunityRole = function (communityID) {
     );
 }
 
+exports.getCommunityKeys = function (communityID) {
+  var sql = "SELECT * FROM CommunityKeys WHERE Community_ID=?;";
+  return this.get().query(
+    {sql:sql},
+    [communityID]
+    );
+}
+
+exports.createCommunityKey = function (communityID,key) {
+  var sql = "INSERT INTO CommunityKeys (Community_KD, Key) values (?, ?);"
+  return this.get()
+  .query(
+      {sql: sql},
+      [communityID,key]
+  );
+}
+
+exports.removeCommunityKey = function (key) {
+  var sql = "DELETE FROM CommunityKeys WHERE Key=?;";
+  return this.get().query(
+    {sql: sql},
+    [key]
+  );
+}
+
 exports.removeCommunityUser = function (communityID, username) {
   var sql = "DELETE FROM CommunityRoles WHERE Community_ID=? AND Username=?;";
   return this.get().query(

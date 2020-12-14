@@ -114,3 +114,10 @@ CREATE TABLE `CommunityRoles` (
   `Role_Name` varchar(20) NOT NULL,
   PRIMARY KEY (`Community_ID`,`Username`)
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+DROP TABLE IF EXISTS `CommunityKeys`;
+CREATE TABLE `CommunityKeys` (
+  `Community_ID` varchar(20) NOT NULL,
+  `Key` varchar(50) DEFAULT NULL,
+  PRIMARY KEY (`Key`)
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
