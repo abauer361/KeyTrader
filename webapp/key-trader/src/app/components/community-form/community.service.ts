@@ -45,8 +45,7 @@ export class CommunityService {
       communityName : communityName
     };
     const url = environment.getApiUrl("user/create-community");
-
-    this.http.post<{token:string}>(url,body)
+    this.http.post(url,body)
     .subscribe(response => {
       console.log(response);
       var result = response['result']

@@ -110,11 +110,10 @@ router.post("/create-community", async (req, res, next) => {
   const communityID = req.body.communityID;
   const communityName = req.body.communityName;
   const communityLink = ' ';
-
-  
+ 
   //insert to database
     try {
-      await databaseRecords.createCommunity(communityID, communityName, communityLink);
+      await databaseRecords.addCommunity(communityID, communityName, communityLink);
 
       return res.status(201).json({
           msg:"Community Added",
@@ -122,7 +121,7 @@ router.post("/create-community", async (req, res, next) => {
           });
   }
   catch (err) {
-    return next(new BadRequestError("Failed to create community. KeyTraderUSERTry a different name.", err));
+    return next(new BadRequestError("Failed to create community. Try a different name.", err));
   }
 });
 
