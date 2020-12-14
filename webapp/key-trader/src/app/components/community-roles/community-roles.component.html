@@ -1,36 +1,31 @@
-<div class="settingsPageWrapper" id="loading" *ngIf = "loading">
-  <app-swapping-squares-spinner
-    [animationDuration]="1000"
-    [size]="65"
-    [color]="'#0CDAC2'"
-  ></app-swapping-squares-spinner>
-</div>
 
-<!---
-<div class="settingsPageWrapper" *ngIf="!loading">
-  <app-nav-menu></app-nav-menu>
-
-  <div class="header">
-    <h2 class="settingsTitle">Roles for {{this.community.communityName}}</h2>
+  <div class="community">
+<div *ngIf="userAuthenticated; else elseBlock">
+  <app-communities-nav-menu></app-communities-nav-menu>
+  <div class="settingsPageWrapper" id="loading" *ngIf = "loading">
+    <app-swapping-squares-spinner
+      [animationDuration]="1000"
+      [size]="65"
+      [color]="'#0CDAC2'"
+    ></app-swapping-squares-spinner>
   </div>
--->
-
-  <h4>Add User to Community</h4>
+  <div style="text-align: center;" id="pageWrapper">
+    <h2 class="keyHeader" style="flex-grow:0.3">Add User to Community</h2>
 
   <mat-form-field>
     <input matInput ngModel #userInput="ngModel" id="userInput" placeholder="Add User" name="userInput"><br><br>
-</mat-form-field>
+  </mat-form-field>
   <button class="searchBtn" mat-raised-button (click)="addUser(userInput.value)" >ADD USER</button>
 
 <h4>Role Selector</h4>
 <mat-list-item class="listItem" *ngFor="let user of this.users; index as i">
 
   <mat-card class="role">
-    <h4 mat-line class="roleTitle">{{user.username}}  </h4>
+    <h4 mat-line class="roleTitle">{{user.role}}:  {{user.username}}</h4>
    
     <mat-form-field>
       <mat-label>{{user.role}}</mat-label>
-      <mat-select [formControl]="this.userRoles[i]">
+      <mat-select [formControl]="this.userRoles[i]" placeholder="Mode" [(value)]="newRoles[i]">
         <mat-option value="Admin">Admin</mat-option>
         <mat-option value="Donor/Recipient">Donor/Recipient</mat-option>
         <mat-option value="Donor">Donor</mat-option>
@@ -39,12 +34,20 @@
         <mat-option value="Blocked">Blocked</mat-option>
       </mat-select>
     </mat-form-field>
-    <button class="searchBtn" mat-raised-button (click)="updateRole(user.username,this.userRoles[i])" >UPDATE ROLE</button>
+    <button class="searchBtn" mat-raised-button (click)="updateRole(user.username,newRoles[i])" >UPDATE ROLE</button>
 
 
   </mat-card>
 
 </mat-list-item>
+</div>
+</div>
+<ng-template #elseBlock>
 
+  <h2 class="keyHeader" style="flex-grow:0.3">User must log in to view page.</h2>
+  <button class="loginBtn" onclick="window.location.href =  '/login-form';">Login with Key Trader</button>
+
+</ng-template>
+</div>
 
 <!--</div> -->

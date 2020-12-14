@@ -48,6 +48,17 @@
   display: flex;
   justify-content: space-between;
 }
+.loginBtn {
+  background-color: #34d4c4;
+  text-shadow: 1px 1px #000000;
+  color: white;
+  list-style-type: none;
+  text-decoration: none;
+  text-align: center;
+  font-family: 'Varela Round', sans-serif;
+  font-size: 1vw;
+  cursor:pointer;
+}
 
 .roleBtn {
   background-color: #7289DA;
@@ -56,6 +67,15 @@
   text-align: center;
   color: white;
   margin:30px;
+}
+.community{
+  width:48vw;
+  left:0;
+  height:95vh;
+  background-color: white;
+  border-radius:20px;
+  justify-content: center;
+  align-items: center;
 }
 
 .addUserBtn {

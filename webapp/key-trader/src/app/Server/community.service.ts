@@ -64,7 +64,7 @@ export class CommunityService {
         const role = "Admin";
         this.createRole(communityID,username,role);
         
-        this.router.navigate(['/communities-page']);
+        this.router.navigate(['/community-roles']);
       }
     });
   }

@@ -45,10 +45,11 @@ export class CommunitiesComponent implements OnInit, OnDestroy {
       this.loading = true;
       this.userAuthenticated = this.authService
                 .getIsAuthenticated();
-      
-      this.username = this.authService.getUsername();
-      
-      this.retrieveCommunity();
+      if (this.userAuthenticated == true) {
+        this.username = this.authService.getUsername();
+        
+        this.retrieveCommunity();
+      }
   }
           
   retrieveCommunity() {
@@ -83,11 +84,6 @@ export class CommunitiesComponent implements OnInit, OnDestroy {
     this.setRoleCommunity(community);
     this.router.navigate(['/community-roles']);
 
-  }
-  seeRoles(community) {
-    this.setRoleCommunity(community);
-    //TODO: navigate to role
-    //this.router.navigateByUrl('/see-keys');
   }
 
   createCommunity() {

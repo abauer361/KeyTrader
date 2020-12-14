@@ -8,6 +8,8 @@ import {UserComService} from '../../User/userComService';
 import {Router} from "@angular/router";
 import { Community } from 'src/app/Models/community.model';
 import { CommunityRole } from 'src/app/Models/community-role.model';
+import {AuthService} from '../../Auth/auth.service';
+
 
 @Component({
   selector: 'app-community-roles',
@@ -18,10 +20,12 @@ export class CommunityRolesComponent implements OnInit, OnDestroy {
 
   community: Community;
 
+  public newRoles: string [] = [];
   public userRoles: string[] = ["Admin","Doner/Recipient","Doner","Recipient","Viewer","Blocked"];
   public username: string;
   public users: CommunityRole [] = [];
   private communityRoleSub: Subscription;
+  userAuthenticated = false;
 
   allowed: boolean;
   accessDenied: boolean;
@@ -29,7 +33,8 @@ export class CommunityRolesComponent implements OnInit, OnDestroy {
   loading = false;
   popup = false;
 
-  constructor(public communityService: CommunityService, public userComService: UserComService, private router: Router) { }
+  constructor(public communityService: CommunityService, public userComService: UserComService, 
+                      public authService: AuthService, private router: Router) { }
 
   @ViewChild('autosize') autosize: CdkTextareaAutosize;
 
@@ -37,7 +42,11 @@ export class CommunityRolesComponent implements OnInit, OnDestroy {
   ngOnInit() {
     this.loading = true;
     this.community = this.communityService.getCommunity();
-    this.loadUsers();
+    this.userAuthenticated = this.authService.getIsAuthenticated();
+    this.username = this.authService.getUsername();
+    if (this.userAuthenticated == true) {
+      this.loadUsers();
+    }
   }
 
   ngOnDestroy(): void {
@@ -49,19 +58,20 @@ export class CommunityRolesComponent implements OnInit, OnDestroy {
   loadUsers() {
     this.communityService.loadRoles(this.community.communityID);
     this.communityService.getCommunityRoles().subscribe((communityRoles: CommunityRole []) => {
-      console.log("Testing");
       this.users = communityRoles;
-      console.log(communityRoles);
-     
+      for (let user in this.users) {
+        const newRole = this.users[user].role;
+        this.newRoles.push(newRole);
+      }
       this.loading = false;
     });
   }
 
   updateRole(username: string, role: string) {
     const communityID = this.community.communityID;
-    console.log(role);
-    console.log("Updating role.");
+    console.log("Updating role: " + role);
     this.communityService.createRole(communityID, username, role);
+    
   }
 
   addUser(newUser: string) {
