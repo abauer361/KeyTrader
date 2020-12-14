@@ -115,13 +115,13 @@
 }
 
 .communityBtn {
-  cursor: pointer;
-  color:white;
+  background-color: #34d4c4;
+  text-shadow: 1px 1px #000000;
   text-align: center;
-  font-weight: bold;
-  font-size:12px;
-  margin: auto;
-  background-color: #0CDAC2;
+  justify-content: center;
+  align-items: center;
+  color: white;
+  font-size: 12px;
 }
 #addKey{
   border-right: 1px solid white;
