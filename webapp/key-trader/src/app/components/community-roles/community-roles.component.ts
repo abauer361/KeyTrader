@@ -37,7 +37,7 @@ export class CommunityRolesComponent implements OnInit, OnDestroy {
   ngOnInit() {
     this.loading = true;
     this.community = this.communityService.getCommunity();
-
+    this.loading = false;
   }
 
   ngOnDestroy(): void {

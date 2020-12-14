@@ -109,6 +109,7 @@ router.post("/load-community", async (req, res, next) => {
   
   }
   catch (err) {
+    console.log(err);
     return next(new InternalServerError("Cannot get communities.", err));
   }
 });

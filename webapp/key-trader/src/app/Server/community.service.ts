@@ -19,6 +19,7 @@ import {environment} from '../../environments/environment';
 import {CookieService} from 'ngx-cookie-service';
 import { Community } from 'src/app/Models/community.model';
 import { CommunityRole } from 'src/app/Models/community-role.model';
+import { timer } from 'rxjs/observable/timer';
 
 
 @Injectable({ providedIn: 'root' })
@@ -34,6 +35,9 @@ export class CommunityService {
   private communities: Community [] = [];
   private communitiesUpdated = new Subject<Community []>();
  
+  public showSuccess: boolean;     // Success timer info
+  private successSub: Subscription;
+  timer = timer(3000);
 
   private currentCommunity: Community;
 
@@ -71,6 +75,7 @@ export class CommunityService {
       console.log(result);
       this.communities = result.communities;
       this.communitiesUpdated.next([...this.communities]);
+      this.setTimer();
       console.log("Successfully loaded community.");
     }), error => {
       console.log(error);
@@ -101,8 +106,23 @@ export class CommunityService {
     this.currentCommunity = community;
   }
 
+  getCommunity() {
+    return this.currentCommunity;
+  }
+
   getCommunities() {
     return this.communitiesUpdated.asObservable();
+  }
+
+  public setTimer() {
+    console.log('timer called');
+    // set showloader to true to show loading div on view
+    this.showSuccess   = true;
+    this.successSub = this.timer.subscribe(() => {
+      console.log('timer removed');
+      // set showloader to false to hide loading div from view after 5 seconds
+      this.showSuccess = false;
+    });
   }
 
 }
