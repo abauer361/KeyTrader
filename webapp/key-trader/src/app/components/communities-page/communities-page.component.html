@@ -42,11 +42,16 @@
                 <mat-card class="communityCard" *ngFor="let community of this.communities">
                   <mat-card-header class="communityCardHeader">
 
+
                   </mat-card-header>
                   <mat-card-content>
-                    <button class="settingsBtn" (click)="window.location.href = '/settings';"><fa-icon [icon]="settingsIcon"></fa-icon></button>
+                    <button class="settingsBtn" (click)="communitySettings(community)"><fa-icon [icon]="settingsIcon"></fa-icon></button>
                     <h4 class="communityName">{{community.communityName}}</h4>
                   </mat-card-content>
+                  <mat-card-actions style="display:flex; ">
+                    <button mat-raised-button (click)="addKey(community)" id="addKey" class="serverBtn">ADD KEY</button>
+                    <button mat-raised-button (click)="seeKeys(community)" id="viewKey" class="serverBtn">VIEW KEYS</button>
+                  </mat-card-actions>
                 </mat-card>
 
               </div>

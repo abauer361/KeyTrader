@@ -73,7 +73,6 @@ export class CommunitiesComponent implements OnInit, OnDestroy {
     this.router.navigateByUrl('/community-form')
   }
   
-  /*
   setCommunity(community) {               // Sets current community for settings page (Its own function for abstraction)
     this.communityService.setCommunity(community);
   }
@@ -81,6 +80,5 @@ export class CommunitiesComponent implements OnInit, OnDestroy {
     this.setCommunity(community);
     this.router.navigateByUrl('/view-roles');
   }
-  */
 
 }
