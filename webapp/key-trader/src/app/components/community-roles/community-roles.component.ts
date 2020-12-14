@@ -47,6 +47,9 @@ export class CommunityRolesComponent implements OnInit, OnDestroy {
 
   loadUsers() {
     this.communityService.loadRoles(this.community.communityID);
+    this.communityService.getCommunities().subscribe((communityRoles: CommunityRole []) => {
+      this.users = communityRoles;
+    });
   }
 
   addUser(newUser: string) {

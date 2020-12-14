@@ -59,7 +59,7 @@ export class CommunitiesComponent implements OnInit, OnDestroy {
   loadCommunity(username) {
     console.log('Locating key trader community');
     this.communityService.loadCommunity(username);
-    this.communities = this.communityService.getCommunities().subscribe((community: Community []) => {
+    this.communityService.getCommunities().subscribe((community: Community []) => {
       this.communities = community;
       this.loading = false;
     });

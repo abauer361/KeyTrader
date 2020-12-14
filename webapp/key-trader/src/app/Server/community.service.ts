@@ -91,7 +91,7 @@ export class CommunityService {
       username : username, 
       role : role
     };
-    
+    console.log(body);
     const url = environment.getApiUrl("user/update-role");
     this.http.post(url,body)
     .subscribe(response => {
@@ -134,6 +134,10 @@ export class CommunityService {
 
   getCommunities() {
     return this.communitiesUpdated.asObservable();
+  }
+
+  getCommunityRoles() {
+    return this.communityRolesUpdated.asObservable();
   }
 
   public setTimer() {
