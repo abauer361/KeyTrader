@@ -15,6 +15,7 @@ import {ViewRolesComponent} from './components/view-roles/view-roles.component';
 import {LoggedOutComponent} from './components/logged-out/logged-out.component';
 import {NormalAuthGuard} from './Auth/auth-2.guard';
 import {ProfilePageComponent} from './components/profile-page/profile-page.component';
+import {CommunityFormComponent} from './components/community-form/community-form.component';
 const routes: Routes = [
   {path: '', component: ServersPageComponent, canActivate: [AuthGuard]},
   {path: 'login', component: LoginPageComponent},
@@ -27,6 +28,7 @@ const routes: Routes = [
   {path: 'settings', component: ChangeRolesComponent, canActivate: [NormalAuthGuard]},
   {path: 'profile-page', component: ProfilePageComponent},
   {path: 'communities-page', component: CommunitiesComponent, canActivate: [AuthGuard]},
+  {path: 'community-form', component: CommunityFormComponent, canActivate: [AuthGuard]},
   {path: 'logged-out', component: LoggedOutComponent}
 ];
 
