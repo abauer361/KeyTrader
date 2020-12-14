@@ -1,115 +1,82 @@
-import {Injectable} from '@angular/core';
-import {HttpClient} from '@angular/common/http';
+/*
+Auth service:
+Basically anything having to do with the jwt is in here which includes:
+  Logging in
+  Getting authorization
+  Logging out
+  Setting timers
+  Validating token with the backend
+*/
+
+
+
+
+import {Injectable, OnInit} from '@angular/core';
+import { HttpClient, HttpParams } from '@angular/common/http';
+import { Router } from '@angular/router';
+import { Subject } from 'rxjs';
 import {environment} from '../../environments/environment';
-import {Observable, Subject, Subscription} from 'rxjs';
-import {Community} from '../Models/community.model';
-import {KeyTraderRole} from '../Models/keyTraderRole.model';
-import {Router} from '@angular/router';
-import {Channel} from '../Models/channel.model';
-import { timer } from 'rxjs/observable/timer';
+import {CookieService} from 'ngx-cookie-service';
+import { Community } from 'src/app/Models/community.model';
 
-
-@Injectable({providedIn: 'root'})
+@Injectable({ providedIn: 'root' })
 export class CommunityService {
+
+  private isAuthenticated = false;
+  private token: string;
+
+  private tokenTimer: any;
+  private authStatusListener = new Subject<boolean>();
+  private keyTraderAuthStatusListener = false;
+
+  private validity: { validity: boolean };
+  private validityUpdated = new Subject<{validity: boolean }>();
+
 
   private currentCommunity: Community;
 
-  private roles: string[] = [];
-  private rolesUpdated = new Subject<string []>();
+  constructor(private http: HttpClient, private router: Router, private cookieService: CookieService) {
 
-  private keyTraderRoles: KeyTraderRole[] = [];
-  private keyTraderRolesUpdated = new Subject<KeyTraderRole []>();
-
-  private notifications: boolean[] = [];
-  private notificationsUpdated = new Subject<boolean []>();
-
-  private channels: Channel[] = [];
-  private channelsUpdated = new Subject<Channel []>();
-
-  public showSuccess: boolean;     // Success timer info
-  private successSub: Subscription;
-  timer = timer(3000);
-
-  constructor(private http: HttpClient, private router: Router) {
   }
 
-
-  public getRoles(guildID) {
-    this.http.get<{ message: string, roles: string[] }>(environment.getApiUrl('discord/getRoles'), {params: {guildID}})
-      .subscribe((roleData) => {
-        this.roles = roleData.roles;
-        this.rolesUpdated.next([...this.roles]);
-      });
-  }
-  public getRolesUpdatedList() {
-    return this.rolesUpdated.asObservable();
-  }
-
-  public getKeyTraderRoles(guildID) {
-    this.http.get<{ message: string, keyTraderRoles: KeyTraderRole[] }>(environment.getApiUrl('discord/getKeyTraderRoles'), {params: {guildID}})
-      .subscribe((roleData) => {
-        this.keyTraderRoles = roleData.keyTraderRoles;
-        this.keyTraderRolesUpdated.next([...this.keyTraderRoles]);
-      });
-  }
-  public getKeyTraderRolesUpdatedList() {
-    return this.keyTraderRolesUpdated.asObservable();
-  }
-
-  setCommunity(community) {
-    this.currentCommunity = community;
-  }
-  getCommunity() {
-    return this.currentCommunity;
-  }
-  updateRoles(communityRoles, communityUpdates) {
-    const guildID = this.currentCommunity.communityID;
-    this.http.post(environment.getApiUrl('discord/saveRoles'), {communityRoles, communityUpdates, guildID}).subscribe(
-      response => {
-        console.log(response);
-        this.router.navigateByUrl('/view-roles');
+  createCommunity(communityID: string, communityName: string){
+    const body: Community = {
+      communityID : communityName, 
+      communityName : communityName
+    };
+    const url = environment.getApiUrl("user/create-community");
+    this.http.post(url,body)
+    .subscribe(response => {
+      console.log(response);
+      var result = response['result']
+      if (result) {
+        //navigate to page so user can see new community
+        console.log("Successfully created page.");
+        this.router.navigate(['/communities-community']);
       }
-    );
-  }
-
-  public getNotifications(guildID) {
-    this.http.get<{ message: string, notifications: boolean[] }>(environment.getApiUrl('discord/getNotifications'), {params: {guildID}})
-      .subscribe((notificationData) => {
-        this.notifications = notificationData.notifications;
-        this.notificationsUpdated.next([...this.notifications]);
-      });
-  }
-  public getNotificationsUpdated() {
-    return this.notificationsUpdated.asObservable();
-  }
-
-  public updateNotifications(keysAdded, keysClaimed, newUser) {
-
-    const guildID = this.currentCommunity.communityID;
-    this.http.post(environment.getApiUrl('discord/storeSettings'), {keysAdded, keysClaimed, newUser, guildID}).subscribe(
-      response => {
-        console.log(response);
-        this.setTimer();
-      }, error => {
-        console.log(error);
-      }
-    );
-  }
-
-  public deleteChannels() {
-    this.channels.length = 0;
-  }
-
-
-
-  public setTimer() {
-    console.log('timer called');
-    // set showloader to true to show loading div on view
-    this.showSuccess   = true;
-    this.successSub = this.timer.subscribe(() => {
-      console.log('timer removed');
-      // set showloader to false to hide loading div from view after 5 seconds
-      this.showSuccess = false;
     });
   }
+
+  loadCommunity(communityID: string, communityName: string){
+    const body: Community = {
+      communityID : communityName,
+      communityName : communityName
+    };
+    const url = environment.getApiUrl("user/load-community");
+
+    this.http.post(url,body)
+    .subscribe(response => {
+      console.log(response);
+      var result = response['result']
+      if (result) {
+        //navigate to page so user can see new community
+        console.log("Successfully loaded community.");
+      }
+    });
+  }
+
+  setCommunity(community: Community){
+    this.currentCommunity = community
+  }
+
 }

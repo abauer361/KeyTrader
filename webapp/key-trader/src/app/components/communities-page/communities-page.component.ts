@@ -8,7 +8,7 @@ import {AuthService} from '../../Auth/auth.service';
 import {Router} from '@angular/router';
 import {KeyService} from '../../Key/keyService';
 import {Community} from '../../Models/community.model';
-import {CommunityService} from '../community-form/community.service'
+import {CommunityService} from '../../Server/community.service'
 
 @Component({
   selector: 'app-communities-page',
@@ -49,6 +49,11 @@ export class CommunitiesComponent implements OnInit, OnDestroy {
           
   retrieveCommunity() {
     this.loading = false;
+  }
+
+  loadCommunity(communityName) {
+    console.log('Locating key trader community');
+    this.communityService.loadCommunity(communityName,communityName);
   }
 
 

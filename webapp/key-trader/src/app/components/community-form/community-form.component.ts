@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
-import { CommunityService } from './community.service';
+import { CommunityService } from '../../Server/community.service';
 import {NgForm} from '@angular/forms';
 import {AuthService} from '../../Auth/auth.service';
 
