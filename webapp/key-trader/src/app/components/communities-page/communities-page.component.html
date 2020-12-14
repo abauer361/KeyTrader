@@ -2,9 +2,9 @@
   <div class="page">
     <div *ngIf="userAuthenticated; else elseBlock">
       <app-communities-nav-menu></app-communities-nav-menu>
-      <div class="center" id="pageWrapper">
+      <div style="text-align: center;" id="pageWrapper">
 
-        <div class="communitySection">
+        <div class="communitySection" >
           <div class="headerWrapper">
             <h2 class="communityHeader">Your Communities that use KeyTrader</h2>
           </div>
@@ -18,7 +18,7 @@
             </div>
 
             <div *ngIf="!loading" class="communitiesWrapper">
-                <mat-card class="communityCard" *ngIf="this.communities.length === 0">
+                <mat-card class="communityCard" *ngIf="this.communities.length === 0" style="text-align: center;">
                   <mat-card-header class="communityCardHeader">
 
                   </mat-card-header>
