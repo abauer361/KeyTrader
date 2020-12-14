@@ -52,6 +52,7 @@ export class ServerService {
         this.keyTraderRolesUpdated.next([...this.keyTraderRoles]);
       });
   }
+  
   public getKeyTraderRolesUpdatedList() {
     return this.keyTraderRolesUpdated.asObservable();
   }

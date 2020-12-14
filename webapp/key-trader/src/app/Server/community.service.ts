@@ -14,7 +14,7 @@ Basically anything having to do with the jwt is in here which includes:
 import {Injectable, OnInit} from '@angular/core';
 import { HttpClient, HttpParams } from '@angular/common/http';
 import { Router } from '@angular/router';
-import { Subject } from 'rxjs';
+import { Subject, Subscription } from 'rxjs';
 import {environment} from '../../environments/environment';
 import {CookieService} from 'ngx-cookie-service';
 import { Community } from 'src/app/Models/community.model';
@@ -24,9 +24,6 @@ import { CommunityRole } from 'src/app/Models/community-role.model';
 @Injectable({ providedIn: 'root' })
 export class CommunityService {
 
-  private isAuthenticated = false;
-  private token: string;
-
   private tokenTimer: any;
   private authStatusListener = new Subject<boolean>();
   private keyTraderAuthStatusListener = false;
@@ -34,6 +31,9 @@ export class CommunityService {
   private validity: { validity: boolean };
   private validityUpdated = new Subject<{validity: boolean }>();
 
+  private communities: Community [] = [];
+  private communitiesUpdated = new Subject<Community []>();
+ 
 
   private currentCommunity: Community;
 
@@ -64,19 +64,13 @@ export class CommunityService {
     const body = {
       username: username
     }
-    console.log(body);
     const url = environment.getApiUrl("user/load-community");
 
-    this.http.post(url,body)
-    .subscribe(response => {
-      console.log(response);
-      var result = response['result']
-      if (result) {
-        //navigate to page so user can see new community
-        console.log("Successfully retrieved communities.");
-        console.log(result);
-        return result;
-      }
+    this.http.post<{ message: string, communities: Community [] }>(url,body)
+    .subscribe((result) => {
+      this.communities = result.communities;
+      this.communitiesUpdated.next([...this.communities]);
+      console.log("Successfully loaded community.");
     });
   }
 
@@ -100,8 +94,14 @@ export class CommunityService {
     });
   }
 
-  setCommunity(community: Community){
-    this.currentCommunity = community
+  setCommunity(community){
+    this.currentCommunity = community;
+  }
+
+  getCommunities() {
+    console.log(this.communities);
+    console.log(this.communitiesUpdated.asObservable());
+    return this.communitiesUpdated.asObservable();
   }
 
 }

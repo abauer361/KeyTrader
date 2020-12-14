@@ -97,14 +97,19 @@ router.post("/load-community", async (req, res, next) => {
     try {
       const results = await databaseRecords.getCommunity(username);
       const keyJson = JSON.parse(JSON.stringify(results));
-      
-      return res.status(201).json({
-          msg:"Community Loaded",
-          result: keyJson
-          });
+      let roleDataArray = [];
+
+      for (const data in keyJson) {
+        const communityID = keyJson[data].Community_ID;
+        const communityName = keyJson[data].Community_ID;
+        roleDataArray.push({ communityID: communityID, roleType: communityName });
+    }
+    res.status(200).json({ message: "Success", communities: roleDataArray });
+
+  
   }
   catch (err) {
-    return next(new BadRequestError("Failed to create community. Try a different name.", err));
+    return next(new InternalServerError("Cannot get communities.", err));
   }
 });
 
