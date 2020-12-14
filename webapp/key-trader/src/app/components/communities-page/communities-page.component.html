@@ -2,9 +2,9 @@
   <div class="page">
     <div *ngIf="userAuthenticated; else elseBlock">
       <app-communities-nav-menu></app-communities-nav-menu>
-      <div style="text-align: center;" id="pageWrapper">
+      <div class="center" id="pageWrapper">
 
-        <div class="communitySection" >
+        <div class="communitySection">
           <div class="headerWrapper">
             <h2 class="communityHeader">Your Communities that use KeyTrader</h2>
           </div>
@@ -18,7 +18,7 @@
             </div>
 
             <div *ngIf="!loading" class="communitiesWrapper">
-                <mat-card class="communityCard" *ngIf="this.communities.length === 0" style="text-align: center;">
+                <mat-card class="communityCard" *ngIf="this.communities.length === 0">
                   <mat-card-header class="communityCardHeader">
 
                   </mat-card-header>
@@ -32,9 +32,9 @@
                   <mat-card-header class="communityCardHeader">
 
                   </mat-card-header>
-                  <mat-card-content style="text-align: center;">
+                  <mat-card-content>
                     <h4 class="communityName">Create a Community Here</h4>
-                    <button class="createButton" mat-raised-button (click)="createCommunity()">CREATE COMMUNITY</button>
+                    <button mat-raised-button (click)="createCommunity()">CREATE COMMUNITY</button>
                   </mat-card-content>
                 </mat-card>
 
@@ -45,12 +45,12 @@
 
                   </mat-card-header>
                   <mat-card-content>
-                    <button class="settingsBtn" (click)="communitySettings(community)"><fa-icon [icon]="settingsIcon"></fa-icon></button>
+                    <button class="settingsBtn" (click)="window.location.href = '/comRoles';"><fa-icon [icon]="settingsIcon"></fa-icon></button>
                     <h4 class="communityName">{{community.communityName}}</h4>
                   </mat-card-content>
                   <mat-card-actions style="display:flex; ">
-                    <button mat-raised-button (click)="addKey(community)" id="addKey" class="serverBtn">ADD KEY</button>
-                    <button mat-raised-button (click)="seeKeys(community)" id="viewKey" class="serverBtn">VIEW KEYS</button>
+                    <button mat-raised-button (click)="addKey(linkedServer)" id="addKey" class="serverBtn">ADD KEY</button>
+                    <button mat-raised-button (click)="seeKeys(linkedServer)" id="viewKey" class="serverBtn">VIEW KEYS</button>
                   </mat-card-actions>
                 </mat-card>
 

@@ -46,11 +46,11 @@
   flex-grow: 0.2;
 }
 .keyTraderBtn {
-  background-color: #970C0C;
-  color:white;
+  background-color: #34d4c4;
+  text-shadow: 1px 1px #000000;
+  color: white;
   list-style-type: none;
   text-decoration: none;
-  border-radius: 5px;
   width:100%;
   height:40%;
   text-align: center;

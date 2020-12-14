@@ -1,0 +1,85 @@
+.settingsPageWrapper {
+  background-color: white;
+  width:95vw;
+  height:95vh;
+  border-radius:20px;
+  display:flex;
+  flex-direction: column;
+  align-content: center;
+}
+#loading {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+.header{
+  border-top-left-radius: 20px;
+  border-top-right-radius:20px;
+  padding:30px;
+}
+.settingsTitle{
+  font-family: 'Varela Round', sans-serif;
+}
+.roles{
+  background-color: #7289DA;
+  padding:30px;
+  overflow-y: auto;
+  max-height: 600px;
+}
+.roleTitle{
+  font-family: 'Varela Round', sans-serif;
+  font-size: 20px;
+}
+.listItem{
+  margin-bottom: 40px;
+}
+.role{
+  padding: 5px 10px;
+  background-color: white;
+  font-weight: normal;
+  box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+  width:100%;
+  display:flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.discordRoles{
+  display: flex;
+  justify-content: space-between;
+}
+
+.roleBtn {
+  background-color: #7289DA;
+  width: 200px;
+  border-radius: 10px;
+  text-align: center;
+  color: white;
+  margin:30px;
+}
+
+.addUserBtn {
+  background-color: white;
+  width: 150px;
+  border-radius: 10px;
+  text-align: center;
+  color: #7289DA;
+  margin:30px;
+}
+
+.roleGuides {
+  display: flex;
+  justify-content: space-between;
+  padding: 5px 10px;
+}
+.roleType {
+  color:white;
+}
+.equates{
+  color:white;
+}
+.notifications {
+  padding: 5px 10px;
+  border-radius: 10px;
+  background-color: white;
+}

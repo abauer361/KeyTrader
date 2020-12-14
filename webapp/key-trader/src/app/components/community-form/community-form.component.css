@@ -29,11 +29,11 @@
 
 }
 .loginBtn {
-  background-color: #970C0C;
-  color:white;
+  background-color: #34d4c4;
+  text-shadow: 1px 1px #000000;
+  color: white;
   list-style-type: none;
   text-decoration: none;
-  border-radius: 5px;
   text-align: center;
   font-family: 'Varela Round', sans-serif;
   font-size: 1vw;

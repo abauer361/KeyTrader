@@ -75,8 +75,12 @@ export class CommunityService {
     });
   }
 
+  getCommunity(){
+    return this.currentCommunity;
+  }
+
   setCommunity(community: Community){
-    this.currentCommunity = community
+    this.currentCommunity = community;
   }
 
 }
