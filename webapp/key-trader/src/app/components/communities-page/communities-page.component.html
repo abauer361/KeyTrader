@@ -34,18 +34,18 @@
                   </mat-card-header>
                   <mat-card-content>
                     <h4 class="communityName">Create a Community Here</h4>
-                    <button class = "communityBtns">Create Community</button>
+                    <button mat-raised-button (click)="createCommunity()">CREATE COMMUNITY</button>
                   </mat-card-content>
                 </mat-card>
 
 
-                <mat-card class="communityCard" *ngFor="let linkedServer of this.linkedServers">
+                <mat-card class="communityCard" *ngFor="let community of this.communities">
                   <mat-card-header class="communityCardHeader">
 
                   </mat-card-header>
                   <mat-card-content>
-                    <button class="settingsBtn" (click)="communitySettings(linkedServer)"><fa-icon [icon]="settingsIcon"></fa-icon></button>
-                    <h4 class="communityName">{{linkedServer.communityName}}</h4>
+                    <button class="settingsBtn" (click)="window.location.href = '/settings';"><fa-icon [icon]="settingsIcon"></fa-icon></button>
+                    <h4 class="communityName">{{community.communityName}}</h4>
                   </mat-card-content>
                 </mat-card>
 

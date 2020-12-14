@@ -106,3 +106,21 @@ router.post("/signup", async (req, res, next) => {
 });
 
 module.exports = router;
+
+router.post("/create-community", async (req, res, next) => {
+  const communityID = req.body.communityID;
+  const communityName = req.body.communityName;
+
+  //insert to database
+    try {
+      await databaseRecords.addCommunity(communityID, communityName);
+
+      return res.status(201).json({
+          msg:"Community Added",
+          result: true
+          });
+  }
+  catch (err) {
+    return next(new BadRequestError("Failed to create community. Try a different name.", err));
+  }
+});

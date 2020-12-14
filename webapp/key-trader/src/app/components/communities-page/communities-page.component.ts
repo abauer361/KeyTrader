@@ -7,8 +7,8 @@ import {faCog, faPlus} from '@fortawesome/free-solid-svg-icons';
 import {AuthService} from '../../Auth/auth.service';
 import {Router} from '@angular/router';
 import {KeyService} from '../../Key/keyService';
-import {CommunityService} from '../../Server/community.service';
 import {Community} from '../../Models/community.model';
+import {CommunityService} from '../community-form/community.service'
 
 @Component({
   selector: 'app-communities-page',
@@ -68,7 +68,12 @@ export class CommunitiesComponent implements OnInit, OnDestroy {
     this.setKeyCommunity(community);
     this.router.navigateByUrl('/see-keys');
   }
+
+  createCommunity() {
+    this.router.navigateByUrl('/community-form')
+  }
   
+  /*
   setCommunity(community) {               // Sets current community for settings page (Its own function for abstraction)
     this.communityService.setCommunity(community);
   }
@@ -76,5 +81,6 @@ export class CommunitiesComponent implements OnInit, OnDestroy {
     this.setCommunity(community);
     this.router.navigateByUrl('/view-roles');
   }
+  */
 
 }

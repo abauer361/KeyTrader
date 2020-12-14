@@ -101,6 +101,7 @@ export class CommunityService {
   }
 
 
+
   public setTimer() {
     console.log('timer called');
     // set showloader to true to show loading div on view
