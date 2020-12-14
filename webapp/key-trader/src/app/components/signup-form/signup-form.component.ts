@@ -3,6 +3,7 @@ import { Router } from '@angular/router';
 import { AuthService } from '../../Auth/auth.service' ;
 import {NgForm} from '@angular/forms';
 
+
 @Component({
   selector: 'app-signup-form',
   templateUrl: './signup-form.component.html',
@@ -20,10 +21,7 @@ export class SignupFormComponent implements OnInit {
   ngOnInit(): void {
   }
 
-  onSubmitButtonClicked(): void {
-    console.log('Going to key-trader home page');
-    this.router.navigate(['/']);
-  }
+  
 
   onSignup(form: NgForm) {
     this.password = form.value.passwordInput;
