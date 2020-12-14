@@ -65,22 +65,7 @@ router.post("/signup", async (req, res, next) => {
 
     //check password
     const password = req.body.password;
-    /*const length = 6;
-    var missing = "";
-    var approved = true;
-    if (password.length < length) {
-      missing = missing + "\n 6+ characters";
-      approved = false
-    }
-    
-    if (approved == false) {
-      next(new BadRequestError("Failed to create user.  Password requires: ${missing}", err));
-      return res.status(401).json({
-            msg:"Signup failed.",
-            result:false
-          });
-    }*/
-
+ 
     //hash password
     const saltRounds = 10;
     const salt = bcrypt.genSaltSync(saltRounds);
@@ -105,8 +90,6 @@ router.post("/signup", async (req, res, next) => {
     }
 });
 
-module.exports = router;
-
 router.post("/create-community", async (req, res, next) => {
   const communityID = req.body.communityID;
   const communityName = req.body.communityName;
@@ -124,3 +107,5 @@ router.post("/create-community", async (req, res, next) => {
     return next(new BadRequestError("Failed to create community. Try a different name.", err));
   }
 });
+
+module.exports = router;
