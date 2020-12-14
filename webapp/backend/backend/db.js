@@ -50,6 +50,14 @@ exports.getKeyTraderUsers = function (username) {
     );
 }
 
+exports.getCommunity = function (username) {
+  var sql = "SELECT * FROM CommunityRoles WHERE Username=?;";
+  return this.get().query(
+    {sql:sql},
+    [username]
+    );
+}
+
 exports.addCommunity = function (communityID, communityName, communityLink) {
   var sql = "INSERT INTO Communities(Community_ID, Community_Name, Community_Link) values (?, ?, ?);";
   return this.get().query(
@@ -58,12 +66,20 @@ exports.addCommunity = function (communityID, communityName, communityLink) {
   );
 }
 
-exports.loadCommunity = function () {
-  var sql = "SELECT * FROM Communities;";
+exports.getCommunityRole = function (communityID) {
+  var sql = "SELECT Username, Role_Name FROM CommunityRoles WHERE Community_ID=?;";
   return this.get().query(
     {sql:sql},
-    []
+    [communityID]
     );
+}
+
+exports.addCommunityRole = function (communityID, username, role) {
+  var sql = "INSERT INTO CommunityRoles(Community_ID, Username, Role_Name) values (?, ?, ?) ON DUPLICATE KEY UPDATE Role_Name = ?;";
+  return this.get().query(
+    {sql: sql},
+    [communityID, username, role, role]
+  );
 }
 
 //-------------------------------------------
