@@ -171,7 +171,7 @@ router.post("/create-key", async (req, res, next) => {
           });
   }
   catch (err) {
-    return next(new BadRequestError("Failed to create community. Try a different name.", err));
+    return next(new BadRequestError("Failed to add key.", err));
   }
 });
 
