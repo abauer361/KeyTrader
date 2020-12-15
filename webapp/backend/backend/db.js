@@ -93,7 +93,7 @@ exports.createCommunityKey = function (communityID,key) {
 }
 
 exports.removeCommunityKey = function (key) {
-  var sql = "DELETE FROM CommunityKeys WHERE Key=?;";
+  var sql = "DELETE FROM CommunityKeys WHERE KeyString=?;";
   return this.get().query(
     {sql: sql},
     [key]
