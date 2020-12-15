@@ -88,6 +88,7 @@ export class AddKeyPageComponent implements OnInit {
     this.keyService.getKeyUpdatedListener().subscribe((keys: Key []) => {
       this.keys = keys;
     });
+
   }
 
 

@@ -12,6 +12,9 @@
     <button class="createButton" mat-raised-button (click)="addCommunityKey(userInput.value)" >ADD KEY</button>
   
     <h1>View keys</h1>
+    <div *ngIf="keys.length == 0">
+      <h2>There are no keys available right now.</h2>
+    </div>
     <mat-card class="communityCard" *ngFor="let key of keys">
       <mat-card-header class="header">
       </mat-card-header>
