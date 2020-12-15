@@ -87,7 +87,9 @@ export class AddKeyPageComponent implements OnInit {
     this.keyService.loadCommunityKeys(this.community.communityID);
     this.keyService.getKeyUpdatedListener().subscribe((keys: Key []) => {
       this.keys = keys;
+      console.log(this.keys);
     });
+    console.log(this.keys);
 
   }
 

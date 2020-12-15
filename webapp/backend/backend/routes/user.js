@@ -159,23 +159,25 @@ router.post("/create-community", async (req, res, next) => {
 
 router.post("/create-key", async (req, res, next) => {
   const communityID = req.body.communityID;
-  const key = req.body.key;
-
+  const key = req.body.keyString;
+  
   //insert to database
     try {
       await databaseRecords.createCommunityKey(communityID, key);
+
       return res.status(201).json({
           msg:"Community key Added",
           result: true
           });
   }
   catch (err) {
-    return next(new BadRequestError("Failed to create key.  It may already be in use.  Try a different one.", err));
+    console.log(err);
+    return next(new BadRequestError("Failed to create key.  It may already be in use.  Try a different key.", err));
   }
 });
 
 router.post("/remove-key", async (req, res, next) => {
-  const key = req.body.key;
+  const key = req.body.keyString;
 
   //remove from db
     try {
@@ -198,12 +200,17 @@ router.post("/get-keys", async (req, res, next) => {
     try {
       const results = await databaseRecords.getCommunityKeys(communityID);
       const keyJson = JSON.parse(JSON.stringify(results));
+      let roleDataArray = [];
+
+      for (const data in keyJson) {
+        const communityID = keyJson[data].Community_ID;
+        const keyString = keyJson[data].KeyString;
+        roleDataArray.push({ communityID: communityID, keyString: keyString });
+      }
+      console.log(roleDataArray);
+      return  res.status(200).json({ message: "Success: Loaded roles", key: roleDataArray });
       
-        
-      return res.status(201).json({
-          msg:"Keys found",
-          result: keyJson
-          });
+     
   }
   catch (err) {
     console.log(err);

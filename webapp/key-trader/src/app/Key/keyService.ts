@@ -5,13 +5,14 @@
 */
 import {Injectable} from '@angular/core';
 import { HttpClient } from '@angular/common/http';
-import {Observable, Subject} from 'rxjs';
+import {Observable, Subject, Subscription} from 'rxjs';
 import {environment} from '../../environments/environment';
 
 import {Key} from '../Models/key.model';
 import {Server} from '../Models/server.model';
 import {Community} from '../Models/community.model'
 import { CommunityKey } from 'src/app/Models/community-key.model';
+import { timer } from 'rxjs/observable/timer';
 
 @Injectable({providedIn: 'root'})
 export class KeyService {
@@ -29,19 +30,29 @@ export class KeyService {
   private steamKeyUpdated = new Subject<Key>();
 
   constructor(private http: HttpClient) {}
+  public showSuccess: boolean;     // Success timer info
+  private successSub: Subscription;
+  timer = timer(3000);
 
   keyAdded : boolean;
   private keyAddedUpdated = new Subject<boolean>();
 
   public loadCommunityKeys(communityID) {
-    this.http.post(environment.getApiUrl('user/get-keys'), {
-      communityID: communityID})
+    this.http.post< {message: string, key: Key [] }>(environment.getApiUrl('user/get-keys'), 
+    {
+      communityID: communityID
+    })
     .subscribe((keyData) => {
       console.log(keyData);
-      /*if (keyData.length > 0) {
-        this.keys = keyData.keys;
+      const result = keyData['key'];
+      console.log(result);
+      if (result.length > 0) {
+        this.keys = result;
         this.keysUpdated.next([...this.keys]);
-      }*/
+        console.log(this.keys);
+        this.setTimer();
+        console.log("Succesfully loaded keys.");
+      }
     });
   }
 
@@ -60,7 +71,7 @@ export class KeyService {
   addCommunityKey(communityID: string, key: string){
     const body: CommunityKey = {
       communityID : communityID, 
-      key: key
+      keyString: key
     };
     const url = environment.getApiUrl("user/create-key");
     this.http.post(url,body)
@@ -158,5 +169,16 @@ export class KeyService {
   }
   getKeyServer() {
     return this.currentServer;
+  }
+
+  public setTimer() {
+    console.log('timer called');
+    // set showloader to true to show loading div on view
+    this.showSuccess   = true;
+    this.successSub = this.timer.subscribe(() => {
+      console.log('timer removed');
+      // set showloader to false to hide loading div from view after 5 seconds
+      this.showSuccess = false;
+    });
   }
 }
