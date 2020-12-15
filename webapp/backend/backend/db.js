@@ -83,7 +83,8 @@ exports.getCommunityKeys = function (communityID) {
 }
 
 exports.createCommunityKey = function (communityID,key) {
-  var sql = "INSERT INTO CommunityKeys (Community_ID, Key) values (?, ?);"
+
+  var sql = "INSERT INTO CommunityKeys(Community_ID, KeyString) values (?, ?);"
   return this.get()
   .query(
       {sql: sql},
@@ -92,7 +93,7 @@ exports.createCommunityKey = function (communityID,key) {
 }
 
 exports.removeCommunityKey = function (key) {
-  var sql = "DELETE FROM CommunityKeys WHERE Key=?;";
+  var sql = "DELETE FROM CommunityKeys WHERE KeyString=?;";
   return this.get().query(
     {sql: sql},
     [key]

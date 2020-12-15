@@ -142,7 +142,7 @@ router.post("/create-community", async (req, res, next) => {
   const communityID = req.body.communityID;
   const communityName = req.body.communityName;
   const communityLink = ' ';
- 
+  
   //insert to database
     try {
       await databaseRecords.addCommunity(communityID, communityName, communityLink);
@@ -153,13 +153,13 @@ router.post("/create-community", async (req, res, next) => {
           });
   }
   catch (err) {
-    return next(new InternalServerError("Cannot create community keys.", err));
+    return next(new InternalServerError("Cannot create community.", err));
   }
 });
 
 router.post("/create-key", async (req, res, next) => {
   const communityID = req.body.communityID;
-  const key = req.body.key;
+  const key = req.body.keyString;
   
   //insert to database
     try {
@@ -171,12 +171,17 @@ router.post("/create-key", async (req, res, next) => {
           });
   }
   catch (err) {
+<<<<<<< HEAD
     return next(new BadRequestError("Failed to add key.", err));
+=======
+    console.log(err);
+    return next(new BadRequestError("Failed to create key.  It may already be in use.  Try a different key.", err));
+>>>>>>> fa481ff51c6bdad90d5c4be9f91a90b296d30e13
   }
 });
 
 router.post("/remove-key", async (req, res, next) => {
-  const key = req.body.key;
+  const key = req.body.keyString;
 
   //remove from db
     try {
@@ -199,12 +204,17 @@ router.post("/get-keys", async (req, res, next) => {
     try {
       const results = await databaseRecords.getCommunityKeys(communityID);
       const keyJson = JSON.parse(JSON.stringify(results));
+      let roleDataArray = [];
+
+      for (const data in keyJson) {
+        const communityID = keyJson[data].Community_ID;
+        const keyString = keyJson[data].KeyString;
+        roleDataArray.push({ communityID: communityID, keyString: keyString });
+      }
+      console.log(roleDataArray);
+      return  res.status(200).json({ message: "Success: Loaded roles", key: roleDataArray });
       
-        
-      return res.status(201).json({
-          msg:"Keys found",
-          result: keyJson
-          });
+     
   }
   catch (err) {
     console.log(err);

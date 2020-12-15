@@ -118,6 +118,6 @@ CREATE TABLE `CommunityRoles` (
 DROP TABLE IF EXISTS `CommunityKeys`;
 CREATE TABLE `CommunityKeys` (
   `Community_ID` varchar(20) NOT NULL,
-  `Key` varchar(50) DEFAULT NULL,
-  PRIMARY KEY (`Key`)
+  `KeyString` varchar(50) NOT NULL,
+  PRIMARY KEY (`KeyString`)
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
