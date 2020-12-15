@@ -34,10 +34,14 @@ export class KeyService {
   private keyAddedUpdated = new Subject<boolean>();
 
   public loadCommunityKeys(communityID) {
-    this.http.get<{message: string, keys}>(environment.getApiUrl('user/get-keys'), {params: {communityID}})
+    this.http.post(environment.getApiUrl('user/get-keys'), {
+      communityID: communityID})
     .subscribe((keyData) => {
-      this.keys = keyData.keys;
-      this.keysUpdated.next([...this.keys]);
+      console.log(keyData);
+      /*if (keyData.length > 0) {
+        this.keys = keyData.keys;
+        this.keysUpdated.next([...this.keys]);
+      }*/
     });
   }
 
@@ -52,25 +56,6 @@ export class KeyService {
       }
     });
   }
-
-  /*public addCommunityKey(communityID, key) {
-    const body: CommunityKey = {
-      communityID : communityID, 
-      key: key
-    };
-    console.log(body);
-    this.http.post(environment.getApiUrl('user/create-key') , body).subscribe(
-        responseData => {
-          this.keyAdded = true;
-          this.keyAddedUpdated.next(this.keyAdded);
-          console.log(responseData);
-          //this.sendNotification(ID, 'newKey');
-        }, err => {
-          console.log(err);
-          this.keyAdded = false;
-      });
-
-  }*/
 
   addCommunityKey(communityID: string, key: string){
     const body: CommunityKey = {

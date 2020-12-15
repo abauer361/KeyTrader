@@ -142,7 +142,7 @@ router.post("/create-community", async (req, res, next) => {
   const communityID = req.body.communityID;
   const communityName = req.body.communityName;
   const communityLink = ' ';
- 
+  
   //insert to database
     try {
       await databaseRecords.addCommunity(communityID, communityName, communityLink);
@@ -153,25 +153,24 @@ router.post("/create-community", async (req, res, next) => {
           });
   }
   catch (err) {
-    return next(new InternalServerError("Cannot create community keys.", err));
+    return next(new InternalServerError("Cannot create community.", err));
   }
 });
 
 router.post("/create-key", async (req, res, next) => {
   const communityID = req.body.communityID;
   const key = req.body.key;
-  
+
   //insert to database
     try {
       await databaseRecords.createCommunityKey(communityID, key);
-
       return res.status(201).json({
           msg:"Community key Added",
           result: true
           });
   }
   catch (err) {
-    return next(new BadRequestError("Failed to create community. Try a different name.", err));
+    return next(new BadRequestError("Failed to create key.  It may already be in use.  Try a different one.", err));
   }
 });
 
