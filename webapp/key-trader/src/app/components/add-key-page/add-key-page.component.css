@@ -20,6 +20,12 @@
   flex-direction: column;
   margin-bottom: 20px;
 }
+.createButton{
+  background-color: #34d4c4;
+  text-shadow: 1px 1px #000000;
+  color: white;
+}
+
 .addKeyTitle{
   font-family: 'Varela Round', sans-serif;
 }
