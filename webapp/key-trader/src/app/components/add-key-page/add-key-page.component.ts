@@ -78,12 +78,13 @@ export class AddKeyPageComponent implements OnInit {
     this.loadCommunityKeys();
   }
 // button
-  deleteCommunityKey(key: string) {
-    this.keyService.removeCommunityKey(key);
+  deleteCommunityKey(key) {
+    this.keyService.removeCommunityKey(key.keyString);
     this.loadCommunityKeys();
   }
 
   loadCommunityKeys() {
+    this.keys = [];
     this.keyService.loadCommunityKeys(this.community.communityID);
     this.keyService.getKeyUpdatedListener().subscribe((keys: Key []) => {
       this.keys = keys;
