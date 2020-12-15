@@ -43,22 +43,24 @@ export class KeyService {
       communityID: communityID
     })
     .subscribe((keyData) => {
-      console.log(keyData);
       const result = keyData['key'];
-      console.log(result);
       if (result.length > 0) {
         this.keys = result;
         this.keysUpdated.next([...this.keys]);
-        console.log(this.keys);
         this.setTimer();
         console.log("Succesfully loaded keys.");
       }
     });
   }
 
-  public removeCommunityKey(key) {
-    this.http.get<{message: string, keys}>(environment.getApiUrl('user/remove-keys'), {params: {key}})
-    .subscribe((response) => {
+ 
+  removeCommunityKey(key) {
+
+    const url = environment.getApiUrl("user/remove-key");
+    this.http.post(url, {
+      key: key
+    })
+    .subscribe(response => {
       console.log(response);
       var result = response['result']
       if (result) {

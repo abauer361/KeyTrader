@@ -177,7 +177,7 @@ router.post("/create-key", async (req, res, next) => {
 });
 
 router.post("/remove-key", async (req, res, next) => {
-  const key = req.body.keyString;
+  const key = req.body.key;
 
   //remove from db
     try {
@@ -189,6 +189,7 @@ router.post("/remove-key", async (req, res, next) => {
           });
   }
   catch (err) {
+    console.log(err);
     return next(new BadRequestError("Failed to remove key from community.", err));
   }
 });
@@ -207,7 +208,6 @@ router.post("/get-keys", async (req, res, next) => {
         const keyString = keyJson[data].KeyString;
         roleDataArray.push({ communityID: communityID, keyString: keyString });
       }
-      console.log(roleDataArray);
       return  res.status(200).json({ message: "Success: Loaded roles", key: roleDataArray });
       
      
