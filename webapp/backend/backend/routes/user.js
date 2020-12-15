@@ -207,7 +207,11 @@ router.post("/get-keys", async (req, res, next) => {
           });
   }
   catch (err) {
-    return next(new BadRequestError("Failed to create key. Try a different key.", err));
+    //return next(new BadRequestError("Failed to get key. Try a different key.", err));
+    return res.status(401).json({
+      msg:"No keys found",
+      result: {}
+      });
   }
 });
 
@@ -226,7 +230,7 @@ router.post("/get-roles", async (req, res, next) => {
           });
   }
   catch (err) {
-    return next(new BadRequestError("Failed to create community. Try a different name.", err));
+    return next(new BadRequestError("Failed to create community role. Try again later.", err));
   }
 });
 
@@ -263,7 +267,7 @@ router.post("/update-role", async (req, res, next) => {
           });
   }
   catch (err) {
-    return next(new BadRequestError("Failed to create community. Try a different name.", err));
+    return next(new BadRequestError("Failed to update community role. Try again later.", err));
   }
 });
 

@@ -58,11 +58,12 @@ export class KeyService {
       communityID : communityID, 
       key: key
     };
-    this.http.post(environment.getApiUrl('user/create-Key') , body).subscribe(
+    console.log(body);
+    this.http.post(environment.getApiUrl('user/create-key') , body).subscribe(
         responseData => {
           this.keyAdded = true;
           this.keyAddedUpdated.next(this.keyAdded);
-
+          console.log(responseData);
           //this.sendNotification(ID, 'newKey');
         }, err => {
           console.log(err);
