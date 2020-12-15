@@ -53,7 +53,7 @@ export class KeyService {
     });
   }
 
-  public addCommunityKey(communityID, key) {
+  /*public addCommunityKey(communityID, key) {
     const body: CommunityKey = {
       communityID : communityID, 
       key: key
@@ -70,6 +70,22 @@ export class KeyService {
           this.keyAdded = false;
       });
 
+  }*/
+
+  addCommunityKey(communityID: string, key: string){
+    const body: CommunityKey = {
+      communityID : communityID, 
+      key: key
+    };
+    const url = environment.getApiUrl("user/create-key");
+    this.http.post(url,body)
+    .subscribe(response => {
+      console.log(response);
+      var result = response['result']
+      if (result) {
+        console.log("Successfully created community key.");
+      }
+    });
   }
 
  
