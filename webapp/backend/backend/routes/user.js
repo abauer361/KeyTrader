@@ -171,12 +171,8 @@ router.post("/create-key", async (req, res, next) => {
           });
   }
   catch (err) {
-<<<<<<< HEAD
-    return next(new BadRequestError("Failed to add key.", err));
-=======
     console.log(err);
     return next(new BadRequestError("Failed to create key.  It may already be in use.  Try a different key.", err));
->>>>>>> fa481ff51c6bdad90d5c4be9f91a90b296d30e13
   }
 });
 
